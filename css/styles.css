@@ -878,7 +878,7 @@ button, input, textarea {
   box-shadow: var(--shadow-glow);
 }
 
-/* Articles Grid (2 Columns Layout "a due a due" for All Pages) */
+/* Articles Grid (Always 2 Columns - Two by Two) */
 .articles-grid-container {
   max-width: var(--max-width);
   margin: 0 auto;
@@ -2069,7 +2069,7 @@ button, input, textarea {
     flex-direction: column;
     text-align: center;
   }
-}
+
 
 /* --------------------------------------------------------------------------
    13. Pagination Bar Component
