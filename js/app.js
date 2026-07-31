@@ -444,7 +444,6 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="card-img-overlay"></div>
             <img src="${article.image}" alt="${article.title}" class="card-img" loading="lazy">
             <span class="card-img-badge">${article.category}</span>
-            <span class="card-read-time-badge">⏱️ ${readTime}</span>
           </div>
           <div class="card-content">
             <span class="card-category">${article.category}</span>
@@ -626,11 +625,6 @@ document.addEventListener('DOMContentLoaded', () => {
     if (authorRoleEl) authorRoleEl.textContent = memberData.role || 'Redattore';
 
     if (modalDate) modalDate.textContent = article.date;
-
-    const rawReadTime = article.readTime || '3 min di lettura';
-    const cleanReadTime = rawReadTime.includes('di lettura') ? rawReadTime : `${rawReadTime} di lettura`;
-    const readTimeEl = document.getElementById('modalReadTime');
-    if (readTimeEl) readTimeEl.textContent = `⏱️ ${cleanReadTime}`;
 
     if (modalTextContent) modalTextContent.innerHTML = article.fullContent;
 
