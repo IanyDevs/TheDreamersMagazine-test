@@ -144,7 +144,7 @@ button, input, textarea {
 }
 
 .header-container {
-  background: rgba(255, 255, 255, 0.94);
+  background: #E2DDD6;
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(122, 40, 18, 0.14);
@@ -2104,7 +2104,7 @@ button, input, textarea {
   .nav-menu-wrapper {
     position: fixed;
     inset: 0;
-    background-color: rgba(247, 245, 242, 0.98);
+    background-color: #E2DDD6;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     z-index: 9999;
