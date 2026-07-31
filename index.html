@@ -170,41 +170,43 @@
   <!-- Full Article Reading Modal -->
   <div class="article-modal-overlay" id="articleModal" role="dialog" aria-hidden="true">
     <div class="article-modal-container">
-      <!-- Close Button -->
+      <!-- Floating Close Button -->
       <button class="modal-close-btn" id="modalCloseBtn" aria-label="Chiudi articolo">&times;</button>
       
-      <!-- Inner Scrollable Body clipped strictly inside container rounded corners -->
+      <!-- Inner Scroll Body -->
       <div class="modal-scroll-body">
-        <!-- Immersive Full-Width Cover Header -->
+        
+        <!-- 1. Dedicated Uncropped Cover Photo Stage -->
         <div class="modal-hero-cover">
           <img id="modalHeroImg" src="" alt="" class="modal-hero-cover-img">
-          <div class="modal-hero-cover-overlay"></div>
-          
-          <!-- Hero Header Content OVER the cover image -->
-          <div class="modal-hero-cover-content">
-            <span class="modal-category-badge" id="modalCategoryBadge"></span>
-            <h1 class="modal-article-title" id="modalTitle"></h1>
-            
-            <div class="modal-hero-meta-strip">
-              <div class="modal-author-mini-group">
-                <div class="modal-author-avatar-initials" id="modalAuthorInitials">EP</div>
-                <div class="modal-author-text">
-                  <span class="modal-author-name" id="modalAuthorName">Enzo Peluso</span>
-                  <span class="modal-author-role" id="modalAuthorRole">Fondatore &amp; Redattore</span>
-                </div>
-              </div>
-              <div class="modal-hero-meta-divider"></div>
-              <div class="modal-meta-details">
-                <span class="modal-date" id="modalDate"></span>
-                <span class="modal-read-time" id="modalReadTime">⏱️ 3 min di lettura</span>
-              </div>
-            </div>
-          </div>
         </div>
 
-        <!-- Article Paper Container -->
+        <!-- 2. White Paper Reading Container -->
         <div class="modal-paper-container">
-          <!-- Main Article Text Content -->
+          
+          <!-- Category Badge -->
+          <div class="modal-category-badge-wrapper">
+            <span class="modal-category-badge" id="modalCategoryBadge"></span>
+          </div>
+
+          <!-- Main Article Title -->
+          <h1 class="modal-article-title" id="modalTitle"></h1>
+          
+          <!-- Author & Publication Metadata Card -->
+          <div class="modal-author-card">
+            <div class="modal-author-avatar-initials" id="modalAuthorInitials">EP</div>
+            <div class="modal-author-info">
+              <span class="modal-author-name" id="modalAuthorName">Enzo Peluso</span>
+              <span class="modal-author-role" id="modalAuthorRole">Fondatore &amp; Redattore</span>
+            </div>
+            <div class="modal-meta-divider"></div>
+            <div class="modal-meta-details">
+              <span class="modal-date" id="modalDate"></span>
+              <span class="modal-read-time" id="modalReadTime">⏱️ 3 min di lettura</span>
+            </div>
+          </div>
+
+          <!-- Article Text Content -->
           <article class="modal-text-content" id="modalTextContent">
             <!-- Full article content injected via JS -->
           </article>
@@ -221,6 +223,7 @@
             </div>
             <button class="modal-footer-close-action" id="modalFooterCloseAction">Chiudi Lettura</button>
           </footer>
+
         </div>
       </div>
     </div>

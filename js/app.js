@@ -497,9 +497,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (modalDate) modalDate.textContent = article.date;
 
-    const readTime = calculateReadingTime(article.fullContent || article.excerpt);
+    const rawReadTime = article.readTime || '3 min di lettura';
+    const cleanReadTime = rawReadTime.includes('di lettura') ? rawReadTime : `${rawReadTime} di lettura`;
     const readTimeEl = document.getElementById('modalReadTime');
-    if (readTimeEl) readTimeEl.textContent = `⏱️ ${readTime} di lettura`;
+    if (readTimeEl) readTimeEl.textContent = `⏱️ ${cleanReadTime}`;
 
     if (modalTextContent) modalTextContent.innerHTML = article.fullContent;
 
