@@ -671,6 +671,19 @@ button, input, textarea {
   letter-spacing: -0.02em;
 }
 
+.hero-title-logo {
+  max-width: 420px;
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 6px 18px rgba(122, 40, 18, 0.22));
+  transition: transform 0.4s ease;
+}
+
+.hero-title-logo:hover {
+  transform: scale(1.02);
+}
+
 .hero-desc-col {
   display: flex;
   flex-direction: column;
