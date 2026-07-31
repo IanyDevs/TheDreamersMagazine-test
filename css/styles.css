@@ -1322,6 +1322,22 @@ body[data-page-category="Tutti"] .articles-grid,
   background: rgba(225, 110, 60, 0.85);
 }
 
+@media (max-width: 640px) {
+  .modal-close-btn,
+  .team-modal-close-btn {
+    top: 1rem;
+    right: 1rem;
+    width: 42px;
+    height: 42px;
+  }
+
+  .modal-close-btn svg,
+  .team-modal-close-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+}
+
 /* Top Split Hero Header Stage (Large Photo Left, Info Right) */
 .modal-hero-split-stage {
   width: 100%;
@@ -1343,7 +1359,7 @@ body[data-page-category="Tutti"] .articles-grid,
 
 @media (max-width: 980px) {
   .modal-hero-split-stage {
-    padding: 2.5rem 1.5rem 2rem 1.5rem;
+    padding: 4.5rem 1.5rem 2.25rem 1.5rem;
   }
   .modal-hero-split-container {
     grid-template-columns: 1fr;
@@ -2509,6 +2525,12 @@ body[data-page-category="Tutti"] .articles-grid,
   justify-content: center;
   text-align: center;
   position: relative;
+}
+
+@media (max-width: 640px) {
+  .team-modal-cover-header {
+    padding: 4.5rem 1.25rem 2.5rem 1.25rem;
+  }
 }
 
 .team-modal-header {
