@@ -1201,7 +1201,7 @@ body[data-page-category="Tutti"] .articles-grid,
 }
 
 /* --------------------------------------------------------------------------
-   9. Full-Screen Immersive Article Reader Modal
+   9. Full-Screen Immersive Article Reader Modal (Split Header: Photo Left, Info Right)
    -------------------------------------------------------------------------- */
 .article-modal-overlay {
   position: fixed;
@@ -1250,7 +1250,7 @@ body[data-page-category="Tutti"] .articles-grid,
   position: fixed;
   top: 1.75rem;
   right: 2.25rem;
-  background: rgba(18, 16, 14, 0.8);
+  background: rgba(18, 16, 14, 0.85);
   color: #FFFFFF;
   border: 1px solid rgba(255, 255, 255, 0.4);
   width: 48px;
@@ -1262,7 +1262,7 @@ body[data-page-category="Tutti"] .articles-grid,
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   transition: all 0.3s ease;
@@ -1307,82 +1307,99 @@ body[data-page-category="Tutti"] .articles-grid,
   background: rgba(225, 110, 60, 0.85);
 }
 
-/* 1. Dedicated Uncropped Cover Photo Stage */
-.modal-hero-cover {
+/* Top Split Hero Header Stage (Photo Left, Info Right) */
+.modal-hero-split-stage {
   width: 100%;
-  background-color: #0A0806;
+  background-color: #0D0B0A;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 3.5rem 3rem 3rem 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.modal-hero-split-container {
+  max-width: 1200px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1.15fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+@media (max-width: 960px) {
+  .modal-hero-split-stage {
+    padding: 2.5rem 1.5rem 2rem 1.5rem;
+  }
+  .modal-hero-split-container {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+/* Left Side: Photo Stage */
+.modal-hero-left-stage {
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem 2rem 2.5rem 2rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .modal-hero-cover-img {
   width: 100%;
-  max-width: 1080px;
-  height: auto;
-  max-height: 68vh;
-  object-fit: contain; /* 100% COMPLETE VISIBILITY - ZERO CROPPING */
+  max-height: 54vh;
+  object-fit: contain; /* 100% COMPLETE VISIBILITY - UNCROPPED PHOTO */
+  border-radius: 16px;
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.15);
   display: block;
-  margin: 0 auto;
-  border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
 }
 
-/* 2. White Paper Reading Container */
-.modal-paper-container {
-  padding: 3.5rem 3rem 5rem 3rem;
-  max-width: 880px;
-  margin: 0 auto;
-  width: 100%;
-  background-color: #FFFFFF;
-}
-
-@media (max-width: 640px) {
-  .modal-paper-container {
-    padding: 2rem 1.5rem 3.5rem 1.5rem;
-  }
+/* Right Side: Category, Title & Author Meta */
+.modal-hero-right-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .modal-category-badge-wrapper {
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .modal-category-badge {
   display: inline-block;
   background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
   color: #FFFFFF;
-  padding: 0.45rem 1.3rem;
+  padding: 0.45rem 1.25rem;
   border-radius: 9999px;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  box-shadow: 0 6px 18px rgba(122, 40, 18, 0.35);
+  box-shadow: 0 6px 18px rgba(122, 40, 18, 0.45);
 }
 
 .modal-article-title {
   font-family: var(--font-heading);
-  font-size: clamp(1.85rem, 3.8vw, 2.7rem);
+  font-size: clamp(1.75rem, 3.2vw, 2.4rem);
   font-weight: 900;
-  line-height: 1.22;
-  color: #141210;
+  line-height: 1.25;
+  color: #FFFFFF;
   margin-bottom: 1.75rem;
   letter-spacing: -0.02em;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
 }
 
 /* Author & Publication Metadata Card */
 .modal-author-card {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 1.25rem;
-  margin-bottom: 2.75rem;
-  padding: 1rem 1.35rem;
-  background: #F9F8F6;
-  border: 1px solid rgba(122, 40, 18, 0.12);
-  border-radius: 20px;
+  padding: 0.9rem 1.25rem;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 18px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 @media (max-width: 640px) {
@@ -1394,17 +1411,18 @@ body[data-page-category="Tutti"] .articles-grid,
 }
 
 .modal-author-avatar-initials {
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
   color: #FFFFFF;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 800;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 14px rgba(122, 40, 18, 0.25);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+  border: 2px solid rgba(255, 255, 255, 0.25);
   flex-shrink: 0;
 }
 
@@ -1415,14 +1433,14 @@ body[data-page-category="Tutti"] .articles-grid,
 
 .modal-author-name {
   font-weight: 800;
-  font-size: 1.02rem;
-  color: #141210;
+  font-size: 1rem;
+  color: #FFFFFF;
   line-height: 1.2;
 }
 
 .modal-author-role {
-  font-size: 0.76rem;
-  color: var(--brand-primary);
+  font-size: 0.75rem;
+  color: var(--brand-accent);
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -1431,7 +1449,7 @@ body[data-page-category="Tutti"] .articles-grid,
 .modal-meta-divider {
   width: 1px;
   height: 28px;
-  background: rgba(122, 40, 18, 0.15);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 @media (max-width: 640px) {
@@ -1456,18 +1474,19 @@ body[data-page-category="Tutti"] .articles-grid,
 }
 
 .modal-date {
-  font-size: 0.88rem;
-  color: var(--text-muted);
-  font-weight: 600;
+  font-size: 0.86rem;
+  color: rgba(255, 255, 255, 0.78);
+  font-weight: 500;
 }
 
 .modal-read-time {
-  font-size: 0.84rem;
+  font-size: 0.82rem;
   font-weight: 700;
-  color: var(--brand-primary);
-  background: rgba(122, 40, 18, 0.08);
-  padding: 0.35rem 0.85rem;
+  color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.16);
+  padding: 0.3rem 0.85rem;
   border-radius: 9999px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 /* Article Text Content */
