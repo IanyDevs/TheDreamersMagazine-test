@@ -73,9 +73,10 @@
 
         
         <button class="menu-toggle" id="menuToggleBtn" aria-label="Apri menu" aria-expanded="false" aria-controls="primaryNavMenu">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="4" y1="7.5" x2="20" y2="7.5"></line>
-            <line x1="4" y1="15" x2="20" y2="15"></line>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
           </svg>
         </button>
       </div>
@@ -109,7 +110,7 @@
         <form role="search" id="searchForm" class="search-form" onsubmit="event.preventDefault();">
           <label for="searchInput" class="search-label">Cerca tra tutti gli articoli qui</label>
           <div class="search-input-wrapper">
-            <input type="search" id="searchInput" class="search-input" placeholder="Scrivi una parola chiave (es. Spider-Man, Furious, Pino Daniele)..." aria-label="Cerca tutti gli articoli">
+            <input type="search" id="searchInput" class="search-input" placeholder="Scrivi una parola chiave (es. Spider-Man)..." aria-label="Cerca tutti gli articoli">
             <button type="submit" id="searchBtn" class="btn btn-search">Cerca</button>
           </div>
         </form>
@@ -332,6 +333,7 @@
   </div>
 
   <!-- JavaScript App Logic -->
+  <script src="js/baas-service.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

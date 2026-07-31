@@ -12,13 +12,9 @@ class BaasService {
   }
 
   initLocalEngine() {
-    if (!localStorage.getItem(this.STORAGE_KEY)) {
-      if (typeof INITIAL_ARTICLES !== 'undefined') {
-        localStorage.setItem(this.STORAGE_KEY, JSON.stringify(INITIAL_ARTICLES));
-      } else {
-        localStorage.setItem(this.STORAGE_KEY, JSON.stringify([]));
-      }
-    }
+    // Clear everything in localStorage as requested by user
+    localStorage.removeItem(this.STORAGE_KEY);
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify([]));
 
     if ('BroadcastChannel' in window) {
       this.broadcastChannel = new BroadcastChannel('baas_blog_sync_channel');
@@ -139,15 +135,59 @@ class BaasService {
     return false;
   }
 
-  resetToMockData() {
-    if (typeof INITIAL_ARTICLES !== 'undefined') {
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(INITIAL_ARTICLES));
-      const articles = INITIAL_ARTICLES;
-      this.notifyListeners(articles);
-      if (this.broadcastChannel) {
-        this.broadcastChannel.postMessage({ type: 'ARTICLES_UPDATED', articles });
+  async bulkImportArticles(importedArray, overwrite = false) {
+    let currentArticles = overwrite ? [] : this.getArticles();
+    let importedCount = 0;
+
+    importedArray.forEach((art, index) => {
+      const exists = currentArticles.some(existing => 
+        existing.id === art.id || 
+        (existing.title && art.title && existing.title.toLowerCase().trim() === art.title.toLowerCase().trim())
+      );
+
+      if (!exists || overwrite) {
+        const formattedArt = {
+          id: art.id || ('art-wp-' + Date.now() + '-' + index),
+          title: (art.title || 'Senza Titolo').trim(),
+          category: art.category || 'News',
+          image: art.image || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80',
+          imageFit: art.imageFit || 'cover',
+          imageRatio: art.imageRatio || '16/9',
+          imagePos: art.imagePos || 'center',
+          fontFamily: art.fontFamily || 'sans',
+          titleColor: art.titleColor || '#ffffff',
+          textColor: art.textColor || '#e2e8f0',
+          excerpt: art.excerpt ? art.excerpt.replace(/<[^>]*>?/gm, '').trim() : (art.content ? art.content.replace(/<[^>]*>?/gm, '').substring(0, 150) + '...' : ''),
+          content: art.content ? art.content.trim() : '',
+          author: art.author || 'Redazione',
+          createdAt: art.createdAt || new Date().toISOString(),
+          readTime: art.readTime || '3 min'
+        };
+
+        currentArticles.unshift(formattedArt);
+        importedCount++;
       }
+    });
+
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(currentArticles));
+    this.notifyListeners(currentArticles);
+    if (this.broadcastChannel) {
+      this.broadcastChannel.postMessage({ type: 'ARTICLES_UPDATED', articles: currentArticles });
     }
+
+    return importedCount;
+  }
+
+  clearAllArticles() {
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify([]));
+    this.notifyListeners([]);
+    if (this.broadcastChannel) {
+      this.broadcastChannel.postMessage({ type: 'ARTICLES_UPDATED', articles: [] });
+    }
+  }
+
+  resetToMockData() {
+    this.clearAllArticles();
   }
 }
 

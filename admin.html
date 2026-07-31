@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin - ProvaSite</title>
-  <meta name="description" content="Pannello di prova.">
+  <title>Pannello Admin - The Dreamers Magazine</title>
+  <meta name="description" content="Pannello di controllo e gestione articoli per The Dreamers Magazine.">
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -103,12 +103,12 @@
           <h1 style="font-size: 2.2rem; font-weight: 800;">Pannello Admin</h1>
           <p style="color: var(--text-secondary);">Gestione articoli di prova.</p>
         </div>
-        <button id="resetDataBtn" class="btn btn-secondary" style="font-size: 0.85rem;">
-          Ripristina Dati
+        <button id="resetDataBtn" class="btn btn-danger" style="font-size: 0.85rem; font-weight: 700; background: #dc2626; color: #FFFFFF; border: none; padding: 0.6rem 1.1rem; border-radius: 9999px; cursor: pointer;">
+          🗑️ Svuota Tutti gli Articoli
         </button>
       </div>
 
-      <!-- Navigation Tabs: Create vs Manage -->
+      <!-- Navigation Tabs: Create vs Manage vs Import -->
       <div class="admin-header-tabs">
         <button class="tab-link active" id="tabCreateBtn">
           <span id="tabCreateLabel">Crea Articolo</span>
@@ -116,6 +116,9 @@
         <button class="tab-link" id="tabManageBtn">
           <span>Gestisci Articoli</span>
           <span id="totalArticlesBadge" class="badge-status" style="background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); border: none; padding: 0.15rem 0.6rem; font-size: 0.75rem;">0</span>
+        </button>
+        <button class="tab-link" id="tabImportBtn">
+          <span>Importa da WordPress</span>
         </button>
       </div>
 
@@ -341,6 +344,85 @@
               </tbody>
             </table>
           </div>
+        </div>
+      </div>
+
+      <!-- TAB 3: WORDPRESS & DATA IMPORT SUITE -->
+      <div id="importTabContent" style="display: none;">
+        <div class="editor-card">
+          <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem;">
+            Importatore Articoli WordPress
+          </h2>
+          <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem; line-height: 1.6;">
+            Importa automaticamente tutti gli articoli pubblicati sul vecchio sito WordPress tramite le API REST integrate o caricando un file JSON / WXR.
+          </p>
+
+          <!-- OPTION A: WORDPRESS REST API AUTO IMPORT -->
+          <div style="background: var(--bg-primary); padding: 1.5rem; border-radius: 18px; border: 1px solid var(--border-color); margin-bottom: 2rem;">
+            <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+              <span>🌐 Opzione 1: Importazione Automatica via URL WordPress</span>
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+              Inserisci il dominio del tuo vecchio sito WordPress. Il sistema collegherà le API REST e scaricherà articoli, copertine, autori e categorie.
+            </p>
+
+            <div style="margin-bottom: 1rem;">
+              <label for="wpSiteUrlInput" style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">
+                URL Sito WordPress
+              </label>
+              <input type="url" id="wpSiteUrlInput" class="form-control" value="https://www.thedreamersmagazine.it" placeholder="https://www.thedreamersmagazine.it" style="padding: 0.75rem 1rem;">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+              <div>
+                <label for="wpFetchLimitSelect" style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">
+                  Numero di articoli da importare:
+                </label>
+                <select id="wpFetchLimitSelect" class="form-control" style="padding: 0.55rem 0.85rem; font-size: 0.85rem;">
+                  <option value="20">Primi 20 Articoli</option>
+                  <option value="50">Primi 50 Articoli</option>
+                  <option value="100" selected>Tutti (Fino a 100 per richiesta)</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="wpDefaultCategorySelect" style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">
+                  Categoria Predefinita:
+                </label>
+                <select id="wpDefaultCategorySelect" class="form-control" style="padding: 0.55rem 0.85rem; font-size: 0.85rem;">
+                  <option value="Film">Film</option>
+                  <option value="Serie TV">Serie TV</option>
+                  <option value="News" selected>News</option>
+                  <option value="Approfondimenti">Approfondimenti</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 1rem; align-items: center;">
+              <button type="button" id="startWpFetchBtn" class="btn btn-primary" style="padding: 0.8rem 1.5rem; font-weight: 800;">
+                🚀 Avvia Importazione Automatica
+              </button>
+            </div>
+
+            <div id="wpImportStatus" style="margin-top: 1rem; font-size: 0.88rem; font-weight: 600; display: none;"></div>
+          </div>
+
+          <!-- OPTION B: FILE UPLOAD IMPORT (XML / JSON) -->
+          <div style="background: var(--bg-primary); padding: 1.5rem; border-radius: 18px; border: 1px solid var(--border-color);">
+            <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+              <span>📁 Opzione 2: Carica File di Esportazione WordPress (XML / JSON)</span>
+            </h3>
+            <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
+              Carica il file scaricato dal vecchio WordPress (Strumenti ➔ Esporta ➔ file <code>.xml</code> o file <code>.json</code>).
+            </p>
+
+            <input type="file" id="jsonImportFileInput" accept=".json,.xml" class="form-control" style="padding: 0.75rem 1rem; margin-bottom: 1rem;">
+            <button type="button" id="startJsonImportBtn" class="btn btn-secondary" style="padding: 0.75rem 1.25rem; font-weight: 700;">
+              Importa File (XML / JSON)
+            </button>
+            <div id="fileImportStatus" style="margin-top: 1rem; font-size: 0.88rem; font-weight: 600; display: none;"></div>
+          </div>
+
         </div>
       </div>
 

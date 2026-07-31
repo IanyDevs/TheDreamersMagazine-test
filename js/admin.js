@@ -137,19 +137,45 @@ document.addEventListener('DOMContentLoaded', () => {
     showToast('Disconnessione effettuata.');
   });
 
+  const tabImportBtn = document.getElementById('tabImportBtn');
+  const importTabContent = document.getElementById('importTabContent');
+
+  const startWpFetchBtn = document.getElementById('startWpFetchBtn');
+  const wpSiteUrlInput = document.getElementById('wpSiteUrlInput');
+  const wpFetchLimitSelect = document.getElementById('wpFetchLimitSelect');
+  const wpDefaultCategorySelect = document.getElementById('wpDefaultCategorySelect');
+  const wpImportStatus = document.getElementById('wpImportStatus');
+  const startJsonImportBtn = document.getElementById('startJsonImportBtn');
+  const jsonImportFileInput = document.getElementById('jsonImportFileInput');
+
   tabCreateBtn.addEventListener('click', () => {
     tabCreateBtn.classList.add('active');
     tabManageBtn.classList.remove('active');
+    if (tabImportBtn) tabImportBtn.classList.remove('active');
     createTabContent.style.display = 'block';
     manageTabContent.style.display = 'none';
+    if (importTabContent) importTabContent.style.display = 'none';
   });
 
   tabManageBtn.addEventListener('click', () => {
     tabManageBtn.classList.add('active');
     tabCreateBtn.classList.remove('active');
+    if (tabImportBtn) tabImportBtn.classList.remove('active');
     manageTabContent.style.display = 'block';
     createTabContent.style.display = 'none';
+    if (importTabContent) importTabContent.style.display = 'none';
   });
+
+  if (tabImportBtn && importTabContent) {
+    tabImportBtn.addEventListener('click', () => {
+      tabImportBtn.classList.add('active');
+      tabCreateBtn.classList.remove('active');
+      tabManageBtn.classList.remove('active');
+      importTabContent.style.display = 'block';
+      createTabContent.style.display = 'none';
+      manageTabContent.style.display = 'none';
+    });
+  }
 
   function updateTypographyUI() {
     fontOptBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-font') === currentFont));
@@ -582,12 +608,310 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   resetDataBtn.addEventListener('click', () => {
-    if (confirm('Ripristinare gli articoli di esempio?')) {
-      window.baas.resetToMockData();
+    if (confirm('Sei sicuro di voler eliminare TUTTI gli articoli dal database?')) {
+      window.baas.clearAllArticles();
       resetFormToCreateMode();
-      showToast('Dati ripristinati!');
+      showToast('Tutti gli articoli sono stati eliminati!');
     }
   });
+
+  // ------------------------------------------------------------------------
+  // WORDPRESS REST API AUTOMATIC IMPORTER (WITH CORS PROXY FALLBACK)
+  // ------------------------------------------------------------------------
+  if (startWpFetchBtn && wpSiteUrlInput) {
+    startWpFetchBtn.addEventListener('click', async () => {
+      let siteUrl = wpSiteUrlInput.value.trim().replace(/\/+$/, '');
+      if (!siteUrl) {
+        showToast('Inserisci un URL valido per il sito WordPress', 'error');
+        return;
+      }
+
+      if (!siteUrl.startsWith('http://') && !siteUrl.startsWith('https://')) {
+        siteUrl = 'https://' + siteUrl;
+      }
+
+      const limit = wpFetchLimitSelect ? wpFetchLimitSelect.value : '100';
+      const defaultCat = wpDefaultCategorySelect ? wpDefaultCategorySelect.value : 'News';
+      const endpoint = `${siteUrl}/wp-json/wp/v2/posts?per_page=${limit}&_embed=1`;
+
+      startWpFetchBtn.disabled = true;
+      startWpFetchBtn.textContent = '⌛ Connessione a WordPress in corso...';
+      if (wpImportStatus) {
+        wpImportStatus.style.display = 'block';
+        wpImportStatus.style.color = '#3b82f6';
+        wpImportStatus.textContent = 'Connessione al server WordPress in corso...';
+      }
+
+      try {
+        let wpPosts = null;
+
+        // Try direct fetch first
+        try {
+          const response = await fetch(endpoint);
+          if (response.ok) {
+            wpPosts = await response.json();
+          }
+        } catch (errDirect) {
+          console.warn('Direct fetch failed or CORS blocked. Trying CORS proxy...', errDirect);
+        }
+
+        // Try CORS Proxy fallback if direct fetch failed
+        if (!wpPosts || !Array.isArray(wpPosts)) {
+          if (wpImportStatus) wpImportStatus.textContent = 'Tentativo tramite Proxy CORS...';
+          const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(endpoint)}`;
+          const proxyRes = await fetch(proxyUrl);
+          if (proxyRes.ok) {
+            wpPosts = await proxyRes.json();
+          }
+        }
+
+        if (!Array.isArray(wpPosts) || wpPosts.length === 0) {
+          throw new Error('Nessun articolo trovato sul sito WordPress specificato');
+        }
+
+        const parsedArticles = wpPosts.map((post, idx) => {
+          let coverImage = '';
+          if (post._embedded && post._embedded['wp:featuredmedia'] && post._embedded['wp:featuredmedia'][0]) {
+            coverImage = post._embedded['wp:featuredmedia'][0].source_url || '';
+          }
+
+          let category = defaultCat;
+          if (post._embedded && post._embedded['wp:term'] && post._embedded['wp:term'][0]) {
+            const terms = post._embedded['wp:term'][0];
+            if (terms.length > 0) {
+              const termName = terms[0].name.toLowerCase();
+              if (termName.includes('film') || termName.includes('cinema')) category = 'Film';
+              else if (termName.includes('serie') || termName.includes('tv')) category = 'Serie TV';
+              else if (termName.includes('approfondiment')) category = 'Approfondimenti';
+              else category = 'News';
+            }
+          }
+
+          let author = 'Redazione';
+          if (post._embedded && post._embedded['author'] && post._embedded['author'][0]) {
+            author = post._embedded['author'][0].name || 'Redazione';
+          }
+
+          const rawExcerpt = post.excerpt ? post.excerpt.rendered : '';
+          const cleanExcerpt = rawExcerpt.replace(/<[^>]*>?/gm, '').trim();
+          const rawContent = post.content ? post.content.rendered : '';
+
+          return {
+            id: 'wp-' + post.id,
+            title: post.title ? post.title.rendered.replace(/&#8211;/g, '-').replace(/&#8217;/g, "'").replace(/&amp;/g, '&') : 'Articolo',
+            category: category,
+            image: coverImage || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80',
+            excerpt: cleanExcerpt,
+            content: rawContent,
+            author: author,
+            createdAt: post.date ? new Date(post.date).toISOString() : new Date().toISOString(),
+            readTime: '3 min'
+          };
+        });
+
+        const count = await window.baas.bulkImportArticles(parsedArticles);
+        showToast(`Importati con successo ${count} articoli da WordPress!`);
+        if (wpImportStatus) {
+          wpImportStatus.style.color = '#10b981';
+          wpImportStatus.textContent = `✅ Importazione completata! ${count} articoli aggiunti con successo al database.`;
+        }
+
+      } catch (err) {
+        console.error('Errore importazione WordPress:', err);
+        showToast('Errore durante l\'importazione: ' + err.message, 'error');
+        if (wpImportStatus) {
+          wpImportStatus.style.color = '#ef4444';
+          wpImportStatus.textContent = `❌ Errore: ${err.message}. Prova ad utilizzare l'Opzione 2 (caricamento del file XML esportato da WordPress).`;
+        }
+      } finally {
+        startWpFetchBtn.disabled = false;
+        startWpFetchBtn.textContent = '🚀 Avvia Importazione Automatica';
+      }
+    });
+  }
+
+  // ------------------------------------------------------------------------
+  // FILE IMPORTER (XML WXR & JSON)
+  // ------------------------------------------------------------------------
+  const fileImportStatus = document.getElementById('fileImportStatus');
+
+  if (startJsonImportBtn && jsonImportFileInput) {
+    startJsonImportBtn.addEventListener('click', () => {
+      const file = jsonImportFileInput.files[0];
+      if (!file) {
+        showToast('Seleziona prima un file XML o JSON da caricare', 'error');
+        return;
+      }
+
+      if (fileImportStatus) {
+        fileImportStatus.style.display = 'block';
+        fileImportStatus.style.color = '#3b82f6';
+        fileImportStatus.textContent = 'Lettura ed elaborazione del file in corso...';
+      }
+
+      const reader = new FileReader();
+      reader.onload = async (e) => {
+        try {
+          const fileContent = e.target.result;
+          let parsedArticles = [];
+
+          if (file.name.endsWith('.xml') || fileContent.trim().startsWith('<?xml') || fileContent.includes('<rss')) {
+            // Robust WordPress XML (WXR Export) Parser
+            try {
+              const parser = new DOMParser();
+              const xmlDoc = parser.parseFromString(fileContent, 'text/xml');
+              const items = xmlDoc.getElementsByTagName('item');
+
+              for (let i = 0; i < items.length; i++) {
+                const item = items[i];
+
+                const getTag = (name) => {
+                  const nsEls = item.getElementsByTagNameNS('*', name);
+                  if (nsEls && nsEls.length > 0 && nsEls[0].textContent) return nsEls[0].textContent;
+                  const directEls = item.getElementsByTagName(name);
+                  if (directEls && directEls.length > 0 && directEls[0].textContent) return directEls[0].textContent;
+                  const wpEls = item.getElementsByTagName('wp:' + name);
+                  if (wpEls && wpEls.length > 0 && wpEls[0].textContent) return wpEls[0].textContent;
+                  const contentEls = item.getElementsByTagName('content:' + name);
+                  if (contentEls && contentEls.length > 0 && contentEls[0].textContent) return contentEls[0].textContent;
+                  const dcEls = item.getElementsByTagName('dc:' + name);
+                  if (dcEls && dcEls.length > 0 && dcEls[0].textContent) return dcEls[0].textContent;
+                  const excerptEls = item.getElementsByTagName('excerpt:' + name);
+                  if (excerptEls && excerptEls.length > 0 && excerptEls[0].textContent) return excerptEls[0].textContent;
+                  return '';
+                };
+
+                const postType = getTag('post_type') || 'post';
+                const status = getTag('status') || 'publish';
+
+                if (postType !== 'post' && postType !== '' && postType !== 'page') continue;
+                if (status === 'trash' || status === 'inherit') continue;
+
+                const title = getTag('title') || 'Articolo senza titolo';
+                let content = getTag('encoded') || getTag('content') || '';
+                let excerpt = getTag('excerpt') || '';
+                const author = getTag('creator') || getTag('author') || 'Redazione';
+                const pubDate = getTag('pubDate') || getTag('post_date') || new Date().toISOString();
+
+                if (!excerpt && content) {
+                  excerpt = content.replace(/<[^>]*>?/gm, '').substring(0, 180).trim() + '...';
+                } else {
+                  excerpt = excerpt.replace(/<[^>]*>?/gm, '').trim();
+                }
+
+                let image = '';
+                const imgMatch = content.match(/<img[^>]+src=["']([^"']+)["']/i);
+                if (imgMatch) image = imgMatch[1];
+                if (!image) {
+                  image = 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80';
+                }
+
+                let category = 'News';
+                const catEls = item.querySelectorAll('category');
+                catEls.forEach(c => {
+                  const domain = c.getAttribute('domain');
+                  const cName = c.textContent.trim();
+                  if (!cName) return;
+                  if (domain === 'category' || !domain) {
+                    const lower = cName.toLowerCase();
+                    if (lower.includes('film') || lower.includes('cinema')) category = 'Film';
+                    else if (lower.includes('serie') || lower.includes('tv')) category = 'Serie TV';
+                    else if (lower.includes('approfondiment')) category = 'Approfondimenti';
+                    else if (category === 'News') category = cName;
+                  }
+                });
+
+                parsedArticles.push({
+                  id: 'wp-xml-' + i + '-' + Date.now(),
+                  title: title.trim(),
+                  category: category,
+                  image: image,
+                  excerpt: excerpt,
+                  content: content,
+                  author: author,
+                  createdAt: new Date(pubDate).toString() !== 'Invalid Date' ? new Date(pubDate).toISOString() : new Date().toISOString(),
+                  readTime: '3 min'
+                });
+              }
+            } catch (domErr) {
+              console.warn('DOMParser failed, trying Regex XML parser:', domErr);
+            }
+
+            // Fallback Regex Parser if DOMParser returned 0 items
+            if (parsedArticles.length === 0) {
+              const itemRegex = /<item>([\s\S]*?)<\/item>/gi;
+              let match;
+              let regIdx = 0;
+              while ((match = itemRegex.exec(fileContent)) !== null) {
+                const itemStr = match[1];
+                const getRegexTag = (tag) => {
+                  const reg = new RegExp(`<(${tag}|[a-z0-9_-]+:${tag})[^>]*>(?:<!\\[CDATA\\[([\\s\\S]*?)\\]\\]>|([\\s\\S]*?))<\\/\\1>`, 'i');
+                  const m = itemStr.match(reg);
+                  if (m) return (m[2] !== undefined ? m[2] : m[3] || '').trim();
+                  return '';
+                };
+
+                const postType = getRegexTag('post_type') || 'post';
+                if (postType !== 'post' && postType !== 'page' && postType !== '') continue;
+
+                const title = getRegexTag('title') || 'Articolo';
+                const content = getRegexTag('encoded') || getRegexTag('content') || '';
+                let excerpt = getRegexTag('excerpt') || content.replace(/<[^>]*>?/gm, '').substring(0, 180) + '...';
+                const author = getRegexTag('creator') || 'Redazione';
+                const pubDate = getRegexTag('pubDate') || new Date().toISOString();
+
+                let image = '';
+                const imgMatch = content.match(/<img[^>]+src=["']([^"']+)["']/i);
+                if (imgMatch) image = imgMatch[1];
+                if (!image) {
+                  image = 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80';
+                }
+
+                parsedArticles.push({
+                  id: 'wp-xml-reg-' + regIdx + '-' + Date.now(),
+                  title: title.trim(),
+                  category: 'News',
+                  image: image,
+                  excerpt: excerpt,
+                  content: content,
+                  author: author,
+                  createdAt: pubDate,
+                  readTime: '3 min'
+                });
+                regIdx++;
+              }
+            }
+
+          } else {
+            // Parse JSON file
+            const data = JSON.parse(fileContent);
+            parsedArticles = Array.isArray(data) ? data : (data.articles || data.posts || []);
+          }
+
+          if (!parsedArticles || parsedArticles.length === 0) {
+            throw new Error('Nessun articolo valido trovato nel file caricato. Assicurati che sia un file XML esportato da WordPress.');
+          }
+
+          const count = await window.baas.bulkImportArticles(parsedArticles, true);
+          showToast(`Importati con successo ${count} articoli dal file!`);
+          if (fileImportStatus) {
+            fileImportStatus.style.color = '#10b981';
+            fileImportStatus.textContent = `✅ Importazione completata! ${count} articoli aggiunti dal file.`;
+          }
+          jsonImportFileInput.value = '';
+
+        } catch (err) {
+          console.error('Errore lettura file:', err);
+          showToast('Errore nel file: ' + err.message, 'error');
+          if (fileImportStatus) {
+            fileImportStatus.style.color = '#ef4444';
+            fileImportStatus.textContent = `❌ Errore: ${err.message}`;
+          }
+        }
+      };
+      reader.readAsText(file);
+    });
+  }
 
   window.baas.subscribe((articles) => {
     renderAdminTable(articles);

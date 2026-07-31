@@ -4,332 +4,6 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  // ------------------------------------------------------------------------
-  // 1. Articles Database (Curated, Rich & Ordered Collection)
-  // ------------------------------------------------------------------------
-  const articles = [
-    {
-      id: 1,
-      category: 'Film',
-      title: 'SPIDER-MAN: BRAND NEW DAY – Spider-Man torna a essere una storia su Peter Parker. Un film più intimo, più maturo, che mette al centro la solitudine, la crescita e il peso delle responsabilità',
-      excerpt: 'Articolo di Enzo Peluso. Spider-Man: Brand New Day rappresenta una vera svolta per il percorso del supereroe Marvel, riportando l\'attenzione sull\'uomo dietro la maschera.',
-      fullContent: `
-        <p><strong>Articolo di Enzo Peluso</strong></p>
-        <p>Spider-Man: Brand New Day rappresenta una vera svolta per il percorso cinematico di Peter Parker. Dopo le incredibili battaglie multiversali dei capitoli precedenti, questo nuovo film sceglie una direzione coraggiosa e intimista: spogliare l'eroe di ogni certezza e rimettere al centro la sua umanità.</p>
-        <p>In una New York cupa, autunnale e affascinante, Peter si ritrova completamente solo a dover ricostruire la propria vita quotidiana. Senza il supporto di grandi tecnologici o alleati leggendari, il peso delle responsabilità torna a farsi sentire in tutta la sua drammatica concretezza.</p>
-        <p>La regia punta molto su toni maturi, inquadrature strette sui volti e un ritmo narrativo ragionato che concede ampio spazio ai dilemmi morali ed emotivi del protagonista. Un'opera fondamentale che riconnette i fan all'essenza più autentica dell'arrampicamuri di quartiere.</p>
-      `,
-      image: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/07/MV5BNGQxY2FkZDktZDI5Yy00ZmEyLTg4NmYtOWIzMDBmMzg2ZWU0XkEyXkFqcGdeQWFybm8@._V1_.jpg',
-      author: 'Enzo Peluso',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Lug 29, 2026'
-    },
-    {
-      id: 2,
-      category: 'News',
-      title: 'Festival del Cinema: annunciata la selezione ufficiale delle opere in concorso e gli ospiti internazionali',
-      excerpt: 'Svelato il programma della nuova edizione del prestigioso festival cinematografico con anteprime mondiali dei registi più acclamati.',
-      fullContent: `
-        <p>È stato finalmente rivelato il cartellone ufficiale del festival di quest'anno, caratterizzato da una selezione varia e internazionale che spazia dai colossal d'autore al cinema indipendente di ricerca.</p>
-        <p>Tra i titoli più attesi in concorso figurano i nuovi lavori di acclamati maestri della regia mondiale e opere prime di straordinario talento giovanile.</p>
-      `,
-      image: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/3297dbcfad1886dd05f161880815fd02948fbc5e.jpg',
-      author: 'Enzo Peluso',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Lug 28, 2026'
-    },
-    {
-      id: 3,
-      category: 'Serie TV',
-      title: 'FURIOUS: Una caccia a una serial killer tra passato, vendetta e giustizia – recensione della nuova serie HULU con Emmy Rossum',
-      excerpt: 'Dal 26 luglio sono disponibili su Disney+ i primi tre episodi di Furious, nuova serie thriller psicologica interpretata da una magistrale Emmy Rossum.',
-      fullContent: `
-        <p>Dal 26 luglio sono disponibili in streaming i primi tre episodi di <em>Furious</em>, la nuova attesissima serie thriller distribuita da Hulu e Disney+, con protagonista un'intensa Emmy Rossum.</p>
-        <p>La trama si snoda su due piani temporali paralleli: da un lato l'ossessiva caccia a un astuto serial killer che sconvolse una piccola cittadina costiera negli anni novanta, dall'altro le ripercussioni psicologiche e i segreti inconfessabili che riemergono nel presente.</p>
-        <p>Emmy Rossum offre una delle migliori interpretazioni della sua carriera, trasmettendo con doloroso realismo il trauma, la determinazione e la tensione morale di una donna disposta a tutto pur di far luce sulla verità.</p>
-      `,
-      image: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/07/compose-1-e1785167445789.webp',
-      author: 'Francesco Pisapia',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Lug 27, 2026'
-    },
-    {
-      id: 4,
-      category: 'Film',
-      title: 'IL GLADIATORE II – L\'eredità di Massimo Decimo Meridio e la visione di Ridley Scott',
-      excerpt: 'Recensione e analisi approfondita del kolossal epico che riprende le gesta dell\'Impero Romano a distanza di vent\'anni.',
-      fullContent: `
-        <p>Ridley Scott torna nell'antica Roma con una produzione imponente che esplora il potere, le congiure di palazzo ed il destino dei gladiatori nell'arena.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80',
-      author: 'Francesco Pisapia',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Lug 26, 2026'
-    },
-    {
-      id: 5,
-      category: 'Approfondimenti',
-      title: 'JE SO’ PAZZO: Presentate in anteprima al Giffoni Film Festival le prime clip del biopic su Pino Daniele',
-      excerpt: 'Articolo di Francesco Pisapia. Nella giornata conclusiva del Giffoni Film Festival, sono state presentate in anteprima assoluta le prime sequenze dell\'atteso film dedicato all\'inimitabile artista napoletano.',
-      fullContent: `
-        <p><strong>Articolo di Francesco Pisapia</strong></p>
-        <p>Nella giornata conclusiva della nuova edizione del Giffoni Film Festival, un'ondata di profonda emozione ha travolto la Sala Truffaut durante la proiezione speciale in anteprima delle prime clip inedite di <em>Je so' pazzo</em>, il biopic cinematografico dedicato all'icona della musica italiana Pino Daniele.</p>
-        <p>Il progetto racconterà con autenticità la giovinezza del cantautore, dai vicoli di Napoli alle storiche sessioni d'incisione che hanno rivoluzionato la canzone d'autore italiana degli anni '70 e '80.</p>
-      `,
-      image: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/07/foto-je-so-pazzo-2-high-scaled.jpg',
-      author: 'Francesco Pisapia',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Lug 25, 2026'
-    },
-    {
-      id: 6,
-      category: 'Serie TV',
-      title: 'THE LAST OF US STAGIONE 2 – Le prime immagini dal set mostrano l\'evoluzione di Ellie e Joel',
-      excerpt: 'Articolo di Enzo Peluso. HBO diffonde i primi teaser scatti della seconda stagione dell\'acclamato adattamento videoludico.',
-      fullContent: `
-        <p>HBO ha rilasciato le prime immagini ufficiali della seconda stagione di <em>The Last of Us</em>. La serie torna a raccontare il viaggio di Joel ed Ellie anni dopo gli eventi drammatici della prima stagione.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=800&q=80',
-      author: 'Enzo Peluso',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Lug 24, 2026'
-    },
-    {
-      id: 7,
-      category: 'News',
-      title: 'AVATAR 3: FIRE AND ASH – James Cameron rivela il primo concept visivo del Popolo delle Ceneri',
-      excerpt: 'Tutte le anticipazioni sul terzo capitolo del franchise kolossal che esplorerà le tribù vulcaniche di Pandora.',
-      fullContent: `
-        <p>James Cameron ha presentato i primi concept art di <em>Avatar: Fire and Ash</em>, terzo capitolo della saga di Pandora in arrivo al cinema.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80',
-      author: 'Francesco Pisapia',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Lug 23, 2026'
-    },
-    {
-      id: 8,
-      category: 'Film',
-      title: 'DUNE: PARTE TRE – Denis Villeneuve conferma l\'inizio della pre-produzione per Messia di Dune',
-      excerpt: 'Il regista canadese si prepara a completare la trilogia tratta dai romanzi cult di Frank Herbert con una sceneggiatura ancora più ambiziosa.',
-      fullContent: `
-        <p>Dopo lo straordinario successo di critica e di pubblico di Dune: Parte Due, Denis Villeneuve ha confermato di aver iniziato la fase di scrittura di <em>Dune: Messia</em>.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80',
-      author: 'Francesco Pisapia',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Lug 21, 2026'
-    },
-    {
-      id: 9,
-      category: 'Approfondimenti',
-      title: 'IL CINEMA DI CHRISTOPHER NOLAN – Dalla fisica di Interstellar alla poetica del tempo in Oppenheimer',
-      excerpt: 'Un saggio critico sull\'evoluzione dello stile registico e delle tematiche filosofiche nel cinema di Nolan.',
-      fullContent: `
-        <p>Christopher Nolan si attesta come uno dei registi più influenti dell'era contemporanea. La sua capacità di unire il grande spettacolo con concetti filosofici e fisici complessi rende la sua filmografia unica nel panorama mondiale.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=800&q=80',
-      author: 'Enzo Peluso',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Lug 19, 2026'
-    },
-    {
-      id: 10,
-      category: 'Serie TV',
-      title: 'HOUSE OF THE DRAGON 3 – Le prime teorie sulla Danza dei Draghi e il futuro della casata Targaryen',
-      excerpt: 'Analisi dei dettagli emersi dal finale della seconda stagione e anticipazioni sulle imminenti battaglie navali e aeree.',
-      fullContent: `
-        <p>La terza stagione di <em>House of the Dragon</em> si preannuncia come la più ricca di azione e scontri epici dell'intera serie fantasy prodotta da HBO.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
-      author: 'Enzo Peluso',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Lug 18, 2026'
-    },
-    {
-      id: 11,
-      category: 'News',
-      title: 'MOSTRA DEL CINEMA DI VENEZIA – Annunciati i Leoni d\'Oro alla carriera e la composizione della Giuria',
-      excerpt: 'Ufficializzati i riconoscimenti d\'onore che verranno consegnati durante la serata di apertura del festival in Laguna.',
-      fullContent: `
-        <p>La Mostra Internazionale d'Arte Cinematografica della Biennale di Venezia ha annunciato la giuria internazionale presieduta quest'anno da eminenti figure del cinema europeo e globale.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80',
-      author: 'Francesco Pisapia',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Lug 17, 2026'
-    },
-    {
-      id: 12,
-      category: 'Film',
-      title: 'L\'arte della cinematografia moderna: come l\'illuminazione e il colore raccontano le emozioni su grande schermo',
-      excerpt: 'Un\'analisi tecnica ed estetica sulle scelte visive dei direttori della fotografia più celebri dell\'era contemporanea.',
-      fullContent: `
-        <p>Nel cinema contemporaneo, la direzione della fotografia ha raggiunto livelli di espressività paragonabili alla pittura classica. L'uso consapevole dei contrasti di luce, della palette cromatica e delle lenti vintage trasforma ogni fotogramma in un veicolo di significato narrativo.</p>
-      `,
-      image: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/5409f9b58aba190e5148a1b2aeffc3c3fafd596d.jpg',
-      author: 'Francesco Pisapia',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Lug 15, 2026'
-    },
-    {
-      id: 13,
-      category: 'Approfondimenti',
-      title: 'LA RINASCITA DEL CINEMA ITALIANO – Da Paolo Sorrentino a Matteo Garrone, il nuovo corso europeo',
-      excerpt: 'Uno studio sulle produzioni italiane di maggior impatto internazionale e sull\'evoluzione del linguaggio d\'autore nel nostro Paese.',
-      fullContent: `
-        <p>Il cinema italiano sta attraversando un momento di straordinaria vitalità creativa e riconoscimento festivaliero a livello internazionale.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=800&q=80',
-      author: 'Enzo Peluso',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Lug 13, 2026'
-    },
-    {
-      id: 14,
-      category: 'Serie TV',
-      title: 'STRANGER THINGS 5 – Svelati i titoli degli episodi finali del capitolo conclusivo',
-      excerpt: 'I fratelli Duffer svelano indizi fondamentali sulla resa dei conti a Hawkins e nell\'Sottosopra.',
-      fullContent: `
-        <p>La quinta ed ultima stagione di <em>Stranger Things</em> promette di chiudere tutte le trame lasciate aperte fin dalla prima stagione della celebre serie cult Netflix.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
-      author: 'Enzo Peluso',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Lug 12, 2026'
-    },
-    {
-      id: 15,
-      category: 'News',
-      title: 'BOX OFFICE ITALIA – Record di presenze nelle sale estive con i nuovi blockbuster estivi',
-      excerpt: 'I dati Cinetel confermano un trend eccezionale per gli incassi delle sale cinematografiche della Penisola.',
-      fullContent: `
-        <p>Il pubblico italiano torna affamato al grande schermo con numeri da record per le proiezioni estive nelle principali città.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80',
-      author: 'Enzo Peluso',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Lug 11, 2026'
-    },
-    {
-      id: 16,
-      category: 'Film',
-      title: 'OPPENHEIMER & BARBIE – L\'impatto culturale del fenomeno Barbenheimer al box office mondiale',
-      excerpt: 'Riflessione sullo straordinario successo cinematografico globale che ha riportato milioni di spettatori in sala.',
-      fullContent: `
-        <p>Un'analisi approfondita su come due opere profondamente diverse si siano unite per creare uno dei più memorabili momenti collettivi del cinema contemporaneo.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=800&q=80',
-      author: 'Francesco Pisapia',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Lug 09, 2026'
-    },
-    {
-      id: 17,
-      category: 'Approfondimenti',
-      title: 'L\'EVOLUZIONE DEGLI EFFETTI SPECIALI – Dal passo uno della Stop-Motion al CGI fotorealistico',
-      excerpt: 'Viaggio nella storia degli effetti visivi cinematografici da Georges Méliès alle tecnologie virtuali di StageCraft.',
-      fullContent: `
-        <p>Gli effetti speciali rappresentano la magia visiva che rende l'impossibile visibile sullo schermo d'argento.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=800&q=80',
-      author: 'Enzo Peluso',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Lug 07, 2026'
-    },
-    {
-      id: 18,
-      category: 'Serie TV',
-      title: 'THE PENGUIN – Colin Farrell domina la scena nel dramma crime targato HBO Max',
-      excerpt: 'Recensione e saggio critico sullo spin-off di The Batman dedicato all\'ascesa di Oswald Cobblepot nel sottosuolo di Gotham.',
-      fullContent: `
-        <p>Colin Farrell scompare totalmente dietro il trucco protesico per regalare un'interpretazione memorabile da villain tragico e spietato.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
-      author: 'Francesco Pisapia',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Lug 06, 2026'
-    },
-    {
-      id: 19,
-      category: 'News',
-      title: 'MARVEL STUDIOS – Annunciati ufficialmente i prossimi registi per Avengers: Doomsday e Secret Wars',
-      excerpt: 'I fratelli Russo tornano alla regia del Marvel Cinematic Universe per guidare le prossime fasi epiche della saga.',
-      fullContent: `
-        <p>I Marvel Studios hanno reso ufficiale il ritorno di Joe ed Anthony Russo alla guida dei due prossimi capitoli corali di Avengers.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80',
-      author: 'Enzo Peluso',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Lug 05, 2026'
-    },
-    {
-      id: 20,
-      category: 'Film',
-      title: 'JOKER: FOLIE À DEUX – Il musical tragico con Joaquin Phoenix e Lady Gaga che scompagina la critica',
-      excerpt: 'Analisi senza spoiler sul controverso e audace sequel di Todd Phillips presentato in concorso a Venezia.',
-      fullContent: `
-        <p>Todd Phillips rifiuta le scorciatoie commerciali per regalare un sequel audace, provocatorio ed intimista sul mito del Joker.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80',
-      author: 'Francesco Pisapia',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Lug 02, 2026'
-    },
-    {
-      id: 21,
-      category: 'Approfondimenti',
-      title: 'IL SUONO NEL CINEMA D\'AZIONE – Come il sound design crea la tensione nelle sequenze d\'inseguimento',
-      excerpt: 'Uno studio tecnico su come la miscelazione di effetti sonori e colonna sonora amplifichi l\'adrenalina dello spettatore.',
-      fullContent: `
-        <p>Il suono rappresenta il 50% dell'esperienza cinematografica: senza un sound design d'eccellenza, anche la più spettacolare sequenza d'azione perde carica emotiva.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=800&q=80',
-      author: 'Enzo Peluso',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Lug 01, 2026'
-    },
-    {
-      id: 22,
-      category: 'News',
-      title: 'ACADEMY AWARDS – Svelate le nuove linee guida per l\'ammissibilità dei film agli Oscar 2027',
-      excerpt: 'L\'Academy modifica i criteri di tenuta nelle sale cinematografiche e le finestre di distribuzione per lo streaming.',
-      fullContent: `
-        <p>L'Academy of Motion Picture Arts and Sciences ha diramato le nuove disposizioni ufficiali per le produzioni candidate ai prossimi premi Oscar.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80',
-      author: 'Francesco Pisapia',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Giu 30, 2026'
-    },
-    {
-      id: 23,
-      category: 'Serie TV',
-      title: 'SEVERANCE STAGIONE 2 – Il ritorno dell\'inquietante thriller distopico diretto da Ben Stiller su Apple TV+',
-      excerpt: 'Anticipazioni ed esegesi delle teorie dei fan sul destino degli impiegati della Lumon Industries.',
-      fullContent: `
-        <p>Ben Stiller torna ad orchestrare uno dei thriller psicologici più brillanti ed inquietanti del panorama televisivo moderno.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
-      author: 'Enzo Peluso',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Giu 29, 2026'
-    },
-    {
-      id: 24,
-      category: 'Approfondimenti',
-      title: 'STORIA DEL NEORALISMO – Come il cinema italiano del dopoguerra ha cambiato per sempre la settima arte',
-      excerpt: 'Da Rossellini a De Sica: la lezione estetica ed etica di una stagione irripetibile della storia del cinema mondiale.',
-      fullContent: `
-        <p>Il Neorealismo italiano ha insegnato al mondo che la macchina da presa poteva scendere nelle strade e raccontare la verità dell'animo umano.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=800&q=80',
-      author: 'Francesco Pisapia',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Giu 25, 2026'
-    }
-  ];
-
   // Current State
   let activeCategory = document.body.getAttribute('data-page-category') || 'Tutti';
   let searchQuery = '';
@@ -371,6 +45,17 @@ document.addEventListener('DOMContentLoaded', () => {
   const cookieSaveBtn = document.getElementById('cookieSaveBtn');
   const cookieCloseBtn = document.getElementById('cookieCloseBtn');
 
+  // Dynamic Storage Articles
+  let articles = [];
+
+  function loadArticlesFromStore() {
+    if (window.baas && typeof window.baas.getArticles === 'function') {
+      articles = window.baas.getArticles() || [];
+    } else {
+      articles = [];
+    }
+  }
+
   function calculateReadingTime(htmlContent) {
     const temp = document.createElement('div');
     temp.innerHTML = htmlContent || '';
@@ -389,22 +74,42 @@ document.addEventListener('DOMContentLoaded', () => {
     articlesGrid.innerHTML = '';
 
     const filtered = articles.filter(article => {
-      const matchCat = (activeCategory === 'Tutti') || (article.category.toLowerCase() === activeCategory.toLowerCase());
+      const artCat = (article.category || 'News').toLowerCase().trim();
+      const pageCat = activeCategory.toLowerCase().trim();
+      
+      let matchCat = (pageCat === 'tutti') || (artCat === pageCat);
+
+      if (!matchCat) {
+        if ((pageCat.includes('film') || pageCat.includes('cinema')) && (artCat.includes('film') || artCat.includes('cinema') || artCat.includes('recension'))) {
+          matchCat = true;
+        } else if ((pageCat.includes('serie') || pageCat.includes('tv')) && (artCat.includes('serie') || artCat.includes('tv') || artCat.includes('show'))) {
+          matchCat = true;
+        } else if (pageCat.includes('news') && (artCat.includes('news') || artCat.includes('notiz') || artCat.includes('attual'))) {
+          matchCat = true;
+        } else if (pageCat.includes('approfondiment') && (artCat.includes('approfondiment') || artCat.includes('rubrica') || artCat.includes('saggio'))) {
+          matchCat = true;
+        }
+      }
+
       const q = searchQuery.toLowerCase().trim();
       const matchSearch = !q || (
         article.title.toLowerCase().includes(q) ||
         article.excerpt.toLowerCase().includes(q) ||
-        article.author.toLowerCase().includes(q) ||
-        article.category.toLowerCase().includes(q)
+        (article.author && article.author.toLowerCase().includes(q)) ||
+        artCat.includes(q)
       );
       return matchCat && matchSearch;
     });
 
     if (filtered.length === 0) {
       articlesGrid.innerHTML = `
-        <li style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem; color: var(--text-muted);">
-          <h3>Nessun articolo trovato per la ricerca effettuata.</h3>
-          <p style="margin-top: 0.5rem;">Prova a cercare un'altra parola chiave o seleziona un'altra categoria.</p>
+        <li style="grid-column: 1 / -1; text-align: center; padding: 4rem 1.5rem; color: var(--text-secondary); background: #FFFFFF; border-radius: 24px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); margin: 1rem 0;">
+          <div style="font-size: 2.5rem; margin-bottom: 0.75rem;">📰</div>
+          <h3 style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.35rem;">Nessun articolo presente</h3>
+          <p style="font-size: 0.9rem; color: var(--text-muted); max-width: 480px; margin: 0 auto 1.25rem auto;">Utilizza il pannello di controllo Admin per importare tutti gli articoli del tuo vecchio sito WordPress.</p>
+          <a href="admin.html" class="btn btn-primary" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.65rem 1.4rem; font-size: 0.88rem; border-radius: 9999px;">
+            <span>Apri Pannello Admin</span>
+          </a>
         </li>
       `;
       if (paginationWrapper) paginationWrapper.innerHTML = '';
@@ -417,8 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let paginatedArticles = filtered;
 
     if (isHomePage) {
-      // Home Page: display only the 6 latest articles
-      paginatedArticles = filtered.slice(0, 6);
+      paginatedArticles = filtered.slice(0, 12);
     } else if (isPaginatedPage) {
       const totalPages = Math.ceil(filtered.length / itemsPerPage);
       if (currentPage > totalPages) currentPage = totalPages;
@@ -433,47 +137,50 @@ document.addEventListener('DOMContentLoaded', () => {
     paginatedArticles.forEach(article => {
       const li = document.createElement('li');
       li.className = 'article-card-item';
-      const readTime = calculateReadingTime(article.fullContent || article.excerpt);
-      
-      // Initials helper
-      const authorInitials = article.author.split(' ').map(n => n[0]).join('');
+      const readTime = calculateReadingTime(article.fullContent || article.excerpt || article.content);
+      const authorInitials = (article.author || 'EP').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
 
       li.innerHTML = `
-        <article class="article-card" data-id="${article.id}">
+        <article class="card">
           <div class="card-img-wrapper">
             <div class="card-img-overlay"></div>
             <img src="${article.image}" alt="${article.title}" class="card-img" loading="lazy">
-            <span class="card-img-badge">${article.category}</span>
+            <span class="card-img-badge">${article.category || 'News'}</span>
           </div>
           <div class="card-content">
-            <span class="card-category">${article.category}</span>
+            <span class="card-category">${article.category || 'News'}</span>
             <h2 class="card-title">${article.title}</h2>
-            <p class="card-excerpt">${article.excerpt}</p>
+            <p class="card-excerpt">${article.excerpt || ''}</p>
             <div class="card-footer-meta">
               <div class="card-author-info">
                 <div class="card-author-avatar-initials">${authorInitials}</div>
-                <div>
-                  <div class="author-name">${article.author}</div>
-                  <time class="post-date">${article.date}</time>
-                </div>
+                <span class="card-author-name">${article.author || 'Redazione'}</span>
               </div>
               <div class="card-read-action">
-                <span>Leggi</span>
-                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <span class="card-read-more">Leggi</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                  <polyline points="12 5 19 12 12 19"></polyline>
+                </svg>
               </div>
             </div>
           </div>
         </article>
       `;
+
+      li.addEventListener('click', () => openArticleModal(article));
       articlesGrid.appendChild(li);
     });
+  }
 
-    // Add click listeners to cards
-    document.querySelectorAll('.article-card').forEach(card => {
-      card.addEventListener('click', () => {
-        const id = parseInt(card.getAttribute('data-id'), 10);
-        openArticleModal(id);
-      });
+  // Bind Subscription & Initial Load AFTER renderArticles is defined
+  loadArticlesFromStore();
+  renderArticles();
+
+  if (window.baas && typeof window.baas.subscribe === 'function') {
+    window.baas.subscribe((updatedArticles) => {
+      articles = updatedArticles || [];
+      renderArticles();
     });
   }
 
@@ -691,21 +398,52 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ------------------------------------------------------------------------
-  // 5. Mobile Navigation Menu Toggle
+  // 5. Mobile Navigation Menu Toggle & Enhancements
   // ------------------------------------------------------------------------
+  function closeMobileMenu() {
+    if (primaryNavMenu) {
+      primaryNavMenu.classList.remove('open');
+      if (menuToggleBtn) menuToggleBtn.setAttribute('aria-expanded', 'false');
+      document.body.classList.remove('body-menu-open');
+    }
+  }
+
+  function openMobileMenu() {
+    if (primaryNavMenu) {
+      primaryNavMenu.classList.add('open');
+      if (menuToggleBtn) menuToggleBtn.setAttribute('aria-expanded', 'true');
+      document.body.classList.add('body-menu-open');
+    }
+  }
+
   if (menuToggleBtn && primaryNavMenu) {
     menuToggleBtn.addEventListener('click', () => {
-      primaryNavMenu.classList.add('open');
-      menuToggleBtn.setAttribute('aria-expanded', 'true');
+      if (primaryNavMenu.classList.contains('open')) {
+        closeMobileMenu();
+      } else {
+        openMobileMenu();
+      }
     });
   }
 
   if (menuCloseBtn && primaryNavMenu) {
-    menuCloseBtn.addEventListener('click', () => {
-      primaryNavMenu.classList.remove('open');
-      menuToggleBtn.setAttribute('aria-expanded', 'false');
+    menuCloseBtn.addEventListener('click', closeMobileMenu);
+  }
+
+  // Auto-close menu when a navigation link is tapped
+  if (primaryNavMenu) {
+    const navLinks = primaryNavMenu.querySelectorAll('.nav-link');
+    navLinks.forEach(link => {
+      link.addEventListener('click', closeMobileMenu);
     });
   }
+
+  // Close menu on Escape key press
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && primaryNavMenu && primaryNavMenu.classList.contains('open')) {
+      closeMobileMenu();
+    }
+  });
 
   // ------------------------------------------------------------------------
   // 6. Contact Form Validation & Submit Simulation
