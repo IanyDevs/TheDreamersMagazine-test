@@ -411,13 +411,13 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Determine if pagination applies or home page limit applies
+    // Determine if page displays latest 6 or paginates
     const isPaginatedPage = Boolean(paginationWrapper);
     const isHomePage = document.body.classList.contains('home-body');
     let paginatedArticles = filtered;
 
-    if (isHomePage) {
-      // Home Page: display only the 6 latest articles
+    if (isHomePage || !isPaginatedPage) {
+      // Category pages (Film, Serie TV, News, Approfondimenti) & Home: ALWAYS display only the 6 latest published articles
       paginatedArticles = filtered.slice(0, 6);
     } else if (isPaginatedPage) {
       const totalPages = Math.ceil(filtered.length / itemsPerPage);
