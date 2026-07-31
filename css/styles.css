@@ -288,6 +288,9 @@ button, input, textarea {
 /* --------------------------------------------------------------------------
    Hero Section: 100% Full Width Edge-to-Edge foto1.jpeg (Uncropped & No Side Gap)
    -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Hero Banner with Overlaid Logo ON TOP OF foto1.jpeg
+   -------------------------------------------------------------------------- */
 .hero-section {
   position: relative;
   width: 100%;
@@ -296,37 +299,16 @@ button, input, textarea {
   background-color: var(--bg-primary);
 }
 
-/* Top Centered Logo above foto1.jpeg */
-.hero-top-logo-container {
-  width: 100%;
-  text-align: center;
-  padding: 2.5rem 1.5rem 2rem 1.5rem;
-  background-color: var(--bg-primary);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.hero-top-logo {
-  max-width: 480px;
-  width: 85vw;
-  height: auto;
-  display: block;
-  filter: drop-shadow(0 10px 25px rgba(122, 40, 18, 0.25));
-  transition: transform 0.4s ease;
-}
-
-.hero-top-logo:hover {
-  transform: scale(1.03);
-}
-
 .hero-photo-banner-wrapper {
+  position: relative;
   width: 100%;
   max-width: 100vw;
   margin: 0;
   padding: 0;
-  background-color: transparent;
-  display: block;
+  background-color: #0B0A08;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   overflow: hidden;
 }
 
@@ -336,8 +318,44 @@ button, input, textarea {
   display: block;
   margin: 0;
   padding: 0;
-  box-shadow: none;
   border: none;
+  filter: brightness(0.92);
+}
+
+.hero-banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(11, 10, 8, 0.45) 0%, rgba(11, 10, 8, 0.15) 50%, rgba(11, 10, 8, 0.55) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.hero-overlaid-logo-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
+  width: 90%;
+  max-width: 580px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.hero-overlaid-logo {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  filter: drop-shadow(0 0 35px rgba(0, 0, 0, 0.95)) drop-shadow(0 12px 35px rgba(122, 40, 18, 0.6));
+  animation: logoBreathPulse 5s ease-in-out infinite alternate;
+}
+
+@media (max-width: 640px) {
+  .hero-overlaid-logo-wrapper {
+    max-width: 340px;
+  }
 }
   border: none;
   border-radius: 0;
