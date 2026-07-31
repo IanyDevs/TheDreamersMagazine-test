@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin - ProvaSite</title>
+  <meta name="description" content="Pannello di prova.">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="brand-logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+          <line x1="7" y1="2" x2="7" y2="22"></line>
+          <line x1="17" y1="2" x2="17" y2="22"></line>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <line x1="2" y1="7" x2="7" y2="7"></line>
+          <line x1="2" y1="17" x2="7" y2="17"></line>
+          <line x1="17" y1="17" x2="22" y2="17"></line>
+          <line x1="17" y1="7" x2="22" y2="7"></line>
+        </svg>
+        <span>Pannello<span style="color: #3b82f6;">Admin</span></span>
+      </a>
+
+      <div class="nav-actions">
+        <a href="index.html" class="btn btn-secondary">
+          Vedi Blog
+        </a>
+        <button class="btn btn-danger" id="logoutBtn" style="display: none;">
+          Esci
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <!-- LOGIN SECTION -->
+    <section class="login-wrapper" id="loginSection">
+      <div class="login-card">
+        
+        <div class="login-badge-avatar">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+
+        <h2 class="login-card-title">
+          Accesso Admin
+        </h2>
+        <p class="login-card-subtitle">
+          Pannello di prova.
+        </p>
+
+        <div id="loginError" class="login-error-alert" style="display: none;"></div>
+
+        <form id="loginForm">
+          <div class="form-group" style="margin-bottom: 1rem; text-align: left;">
+            <label class="form-label" for="loginEmail" style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Email</label>
+            <div class="input-icon-wrapper">
+              <span class="input-icon" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">@</span>
+              <input type="email" id="loginEmail" class="form-control input-with-icon" value="admin@blog.com" placeholder="admin@blog.com" required>
+            </div>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 1.25rem; text-align: left;">
+            <label class="form-label" for="loginPassword" style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Password</label>
+            <div class="input-icon-wrapper">
+              <span class="input-icon" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">*</span>
+              <input type="password" id="loginPassword" class="form-control input-with-icon" value="password123" placeholder="••••••••" required>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary login-submit-btn">
+            Accedi
+          </button>
+        </form>
+
+        <div class="demo-credentials-box">
+          <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem; font-size: 0.85rem;">Credenziali Demo</div>
+          <div style="font-size: 0.8rem; color: var(--text-secondary);">
+            Email: <code>admin@blog.com</code> | Password: <code>password123</code>
+          </div>
+          <button type="button" id="autoFillLoginBtn" class="btn-preset" style="margin-top: 0.6rem; width: 100%; text-align: center; justify-content: center;">
+            Compila Credenziali
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- MAIN ADMIN DASHBOARD (Shown when logged in) -->
+    <section id="adminSection" style="display: none;">
+      
+      <!-- Top Title & Controls Header -->
+      <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h1 style="font-size: 2.2rem; font-weight: 800;">Pannello Admin</h1>
+          <p style="color: var(--text-secondary);">Gestione articoli di prova.</p>
+        </div>
+        <button id="resetDataBtn" class="btn btn-secondary" style="font-size: 0.85rem;">
+          Ripristina Dati
+        </button>
+      </div>
+
+      <!-- Navigation Tabs: Create vs Manage -->
+      <div class="admin-header-tabs">
+        <button class="tab-link active" id="tabCreateBtn">
+          <span id="tabCreateLabel">Crea Articolo</span>
+        </button>
+        <button class="tab-link" id="tabManageBtn">
+          <span>Gestisci Articoli</span>
+          <span id="totalArticlesBadge" class="badge-status" style="background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); border: none; padding: 0.15rem 0.6rem; font-size: 0.75rem;">0</span>
+        </button>
+      </div>
+
+      <!-- TAB 1: CREATION / EDITING SUITE -->
+      <div id="createTabContent">
+        <div class="editor-card">
+          <form id="articleForm">
+            
+            <!-- Hidden input to track article being edited -->
+            <input type="hidden" id="editingArticleId" value="">
+
+            <!-- 1. Large Title Field -->
+            <div style="margin-bottom: 2rem;">
+              <div class="section-label" id="editorTitleLabel">Titolo Articolo</div>
+              <input type="text" id="artTitle" class="input-large-title" placeholder="Titolo..." required>
+            </div>
+
+            <!-- 2. Subtitle / Excerpt Field -->
+            <div style="margin-bottom: 2rem;">
+              <div class="section-label">Sottotitolo</div>
+              <input type="text" id="artExcerpt" class="input-large-subtitle" placeholder="Breve descrizione...">
+            </div>
+
+            <!-- 3. Category Selectors (Visual Pills) -->
+            <div style="margin-bottom: 2rem;">
+              <div class="section-label">Categoria</div>
+              <div class="category-pills-grid">
+                <label class="cat-pill-option">
+                  <input type="radio" name="artCategory" value="Categoria 1" checked>
+                  <span class="cat-pill-label">Categoria 1</span>
+                </label>
+                <label class="cat-pill-option">
+                  <input type="radio" name="artCategory" value="Categoria 2">
+                  <span class="cat-pill-label">Categoria 2</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- 4. Cover Image: File Upload + Crop Controls -->
+            <div style="margin-bottom: 2rem;">
+              <div class="section-label">Copertina</div>
+              <div class="cover-image-container">
+                <div>
+                  
+                  <!-- Option A: File Upload Dropzone from Device (PC/Mobile) -->
+                  <div class="file-upload-card" id="fileUploadDropzone">
+                    <input type="file" id="artFileInput" accept="image/*" class="file-input-hidden">
+                    <div style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.2rem;">[ + ]</div>
+                    <div style="font-weight: 600; color: #ffffff; font-size: 0.9rem;">
+                      Carica dal dispositivo
+                    </div>
+                    <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem;">
+                      Trascina qui oppure <span style="color: #3b82f6; text-decoration: underline; font-weight: 500;">sfoglia i file</span>
+                    </div>
+                    <div id="fileSelectedBadge" style="display: none; margin-top: 0.6rem; padding: 0.3rem 0.75rem; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); color: #34d399; border-radius: var(--radius-full); font-size: 0.78rem; font-weight: 600;"></div>
+                  </div>
+
+                  <!-- Option B: URL input -->
+                  <div style="margin-top: 1rem;">
+                    <span style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">URL immagine online:</span>
+                    <input type="url" id="artImage" class="form-control" placeholder="https://..." style="padding: 0.75rem 1rem;">
+                  </div>
+
+                </div>
+
+                <!-- Live Preview Box & Crop Customization Controls -->
+                <div>
+                  <div class="image-preview-box" id="imgPreviewBox">
+                    <span id="previewPlaceholder" style="font-size: 0.82rem; color: var(--text-muted); text-align: center; padding: 1rem;">
+                      Anteprima
+                    </span>
+                    <img id="previewImg" src="" alt="Anteprima" style="object-fit: cover; object-position: center;">
+                  </div>
+
+                  <!-- Interactive Canvas Cropper Trigger Button -->
+                  <button type="button" id="openCropperModalBtn" class="btn btn-secondary" style="width: 100%; margin-top: 0.75rem; font-size: 0.82rem; padding: 0.55rem;">
+                    Editor Ritaglio Canvas
+                  </button>
+
+                  <!-- Crop & Proportion Quick Controls Box -->
+                  <div class="crop-controls-card">
+                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em;">
+                      Proporzioni
+                    </div>
+
+                    <div style="margin-bottom: 0.5rem;">
+                      <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Adattamento:</span>
+                      <div class="mini-btn-group">
+                        <button type="button" class="btn-crop-opt active" data-fit="cover">Riempi</button>
+                        <button type="button" class="btn-crop-opt" data-fit="contain">Intera</button>
+                      </div>
+                    </div>
+
+                    <div style="margin-bottom: 0.5rem;">
+                      <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Proporzioni:</span>
+                      <div class="mini-btn-group">
+                        <button type="button" class="btn-ratio-opt active" data-ratio="16/9">16:9</button>
+                        <button type="button" class="btn-ratio-opt" data-ratio="4/3">4:3</button>
+                        <button type="button" class="btn-ratio-opt" data-ratio="1/1">1:1</button>
+                      </div>
+                    </div>
+
+                    <div>
+                      <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Allineamento:</span>
+                      <div class="mini-btn-group">
+                        <button type="button" class="btn-pos-opt active" data-pos="center">Centro</button>
+                        <button type="button" class="btn-pos-opt" data-pos="top">Alto</button>
+                        <button type="button" class="btn-pos-opt" data-pos="bottom">Basso</button>
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+              </div>
+            </div>
+
+            <!-- 5. Metadata Row (Author & Read time) -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
+              <div>
+                <div class="section-label">Autore</div>
+                <input type="text" id="artAuthor" class="form-control" value="Admin">
+              </div>
+              <div>
+                <div class="section-label">Lettura</div>
+                <input type="text" id="artReadTime" class="form-control" value="2 min">
+              </div>
+            </div>
+
+            <!-- 6. Large Content Textarea Editor -->
+            <div style="margin-bottom: 2rem;">
+              <div class="section-label">Contenuto</div>
+              
+              <div class="editor-toolbar">
+                <button type="button" class="tool-btn" data-tag="**"><b>B</b> Grassetto</button>
+                <button type="button" class="tool-btn" data-tag="*"><i>I</i> Corsivo</button>
+                <button type="button" class="tool-btn" data-tag="### ">H3 Titolo</button>
+                <button type="button" class="tool-btn" data-tag="- ">• Lista</button>
+                <button type="button" class="tool-btn" data-tag="> ">Citazione</button>
+              </div>
+
+              <textarea id="artContent" class="textarea-large-editor" placeholder="Scrivi contenuto..." required></textarea>
+            </div>
+
+            <!-- 7. Typography & Color Customization Box -->
+            <div style="margin-bottom: 2.25rem; background: var(--bg-primary); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+              <div class="section-label" style="color: var(--text-secondary); margin-bottom: 0.85rem;">Font e Colore</div>
+              
+              <!-- Font Selector -->
+              <div style="margin-bottom: 1.1rem;">
+                <span style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Font:</span>
+                <div class="mini-btn-group">
+                  <button type="button" class="btn-font-opt active" data-font="sans">Sans</button>
+                  <button type="button" class="btn-font-opt" data-font="serif">Serif</button>
+                  <button type="button" class="btn-font-opt" data-font="display">Display</button>
+                  <button type="button" class="btn-font-opt" data-font="mono">Mono</button>
+                </div>
+              </div>
+
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
+                <!-- Title Color Selector -->
+                <div>
+                  <span style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Colore Titolo:</span>
+                  <div class="color-swatches-grid" id="titleColorSwatches">
+                    <div class="color-swatch active" data-color="#ffffff" style="background: #ffffff;"></div>
+                    <div class="color-swatch" data-color="#93c5fd" style="background: #93c5fd;"></div>
+                    <div class="color-swatch" data-color="#cbd5e1" style="background: #cbd5e1;"></div>
+                    <div class="color-swatch" data-color="#fef08a" style="background: #fef08a;"></div>
+                    <input type="color" id="artTitleColorPicker" class="color-input-custom" value="#ffffff" title="Colore personalizzato">
+                  </div>
+                </div>
+
+                <!-- Text Body Color Selector -->
+                <div>
+                  <span style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Colore Testo:</span>
+                  <div class="color-swatches-grid" id="textColorSwatches">
+                    <div class="color-swatch active" data-color="#e2e8f0" style="background: #e2e8f0;"></div>
+                    <div class="color-swatch" data-color="#ffffff" style="background: #ffffff;"></div>
+                    <div class="color-swatch" data-color="#94a3b8" style="background: #94a3b8;"></div>
+                    <div class="color-swatch" data-color="#fef9c3" style="background: #fef9c3;"></div>
+                    <input type="color" id="artTextColorPicker" class="color-input-custom" value="#e2e8f0" title="Colore personalizzato">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Submit & Cancel Action Row -->
+            <div style="display: flex; gap: 1rem; align-items: center;">
+              <button type="submit" id="submitFormBtn" class="btn btn-primary" style="flex: 1; font-size: 1.05rem; padding: 0.95rem; border-radius: var(--radius-md);">
+                Pubblica Articolo
+              </button>
+              <button type="button" id="cancelEditBtn" class="btn btn-secondary" style="display: none; padding: 0.95rem 1.25rem; font-size: 0.9rem; border-radius: var(--radius-md);">
+                Annulla
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+
+      <!-- TAB 2: MANAGEMENT TABLE -->
+      <div id="manageTabContent" style="display: none;">
+        <div class="admin-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+            <h2 class="admin-card-title" style="margin-bottom: 0;">
+              <span>Articoli Pubblicati</span>
+            </h2>
+          </div>
+
+          <div class="articles-table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>Copertina</th>
+                  <th>Titolo</th>
+                  <th>Categoria</th>
+                  <th>Data</th>
+                  <th>Azioni</th>
+                </tr>
+              </thead>
+              <tbody id="articlesTableBody">
+                <!-- Rendered dynamically by admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- INTERACTIVE CANVAS CROPPER MODAL -->
+  <div class="modal-overlay" id="cropperModal" role="dialog" aria-hidden="true">
+    <div class="modal-container" style="max-width: 680px; padding: 1.75rem;">
+      <button class="modal-close" id="cropperModalClose" aria-label="Chiudi">✕</button>
+      
+      <h2 style="font-size: 1.35rem; margin-bottom: 0.35rem;">Editor Ritaglio Canvas</h2>
+      <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.25rem;">
+        Trascina, zooma e ruota l'immagine.
+      </p>
+
+      <!-- Canvas Cropper Workspace -->
+      <div class="cropper-canvas-wrap">
+        <canvas id="cropperCanvas" width="600" height="340"></canvas>
+      </div>
+
+      <!-- Controls Row -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.1rem;">
+        
+        <div>
+          <label style="font-size: 0.78rem; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">
+            Zoom: <span id="zoomVal">100%</span>
+          </label>
+          <input type="range" id="cropZoomRange" min="1" max="3" step="0.05" value="1" style="width: 100%;">
+        </div>
+
+        <div>
+          <label style="font-size: 0.78rem; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">
+            Rotazione: <span id="rotateVal">0°</span>
+          </label>
+          <div style="display: flex; gap: 0.5rem;">
+            <button type="button" id="rotateLeftBtn" class="btn btn-secondary" style="flex: 1; font-size: 0.78rem; padding: 0.35rem;">-90°</button>
+            <button type="button" id="rotateRightBtn" class="btn btn-secondary" style="flex: 1; font-size: 0.78rem; padding: 0.35rem;">+90°</button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Filter Controls -->
+      <div style="margin-top: 0.85rem;">
+        <label style="font-size: 0.78rem; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">
+          Filtri:
+        </label>
+        <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
+          <button type="button" class="btn-filter-opt active" data-filter="none">Originale</button>
+          <button type="button" class="btn-filter-opt" data-filter="grayscale(100%)">B&N</button>
+          <button type="button" class="btn-filter-opt" data-filter="sepia(60%)">Sepia</button>
+          <button type="button" class="btn-filter-opt" data-filter="contrast(140%)">Contrasto</button>
+        </div>
+      </div>
+
+      <!-- Save Cropped Canvas Output -->
+      <div style="display: flex; gap: 0.75rem; margin-top: 1.25rem; justify-content: flex-end;">
+        <button type="button" id="cancelCropBtn" class="btn btn-secondary">Annulla</button>
+        <button type="button" id="applyCropBtn" class="btn btn-primary">
+          Applica Ritaglio
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- JavaScript Scripts -->
+  <script src="js/mock-data.js"></script>
+  <script src="js/baas-service.js"></script>
+  <script src="js/admin.js"></script>
+</body>
+</html>
