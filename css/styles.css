@@ -1401,6 +1401,19 @@ body[data-page-category="Tutti"] .articles-grid,
   border-radius: 20px;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-author-card:hover {
+  background: rgba(255, 255, 255, 0.18);
+  border-color: rgba(255, 255, 255, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.45);
+}
+
+.modal-author-card:hover .modal-author-name {
+  color: var(--brand-accent);
 }
 
 @media (max-width: 640px) {
@@ -1559,6 +1572,20 @@ body[data-page-category="Tutti"] .articles-grid,
   display: flex;
   align-items: center;
   gap: 1rem;
+  cursor: pointer;
+  padding: 0.4rem 0.75rem;
+  border-radius: 14px;
+  transition: all 0.3s ease;
+}
+
+.modal-footer-author-box:hover {
+  background: rgba(122, 40, 18, 0.06);
+  transform: translateX(4px);
+}
+
+.modal-footer-author-box:hover .modal-footer-author-name {
+  color: var(--brand-primary);
+  text-decoration: underline;
 }
 
 .modal-footer-avatar {

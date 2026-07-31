@@ -510,6 +510,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const footerAuthorName = document.getElementById('modalFooterAuthorName');
     if (footerAuthorName) footerAuthorName.textContent = article.author;
 
+    // Connect Author Card & Footer Signature to open Team Member Profile Modal
+    const authorCard = articleModal.querySelector('.modal-author-card');
+    if (authorCard) {
+      authorCard.title = `Vedi il profilo completo di ${article.author}`;
+      authorCard.onclick = () => {
+        closeArticleModal();
+        setTimeout(() => {
+          openTeamMemberModal(authorKey);
+        }, 150);
+      };
+    }
+
+    const footerAuthorBox = articleModal.querySelector('.modal-footer-author-box');
+    if (footerAuthorBox) {
+      footerAuthorBox.title = `Vedi il profilo completo di ${article.author}`;
+      footerAuthorBox.onclick = () => {
+        closeArticleModal();
+        setTimeout(() => {
+          openTeamMemberModal(authorKey);
+        }, 150);
+      };
+    }
+
     const footerClose = document.getElementById('modalFooterCloseAction');
     if (footerClose) {
       footerClose.onclick = closeArticleModal;
