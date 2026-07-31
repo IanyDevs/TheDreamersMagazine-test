@@ -26,6 +26,20 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     {
       id: 2,
+      category: 'News',
+      title: 'Festival del Cinema: annunciata la selezione ufficiale delle opere in concorso e gli ospiti internazionali',
+      excerpt: 'Svelato il programma della nuova edizione del prestigioso festival cinematografico con anteprime mondiali dei registi più acclamati.',
+      fullContent: `
+        <p>È stato finalmente rivelato il cartellone ufficiale del festival di quest'anno, caratterizzato da una selezione varia e internazionale che spazia dai colossal d'autore al cinema indipendente di ricerca.</p>
+        <p>Tra i titoli più attesi in concorso figurano i nuovi lavori di acclamati maestri della regia mondiale e opere prime di straordinario talento giovanile.</p>
+      `,
+      image: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/3297dbcfad1886dd05f161880815fd02948fbc5e.jpg',
+      author: 'Enzo Peluso',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
+      date: 'Lug 28, 2026'
+    },
+    {
+      id: 3,
       category: 'Serie TV',
       title: 'FURIOUS: Una caccia a una serial killer tra passato, vendetta e giustizia – recensione della nuova serie HULU con Emmy Rossum',
       excerpt: 'Dal 26 luglio sono disponibili su Disney+ i primi tre episodi di Furious, nuova serie thriller psicologica interpretata da una magistrale Emmy Rossum.',
@@ -40,7 +54,20 @@ document.addEventListener('DOMContentLoaded', () => {
       date: 'Lug 27, 2026'
     },
     {
-      id: 3,
+      id: 4,
+      category: 'Film',
+      title: 'IL GLADIATORE II – L\'eredità di Massimo Decimo Meridio e la visione di Ridley Scott',
+      excerpt: 'Recensione e analisi approfondita del kolossal epico che riprende le gesta dell\'Impero Romano a distanza di vent\'anni.',
+      fullContent: `
+        <p>Ridley Scott torna nell'antica Roma con una produzione imponente che esplora il potere, le congiure di palazzo ed il destino dei gladiatori nell'arena.</p>
+      `,
+      image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80',
+      author: 'Francesco Pisapia',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
+      date: 'Lug 26, 2026'
+    },
+    {
+      id: 5,
       category: 'Approfondimenti',
       title: 'JE SO’ PAZZO: Presentate in anteprima al Giffoni Film Festival le prime clip del biopic su Pino Daniele',
       excerpt: 'Articolo di Francesco Pisapia. Nella giornata conclusiva del Giffoni Film Festival, sono state presentate in anteprima assoluta le prime sequenze dell\'atteso film dedicato all\'inimitabile artista napoletano.',
@@ -55,33 +82,6 @@ document.addEventListener('DOMContentLoaded', () => {
       date: 'Lug 25, 2026'
     },
     {
-      id: 4,
-      category: 'News',
-      title: 'Festival del Cinema: annunciata la selezione ufficiale delle opere in concorso e gli ospiti internazionali',
-      excerpt: 'Svelato il programma della nuova edizione del prestigioso festival cinematografico con anteprime mondiali dei registi più acclamati.',
-      fullContent: `
-        <p>È stato finalmente rivelato il cartellone ufficiale del festival di quest'anno, caratterizzato da una selezione varia e internazionale che spazia dai colossal d'autore al cinema indipendente di ricerca.</p>
-        <p>Tra i titoli più attesi in concorso figurano i nuovi lavori di acclamati maestri della regia mondiale e opere prime di straordinario talento giovanile.</p>
-      `,
-      image: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/3297dbcfad1886dd05f161880815fd02948fbc5e.jpg',
-      author: 'Enzo Peluso',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Lug 20, 2026'
-    },
-    {
-      id: 5,
-      category: 'Film',
-      title: 'L\'arte della cinematografia moderna: come l\'illuminazione e il colore raccontano le emozioni su grande schermo',
-      excerpt: 'Un\'analisi tecnica ed estetica sulle scelte visive dei direttori della fotografia più celebri dell\'era contemporanea.',
-      fullContent: `
-        <p>Nel cinema contemporaneo, la direzione della fotografia ha raggiunto livelli di espressività paragonabili alla pittura classica. L'uso consapevole dei contrasti di luce, della palette cromatica e delle lenti vintage trasforma ogni fotogramma in un veicolo di significato narrativo.</p>
-      `,
-      image: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/5409f9b58aba190e5148a1b2aeffc3c3fafd596d.jpg',
-      author: 'Francesco Pisapia',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Lug 15, 2026'
-    },
-    {
       id: 6,
       category: 'Serie TV',
       title: 'THE LAST OF US STAGIONE 2 – Le prime immagini dal set mostrano l\'evoluzione di Ellie e Joel',
@@ -92,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
       image: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=800&q=80',
       author: 'Enzo Peluso',
       authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Lug 12, 2026'
+      date: 'Lug 24, 2026'
     },
     {
       id: 7,
@@ -105,23 +105,10 @@ document.addEventListener('DOMContentLoaded', () => {
       image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80',
       author: 'Francesco Pisapia',
       authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Lug 08, 2026'
+      date: 'Lug 23, 2026'
     },
     {
       id: 8,
-      category: 'Approfondimenti',
-      title: 'IL CINEMA DI CHRISTOPHER NOLAN – Dalla fisica di Interstellar alla poetica del tempo in Oppenheimer',
-      excerpt: 'Un saggio critico sull\'evoluzione dello stile registico e delle tematiche filosofiche nel cinema di Nolan.',
-      fullContent: `
-        <p>Christopher Nolan si attesta come uno dei registi più influenti dell'era contemporanea. La sua capacità di unire il grande spettacolo con concetti filosofici e fisici complessi rende la sua filmografia unica nel panorama mondiale.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=800&q=80',
-      author: 'Enzo Peluso',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Lug 04, 2026'
-    },
-    {
-      id: 9,
       category: 'Film',
       title: 'DUNE: PARTE TRE – Denis Villeneuve conferma l\'inizio della pre-produzione per Messia di Dune',
       excerpt: 'Il regista canadese si prepara a completare la trilogia tratta dai romanzi cult di Frank Herbert con una sceneggiatura ancora più ambiziosa.',
@@ -131,7 +118,20 @@ document.addEventListener('DOMContentLoaded', () => {
       image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80',
       author: 'Francesco Pisapia',
       authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Giu 28, 2026'
+      date: 'Lug 21, 2026'
+    },
+    {
+      id: 9,
+      category: 'Approfondimenti',
+      title: 'IL CINEMA DI CHRISTOPHER NOLAN – Dalla fisica di Interstellar alla poetica del tempo in Oppenheimer',
+      excerpt: 'Un saggio critico sull\'evoluzione dello stile registico e delle tematiche filosofiche nel cinema di Nolan.',
+      fullContent: `
+        <p>Christopher Nolan si attesta come uno dei registi più influenti dell'era contemporanea. La sua capacità di unire il grande spettacolo con concetti filosofici e fisici complessi rende la sua filmografia unica nel panorama mondiale.</p>
+      `,
+      image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=800&q=80',
+      author: 'Enzo Peluso',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
+      date: 'Lug 19, 2026'
     },
     {
       id: 10,
@@ -144,7 +144,7 @@ document.addEventListener('DOMContentLoaded', () => {
       image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
       author: 'Enzo Peluso',
       authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Giu 22, 2026'
+      date: 'Lug 18, 2026'
     },
     {
       id: 11,
@@ -157,10 +157,23 @@ document.addEventListener('DOMContentLoaded', () => {
       image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80',
       author: 'Francesco Pisapia',
       authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Giu 18, 2026'
+      date: 'Lug 17, 2026'
     },
     {
       id: 12,
+      category: 'Film',
+      title: 'L\'arte della cinematografia moderna: come l\'illuminazione e il colore raccontano le emozioni su grande schermo',
+      excerpt: 'Un\'analisi tecnica ed estetica sulle scelte visive dei direttori della fotografia più celebri dell\'era contemporanea.',
+      fullContent: `
+        <p>Nel cinema contemporaneo, la direzione della fotografia ha raggiunto livelli di espressività paragonabili alla pittura classica. L'uso consapevole dei contrasti di luce, della palette cromatica e delle lenti vintage trasforma ogni fotogramma in un veicolo di significato narrativo.</p>
+      `,
+      image: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/5409f9b58aba190e5148a1b2aeffc3c3fafd596d.jpg',
+      author: 'Francesco Pisapia',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
+      date: 'Lug 15, 2026'
+    },
+    {
+      id: 13,
       category: 'Approfondimenti',
       title: 'LA RINASCITA DEL CINEMA ITALIANO – Da Paolo Sorrentino a Matteo Garrone, il nuovo corso europeo',
       excerpt: 'Uno studio sulle produzioni italiane di maggior impatto internazionale e sull\'evoluzione del linguaggio d\'autore nel nostro Paese.',
@@ -170,20 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
       image: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=800&q=80',
       author: 'Enzo Peluso',
       authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Giu 10, 2026'
-    },
-    {
-      id: 13,
-      category: 'Film',
-      title: 'IL GLADIATORE II – L\'eredità di Massimo Decimo Meridio e la visione di Ridley Scott',
-      excerpt: 'Recensione e analisi approfondita del kolossal epico che riprende le gesta dell\'Impero Romano a distanza di vent\'anni.',
-      fullContent: `
-        <p>Ridley Scott torna nell'antica Roma con una produzione imponente che esplora il potere, le congiure di palazzo ed il destino dei gladiatori nell'arena.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=800&q=80',
-      author: 'Francesco Pisapia',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Giu 05, 2026'
+      date: 'Lug 13, 2026'
     },
     {
       id: 14,
@@ -191,153 +191,142 @@ document.addEventListener('DOMContentLoaded', () => {
       title: 'STRANGER THINGS 5 – Svelati i titoli degli episodi finali del capitolo conclusivo',
       excerpt: 'I fratelli Duffer svelano indizi fondamentali sulla resa dei conti a Hawkins e nell\'Sottosopra.',
       fullContent: `
-      fullContent: `
         <p>La quinta ed ultima stagione di <em>Stranger Things</em> promette di chiudere tutte le trame lasciate aperte fin dalla prima stagione della celebre serie cult Netflix.</p>
       `,
       image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
       author: 'Enzo Peluso',
       authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Mag 28, 2026'
+      date: 'Lug 12, 2026'
     },
     {
       id: 15,
-      category: 'Film',
-      title: 'THE BATMAN 2 – Matt Reeves svela le prime anticipazioni sulla sceneggiatura e sul nuovo villain di Gotham',
-      excerpt: 'Articolo di Enzo Peluso. Il regista conferma il ritorno di Robert Pattinson in un capitolo ancora più oscuro e investigativo.',
-      fullContent: `
-        <p><strong>Articolo di Enzo Peluso</strong></p>
-        <p>Matt Reeves ha svelato dettagli fondamentali sullo stato dei lavori di <em>The Batman: Part II</em>. Il film proseguirà l'esplorazione del lato squisitamente poliziesco ed investigativo del Cavaliere Oscuro nella Gotham sommersa dal crimine.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
-      author: 'Enzo Peluso',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Mag 20, 2026'
-    },
-    {
-      id: 16,
-      category: 'Film',
-      title: 'OPPENHEIMER E LA RIVOLUZIONE DEL FORMATO IMAX – Come Christopher Nolan ha ridefinito l\'esperienza della sala',
-      excerpt: 'Articolo di Francesco Pisapia. Un viaggio dentro le scelte tecniche in pellicola 70mm che hanno conquistato il box office mondiale.',
-      fullContent: `
-        <p><strong>Articolo di Francesco Pisapia</strong></p>
-        <p>Il successo di <em>Oppenheimer</em> ha dimostrato che la grande sala cinematografica ed il formato IMAX 70mm conservano una potenza visiva ineguagliabile nell'era dello streaming digitale.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=800&q=80',
-      author: 'Francesco Pisapia',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Mag 12, 2026'
-    },
-    {
-      id: 17,
-      category: 'Serie TV',
-      title: 'THE BEAR 4 – Carmy e la brigata del ristorante affrontano le sfide della stella Michelin',
-      excerpt: 'Articolo di Francesco Pisapia. La serie FX torna raccontando la pressione psicologica ed il talento della cucina ad altissimi livelli.',
-      fullContent: `
-        <p><strong>Articolo di Francesco Pisapia</strong></p>
-        <p>La nuova stagione di <em>The Bear</em> alza ulteriormente l'asticella della tensione drammatica, raccontando la quotidiana battaglia della brigata di Carmy ed Sydney per l'eccellenza culinaria.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80',
-      author: 'Francesco Pisapia',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Mag 18, 2026'
-    },
-    {
-      id: 18,
-      category: 'Serie TV',
-      title: 'SEVERANCE STAGIONE 2 – Il ritorno dell\'inquietante thriller distopico targato Apple TV+',
-      excerpt: 'Articolo di Enzo Peluso. Ben Stiller ed il cast principale tornano con i nuovi misteriosi capitoli della Lumon Industries.',
-      fullContent: `
-        <p><strong>Articolo di Enzo Peluso</strong></p>
-        <p>La seconda stagione di <em>Severance</em> riprende le fila dello scioccante finale della prima stagione, approfondendo i segreti della scissione della memoria lavorativa.</p>
-      `,
-      image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
-      author: 'Enzo Peluso',
-      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Mag 10, 2026'
-    },
-    {
-      id: 19,
       category: 'News',
-      title: 'BOX OFFICE ESTATE – Record di incassi per i blockbuster d\'azione nelle sale italiane',
-      excerpt: 'Articolo di Enzo Peluso. I dati Cinetel confermano un incremento straordinario di spettatori nei cinema durante i mesi estivi.',
+      title: 'BOX OFFICE ITALIA – Record di presenze nelle sale estive con i nuovi blockbuster estivi',
+      excerpt: 'I dati Cinetel confermano un trend eccezionale per gli incassi delle sale cinematografiche della Penisola.',
       fullContent: `
-        <p><strong>Articolo di Enzo Peluso</strong></p>
-        <p>Le sale cinematografiche italiane registrano affluenze da record durante la stagione estiva grazie ad una programmazione ricca di grandi franchise e film evento per famiglie.</p>
+        <p>Il pubblico italiano torna affamato al grande schermo con numeri da record per le proiezioni estive nelle principali città.</p>
       `,
       image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80',
       author: 'Enzo Peluso',
       authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Mag 15, 2026'
+      date: 'Lug 11, 2026'
+    },
+    {
+      id: 16,
+      category: 'Film',
+      title: 'OPPENHEIMER & BARBIE – L\'impatto culturale del fenomeno Barbenheimer al box office mondiale',
+      excerpt: 'Riflessione sullo straordinario successo cinematografico globale che ha riportato milioni di spettatori in sala.',
+      fullContent: `
+        <p>Un'analisi approfondita su come due opere profondamente diverse si siano unite per creare uno dei più memorabili momenti collettivi del cinema contemporaneo.</p>
+      `,
+      image: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=800&q=80',
+      author: 'Francesco Pisapia',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
+      date: 'Lug 09, 2026'
+    },
+    {
+      id: 17,
+      category: 'Approfondimenti',
+      title: 'L\'EVOLUZIONE DEGLI EFFETTI SPECIALI – Dal passo uno della Stop-Motion al CGI fotorealistico',
+      excerpt: 'Viaggio nella storia degli effetti visivi cinematografici da Georges Méliès alle tecnologie virtuali di StageCraft.',
+      fullContent: `
+        <p>Gli effetti speciali rappresentano la magia visiva che rende l'impossibile visibile sullo schermo d'argento.</p>
+      `,
+      image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=800&q=80',
+      author: 'Enzo Peluso',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
+      date: 'Lug 07, 2026'
+    },
+    {
+      id: 18,
+      category: 'Serie TV',
+      title: 'THE PENGUIN – Colin Farrell domina la scena nel dramma crime targato HBO Max',
+      excerpt: 'Recensione e saggio critico sullo spin-off di The Batman dedicato all\'ascesa di Oswald Cobblepot nel sottosuolo di Gotham.',
+      fullContent: `
+        <p>Colin Farrell scompare totalmente dietro il trucco protesico per regalare un'interpretazione memorabile da villain tragico e spietato.</p>
+      `,
+      image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
+      author: 'Francesco Pisapia',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
+      date: 'Lug 06, 2026'
+    },
+    {
+      id: 19,
+      category: 'News',
+      title: 'MARVEL STUDIOS – Annunciati ufficialmente i prossimi registi per Avengers: Doomsday e Secret Wars',
+      excerpt: 'I fratelli Russo tornano alla regia del Marvel Cinematic Universe per guidare le prossime fasi epiche della saga.',
+      fullContent: `
+        <p>I Marvel Studios hanno reso ufficiale il ritorno di Joe ed Anthony Russo alla guida dei due prossimi capitoli corali di Avengers.</p>
+      `,
+      image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80',
+      author: 'Enzo Peluso',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
+      date: 'Lug 05, 2026'
     },
     {
       id: 20,
-      category: 'News',
-      title: 'ACADEMY AWARDS – Annunciate le nuove regole per l\'ammissibilità dei film in concorso agli Oscar',
-      excerpt: 'Articolo di Francesco Pisapia. L\'Academy introduce criteri aggiornati sulla tenuta nelle sale e sulle produzioni internazionali.',
+      category: 'Film',
+      title: 'JOKER: FOLIE À DEUX – Il musical tragico con Joaquin Phoenix e Lady Gaga che scompagina la critica',
+      excerpt: 'Analisi senza spoiler sul controverso e audace sequel di Todd Phillips presentato in concorso a Venezia.',
       fullContent: `
-        <p><strong>Articolo di Francesco Pisapia</strong></p>
-        <p>L'Academy of Motion Picture Arts and Sciences ha diramato il nuovo regolamento per le prossime edizioni degli Oscar, rafforzando i requisiti di distribuzione cinematografica nelle principali città.</p>
+        <p>Todd Phillips rifiuta le scorciatoie commerciali per regalare un sequel audace, provocatorio ed intimista sul mito del Joker.</p>
       `,
-      image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80',
       author: 'Francesco Pisapia',
       authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Mag 08, 2026'
+      date: 'Lug 02, 2026'
     },
     {
       id: 21,
-      category: 'News',
-      title: 'MARVEL STUDIOS – Kevin Feige presenta la nuova roadmap per la Fase 6 del Marvel Cinematic Universe',
-      excerpt: 'Articolo di Enzo Peluso. Durante il panel speciale vengono svelati i registi ed i titoli ufficiali dei capitoli sugli Avengers.',
+      category: 'Approfondimenti',
+      title: 'IL SUONO NEL CINEMA D\'AZIONE – Come il sound design crea la tensione nelle sequenze d\'inseguimento',
+      excerpt: 'Uno studio tecnico su come la miscelazione di effetti sonori e colonna sonora amplifichi l\'adrenalina dello spettatore.',
       fullContent: `
-        <p><strong>Articolo di Enzo Peluso</strong></p>
-        <p>Kevin Feige ha illustrato i prossimi traguardi del Marvel Cinematic Universe, delineando il percorso che condurrà ai grandi eventi cinematografici degli Avengers.</p>
+        <p>Il suono rappresenta il 50% dell'esperienza cinematografica: senza un sound design d'eccellenza, anche la più spettacolare sequenza d'azione perde carica emotiva.</p>
       `,
-      image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=800&q=80',
       author: 'Enzo Peluso',
       authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Mag 02, 2026'
+      date: 'Lug 01, 2026'
     },
     {
       id: 22,
-      category: 'Approfondimenti',
-      title: 'IL FASCINO DEL CINEMA NOIR – Dalle ombre degli anni \'40 al neonoir contemporaneo',
-      excerpt: 'Articolo di Francesco Pisapia. Un saggio sull\'estetica delle luci a contrasto, della pioggia e dei detective disincantati.',
+      category: 'News',
+      title: 'ACADEMY AWARDS – Svelate le nuove linee guida per l\'ammissibilità dei film agli Oscar 2027',
+      excerpt: 'L\'Academy modifica i criteri di tenuta nelle sale cinematografiche e le finestre di distribuzione per lo streaming.',
       fullContent: `
-        <p><strong>Articolo di Francesco Pisapia</strong></p>
-        <p>Il genere noir rappresenta una delle espressioni più affascinanti della storia del cinema: atmosfere chiaroscurali, personaggi ambigui ed una poetica urbana senza tempo.</p>
+        <p>L'Academy of Motion Picture Arts and Sciences ha diramato le nuove disposizioni ufficiali per le produzioni candidate ai prossimi premi Oscar.</p>
       `,
-      image: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80',
       author: 'Francesco Pisapia',
       authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Mag 14, 2026'
+      date: 'Giu 30, 2026'
     },
     {
       id: 23,
-      category: 'Approfondimenti',
-      title: 'LA COLONNA SONORA NEL CINEMA – Da Ennio Morricone a Hans Zimmer, la musica che crea il mito',
-      excerpt: 'Articolo di Enzo Peluso. Come i grandi temi musicali plasmano l\'identità emotiva ed epica delle pietre miliari cinematografiche.',
+      category: 'Serie TV',
+      title: 'SEVERANCE STAGIONE 2 – Il ritorno dell\'inquietante thriller distopico diretto da Ben Stiller su Apple TV+',
+      excerpt: 'Anticipazioni ed esegesi delle teorie dei fan sul destino degli impiegati della Lumon Industries.',
       fullContent: `
-        <p><strong>Articolo di Enzo Peluso</strong></p>
-        <p>La musica nel cinema non si limita ad accompagnare le immagini: le trasfigura. Da Ennio Morricone a Hans Zimmer, i maestri della colonna sonora hanno creato temi immortali.</p>
+        <p>Ben Stiller torna ad orchestrare uno dei thriller psicologici più brillanti ed inquietanti del panorama televisivo moderno.</p>
       `,
-      image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
       author: 'Enzo Peluso',
       authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
-      date: 'Mag 06, 2026'
+      date: 'Giu 29, 2026'
     },
     {
       id: 24,
       category: 'Approfondimenti',
-      title: 'STORIA DEL FILM ANIME – Come il cinema d\'animazione giapponese ha conquistato l\'Occidente',
-      excerpt: 'Articolo di Francesco Pisapia. Da Hayao Miyazaki a Makoto Shinkai, l\'evoluzione artistica e poetica dei capolavori animati.',
+      title: 'STORIA DEL NEORALISMO – Come il cinema italiano del dopoguerra ha cambiato per sempre la settima arte',
+      excerpt: 'Da Rossellini a De Sica: la lezione estetica ed etica di una stagione irripetibile della storia del cinema mondiale.',
       fullContent: `
-        <p><strong>Articolo di Francesco Pisapia</strong></p>
-        <p>Il cinema d'animazione giapponese ha saputo conquistare il pubblico ed la critica internazionale grazie ad una straordinaria profondità poetica, visiva ed emotiva.</p>
+        <p>Il Neorealismo italiano ha insegnato al mondo che la macchina da presa poteva scendere nelle strade e raccontare la verità dell'animo umano.</p>
       `,
-      image: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80',
+      image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=800&q=80',
       author: 'Francesco Pisapia',
       authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
-      date: 'Apr 28, 2026'
+      date: 'Giu 25, 2026'
     }
   ];
 
@@ -422,16 +411,14 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Determine if pagination applies or home page/category limit applies
+    // Determine if pagination applies or home page limit applies
     const isPaginatedPage = Boolean(paginationWrapper);
     const isHomePage = document.body.classList.contains('home-body');
-    const isCategoryPage = activeCategory !== 'Tutti';
     let paginatedArticles = filtered;
 
-    if (isHomePage || isCategoryPage) {
-      // Home Page & Category Sections (Film, Serie TV, News, Approfondimenti): always display only the 6 latest articles
+    if (isHomePage) {
+      // Home Page: display only the 6 latest articles
       paginatedArticles = filtered.slice(0, 6);
-      if (paginationWrapper) paginationWrapper.innerHTML = '';
     } else if (isPaginatedPage) {
       const totalPages = Math.ceil(filtered.length / itemsPerPage);
       if (currentPage > totalPages) currentPage = totalPages;
