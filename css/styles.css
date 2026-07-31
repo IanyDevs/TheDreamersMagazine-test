@@ -878,7 +878,7 @@ button, input, textarea {
   box-shadow: var(--shadow-glow);
 }
 
-/* Articles Grid (Always 2 Columns - Two by Two) */
+/* Articles Grid */
 .articles-grid-container {
   max-width: var(--max-width);
   margin: 0 auto;
