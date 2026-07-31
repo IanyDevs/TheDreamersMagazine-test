@@ -1257,10 +1257,14 @@ button, input, textarea {
 }
 
 .contact-form-col {
-  padding: 4.5rem 3.5rem 3.5rem 3.5rem;
+  padding: 4.25rem 3.5rem 3rem 3.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+
+.form-container {
+  margin-top: 0.75rem;
 }
 
 .form-group {
