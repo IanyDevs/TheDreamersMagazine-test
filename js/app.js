@@ -191,12 +191,153 @@ document.addEventListener('DOMContentLoaded', () => {
       title: 'STRANGER THINGS 5 – Svelati i titoli degli episodi finali del capitolo conclusivo',
       excerpt: 'I fratelli Duffer svelano indizi fondamentali sulla resa dei conti a Hawkins e nell\'Sottosopra.',
       fullContent: `
+      fullContent: `
         <p>La quinta ed ultima stagione di <em>Stranger Things</em> promette di chiudere tutte le trame lasciate aperte fin dalla prima stagione della celebre serie cult Netflix.</p>
       `,
       image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
       author: 'Enzo Peluso',
       authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
       date: 'Mag 28, 2026'
+    },
+    {
+      id: 15,
+      category: 'Film',
+      title: 'THE BATMAN 2 – Matt Reeves svela le prime anticipazioni sulla sceneggiatura e sul nuovo villain di Gotham',
+      excerpt: 'Articolo di Enzo Peluso. Il regista conferma il ritorno di Robert Pattinson in un capitolo ancora più oscuro e investigativo.',
+      fullContent: `
+        <p><strong>Articolo di Enzo Peluso</strong></p>
+        <p>Matt Reeves ha svelato dettagli fondamentali sullo stato dei lavori di <em>The Batman: Part II</em>. Il film proseguirà l'esplorazione del lato squisitamente poliziesco ed investigativo del Cavaliere Oscuro nella Gotham sommersa dal crimine.</p>
+      `,
+      image: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=800&q=80',
+      author: 'Enzo Peluso',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
+      date: 'Mag 20, 2026'
+    },
+    {
+      id: 16,
+      category: 'Film',
+      title: 'OPPENHEIMER E LA RIVOLUZIONE DEL FORMATO IMAX – Come Christopher Nolan ha ridefinito l\'esperienza della sala',
+      excerpt: 'Articolo di Francesco Pisapia. Un viaggio dentro le scelte tecniche in pellicola 70mm che hanno conquistato il box office mondiale.',
+      fullContent: `
+        <p><strong>Articolo di Francesco Pisapia</strong></p>
+        <p>Il successo di <em>Oppenheimer</em> ha dimostrato che la grande sala cinematografica ed il formato IMAX 70mm conservano una potenza visiva ineguagliabile nell'era dello streaming digitale.</p>
+      `,
+      image: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?auto=format&fit=crop&w=800&q=80',
+      author: 'Francesco Pisapia',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
+      date: 'Mag 12, 2026'
+    },
+    {
+      id: 17,
+      category: 'Serie TV',
+      title: 'THE BEAR 4 – Carmy e la brigata del ristorante affrontano le sfide della stella Michelin',
+      excerpt: 'Articolo di Francesco Pisapia. La serie FX torna raccontando la pressione psicologica ed il talento della cucina ad altissimi livelli.',
+      fullContent: `
+        <p><strong>Articolo di Francesco Pisapia</strong></p>
+        <p>La nuova stagione di <em>The Bear</em> alza ulteriormente l'asticella della tensione drammatica, raccontando la quotidiana battaglia della brigata di Carmy ed Sydney per l'eccellenza culinaria.</p>
+      `,
+      image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80',
+      author: 'Francesco Pisapia',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
+      date: 'Mag 18, 2026'
+    },
+    {
+      id: 18,
+      category: 'Serie TV',
+      title: 'SEVERANCE STAGIONE 2 – Il ritorno dell\'inquietante thriller distopico targato Apple TV+',
+      excerpt: 'Articolo di Enzo Peluso. Ben Stiller ed il cast principale tornano con i nuovi misteriosi capitoli della Lumon Industries.',
+      fullContent: `
+        <p><strong>Articolo di Enzo Peluso</strong></p>
+        <p>La seconda stagione di <em>Severance</em> riprende le fila dello scioccante finale della prima stagione, approfondendo i segreti della scissione della memoria lavorativa.</p>
+      `,
+      image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80',
+      author: 'Enzo Peluso',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
+      date: 'Mag 10, 2026'
+    },
+    {
+      id: 19,
+      category: 'News',
+      title: 'BOX OFFICE ESTATE – Record di incassi per i blockbuster d\'azione nelle sale italiane',
+      excerpt: 'Articolo di Enzo Peluso. I dati Cinetel confermano un incremento straordinario di spettatori nei cinema durante i mesi estivi.',
+      fullContent: `
+        <p><strong>Articolo di Enzo Peluso</strong></p>
+        <p>Le sale cinematografiche italiane registrano affluenze da record durante la stagione estiva grazie ad una programmazione ricca di grandi franchise e film evento per famiglie.</p>
+      `,
+      image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80',
+      author: 'Enzo Peluso',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
+      date: 'Mag 15, 2026'
+    },
+    {
+      id: 20,
+      category: 'News',
+      title: 'ACADEMY AWARDS – Annunciate le nuove regole per l\'ammissibilità dei film in concorso agli Oscar',
+      excerpt: 'Articolo di Francesco Pisapia. L\'Academy introduce criteri aggiornati sulla tenuta nelle sale e sulle produzioni internazionali.',
+      fullContent: `
+        <p><strong>Articolo di Francesco Pisapia</strong></p>
+        <p>L'Academy of Motion Picture Arts and Sciences ha diramato il nuovo regolamento per le prossime edizioni degli Oscar, rafforzando i requisiti di distribuzione cinematografica nelle principali città.</p>
+      `,
+      image: 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=800&q=80',
+      author: 'Francesco Pisapia',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
+      date: 'Mag 08, 2026'
+    },
+    {
+      id: 21,
+      category: 'News',
+      title: 'MARVEL STUDIOS – Kevin Feige presenta la nuova roadmap per la Fase 6 del Marvel Cinematic Universe',
+      excerpt: 'Articolo di Enzo Peluso. Durante il panel speciale vengono svelati i registi ed i titoli ufficiali dei capitoli sugli Avengers.',
+      fullContent: `
+        <p><strong>Articolo di Enzo Peluso</strong></p>
+        <p>Kevin Feige ha illustrato i prossimi traguardi del Marvel Cinematic Universe, delineando il percorso che condurrà ai grandi eventi cinematografici degli Avengers.</p>
+      `,
+      image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80',
+      author: 'Enzo Peluso',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
+      date: 'Mag 02, 2026'
+    },
+    {
+      id: 22,
+      category: 'Approfondimenti',
+      title: 'IL FASCINO DEL CINEMA NOIR – Dalle ombre degli anni \'40 al neonoir contemporaneo',
+      excerpt: 'Articolo di Francesco Pisapia. Un saggio sull\'estetica delle luci a contrasto, della pioggia e dei detective disincantati.',
+      fullContent: `
+        <p><strong>Articolo di Francesco Pisapia</strong></p>
+        <p>Il genere noir rappresenta una delle espressioni più affascinanti della storia del cinema: atmosfere chiaroscurali, personaggi ambigui ed una poetica urbana senza tempo.</p>
+      `,
+      image: 'https://images.unsplash.com/photo-1440404653325-ab127d49abc1?auto=format&fit=crop&w=800&q=80',
+      author: 'Francesco Pisapia',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
+      date: 'Mag 14, 2026'
+    },
+    {
+      id: 23,
+      category: 'Approfondimenti',
+      title: 'LA COLONNA SONORA NEL CINEMA – Da Ennio Morricone a Hans Zimmer, la musica che crea il mito',
+      excerpt: 'Articolo di Enzo Peluso. Come i grandi temi musicali plasmano l\'identità emotiva ed epica delle pietre miliari cinematografiche.',
+      fullContent: `
+        <p><strong>Articolo di Enzo Peluso</strong></p>
+        <p>La musica nel cinema non si limita ad accompagnare le immagini: le trasfigura. Da Ennio Morricone a Hans Zimmer, i maestri della colonna sonora hanno creato temi immortali.</p>
+      `,
+      image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80',
+      author: 'Enzo Peluso',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-17.42.54-48x48.jpeg',
+      date: 'Mag 06, 2026'
+    },
+    {
+      id: 24,
+      category: 'Approfondimenti',
+      title: 'STORIA DEL FILM ANIME – Come il cinema d\'animazione giapponese ha conquistato l\'Occidente',
+      excerpt: 'Articolo di Francesco Pisapia. Da Hayao Miyazaki a Makoto Shinkai, l\'evoluzione artistica e poetica dei capolavori animati.',
+      fullContent: `
+        <p><strong>Articolo di Francesco Pisapia</strong></p>
+        <p>Il cinema d'animazione giapponese ha saputo conquistare il pubblico ed la critica internazionale grazie ad una straordinaria profondità poetica, visiva ed emotiva.</p>
+      `,
+      image: 'https://images.unsplash.com/photo-1578632767115-351597cf2477?auto=format&fit=crop&w=800&q=80',
+      author: 'Francesco Pisapia',
+      authorAvatar: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-WhatsApp-Image-2026-04-02-at-14.08.25-48x48.jpeg',
+      date: 'Apr 28, 2026'
     }
   ];
 
@@ -281,14 +422,16 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    // Determine if pagination applies or home page limit applies
+    // Determine if pagination applies or home page/category limit applies
     const isPaginatedPage = Boolean(paginationWrapper);
     const isHomePage = document.body.classList.contains('home-body');
+    const isCategoryPage = activeCategory !== 'Tutti';
     let paginatedArticles = filtered;
 
-    if (isHomePage) {
-      // Home Page: display only the 6 latest articles
+    if (isHomePage || isCategoryPage) {
+      // Home Page & Category Sections (Film, Serie TV, News, Approfondimenti): always display only the 6 latest articles
       paginatedArticles = filtered.slice(0, 6);
+      if (paginationWrapper) paginationWrapper.innerHTML = '';
     } else if (isPaginatedPage) {
       const totalPages = Math.ceil(filtered.length / itemsPerPage);
       if (currentPage > totalPages) currentPage = totalPages;
