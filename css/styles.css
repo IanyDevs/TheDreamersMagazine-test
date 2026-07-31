@@ -1224,14 +1224,14 @@ button, input, textarea {
    8. Contact Section
    -------------------------------------------------------------------------- */
 .contact-section {
-  background-color: var(--bg-tertiary);
+  background-color: var(--bg-primary);
   padding: 0 1.5rem 4.5rem 1.5rem;
 }
 
 .contact-card-wrapper {
   max-width: var(--max-width);
   margin: 0 auto;
-  background-color: var(--bg-primary);
+  background-color: #FFFFFF;
   border-radius: 20px;
   overflow: hidden;
   display: grid;
