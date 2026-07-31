@@ -1235,7 +1235,7 @@ button, input, textarea {
   border-radius: 20px;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 45% 55%;
+  grid-template-columns: 46% 54%;
   box-shadow: var(--shadow-md);
   border: 1px solid var(--border-color);
 }
@@ -1244,21 +1244,23 @@ button, input, textarea {
   position: relative;
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
+  min-height: 460px;
+  overflow: hidden;
 }
 
 .contact-img {
   width: 100%;
-  height: 240px;
+  height: 100%;
   object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
 .contact-form-col {
-  padding: 2.25rem 2.5rem 1.5rem 2.5rem;
+  padding: 3rem;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
 }
 
 .form-group {
