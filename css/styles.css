@@ -1243,19 +1243,17 @@ button, input, textarea {
 .contact-media-col {
   position: relative;
   width: 100%;
-  min-height: 440px;
-  background-color: #0B0A08;
+  background-color: var(--bg-card);
   display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
+  flex-direction: column;
+  border-right: 1px solid var(--border-color);
 }
 
 .contact-img {
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
+  height: 320px;
+  object-fit: cover;
+  object-position: center 15%;
   display: block;
 }
 
