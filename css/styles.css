@@ -2623,3 +2623,9 @@ body[data-page-category="Tutti"] .articles-grid,
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+/* Hide category filter pills bar */
+.filter-bar-container,
+.category-filters {
+  display: none !important;
+}
