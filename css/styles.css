@@ -286,7 +286,7 @@ button, input, textarea {
    Clean & High-End Homepage Hero Layout with Full Background foto1.jpeg
    -------------------------------------------------------------------------- */
 /* --------------------------------------------------------------------------
-   Hero Section: Full Uncropped foto1.jpeg Image Top + Description Card Below
+   Hero Section: 100% Full Width Edge-to-Edge foto1.jpeg (Uncropped & No Side Gap)
    -------------------------------------------------------------------------- */
 .hero-section {
   position: relative;
@@ -299,19 +299,21 @@ button, input, textarea {
 .hero-photo-banner-wrapper {
   width: 100%;
   max-width: 100vw;
-  background-color: #0B0A08;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 0;
+  padding: 0;
+  background-color: transparent;
+  display: block;
   overflow: hidden;
 }
 
 .hero-uncropped-img {
   width: 100%;
   height: auto;
-  max-height: 80vh;
-  object-fit: contain; /* 100% UNUNCROPPED COMPLETE IMAGE */
   display: block;
+  margin: 0;
+  padding: 0;
+  box-shadow: none;
+  border: none;
 }
   border: none;
   border-radius: 0;
