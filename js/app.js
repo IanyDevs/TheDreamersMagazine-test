@@ -804,6 +804,27 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ------------------------------------------------------------------------
+  // Transparent Header on Scroll Handler
+  // ------------------------------------------------------------------------
+  function initHeaderScroll() {
+    const siteHeader = document.querySelector('.site-header');
+    const headerContainer = document.querySelector('.header-container');
+
+    function handleScroll() {
+      if (window.scrollY > 25) {
+        siteHeader?.classList.add('scrolled');
+        headerContainer?.classList.add('scrolled');
+      } else {
+        siteHeader?.classList.remove('scrolled');
+        headerContainer?.classList.remove('scrolled');
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+  }
+
+  // ------------------------------------------------------------------------
   // Modal Reading Progress Bar Handler
   // ------------------------------------------------------------------------
   function setupModalReadingProgress() {
@@ -1012,6 +1033,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ------------------------------------------------------------------------
   renderArticles();
   initCookieBanner();
+  initHeaderScroll();
   initScrollToTop();
   setupModalReadingProgress();
   initTeamMemberTriggers();
