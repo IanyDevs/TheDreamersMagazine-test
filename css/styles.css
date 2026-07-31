@@ -157,14 +157,14 @@ button, input, textarea {
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Ultra-Pronounced Frosted Glassmorphism Header on Scroll */
+/* Crystal Clear Frosted Glassmorphism Header on Scroll */
 .site-header.scrolled .header-container,
 .header-container.scrolled {
-  background: rgba(226, 221, 214, 0.32);
-  backdrop-filter: blur(28px) saturate(190%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
-  border: 1px solid rgba(255, 255, 255, 0.65);
-  box-shadow: 0 12px 36px rgba(18, 16, 14, 0.09), inset 0 1px 2px rgba(255, 255, 255, 0.85);
+  background: rgba(226, 221, 214, 0.15);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 10px 30px rgba(18, 16, 14, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.6);
 }
 
 .site-header:hover .header-container {
