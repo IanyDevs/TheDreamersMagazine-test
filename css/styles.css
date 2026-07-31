@@ -296,6 +296,30 @@ button, input, textarea {
   background-color: var(--bg-primary);
 }
 
+/* Top Centered Logo above foto1.jpeg */
+.hero-top-logo-container {
+  width: 100%;
+  text-align: center;
+  padding: 2.5rem 1.5rem 2rem 1.5rem;
+  background-color: var(--bg-primary);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-top-logo {
+  max-width: 480px;
+  width: 85vw;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 10px 25px rgba(122, 40, 18, 0.25));
+  transition: transform 0.4s ease;
+}
+
+.hero-top-logo:hover {
+  transform: scale(1.03);
+}
+
 .hero-photo-banner-wrapper {
   width: 100%;
   max-width: 100vw;
