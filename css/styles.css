@@ -1307,26 +1307,26 @@ body[data-page-category="Tutti"] .articles-grid,
   background: rgba(225, 110, 60, 0.85);
 }
 
-/* Top Split Hero Header Stage (Photo Left, Info Right) */
+/* Top Split Hero Header Stage (Large Photo Left, Info Right) */
 .modal-hero-split-stage {
   width: 100%;
-  background-color: #0D0B0A;
+  background-color: #0B0A08;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  padding: 3.5rem 3rem 3rem 3rem;
+  padding: 3.5rem 3rem 3.5rem 3rem;
   display: flex;
   justify-content: center;
 }
 
 .modal-hero-split-container {
-  max-width: 1200px;
+  max-width: 1280px;
   width: 100%;
   display: grid;
-  grid-template-columns: 1fr 1.15fr;
+  grid-template-columns: 1.35fr 1fr;
   gap: 3.5rem;
   align-items: center;
 }
 
-@media (max-width: 960px) {
+@media (max-width: 980px) {
   .modal-hero-split-stage {
     padding: 2.5rem 1.5rem 2rem 1.5rem;
   }
@@ -1336,7 +1336,7 @@ body[data-page-category="Tutti"] .articles-grid,
   }
 }
 
-/* Left Side: Photo Stage */
+/* Left Side: Large Uncropped Photo Stage */
 .modal-hero-left-stage {
   width: 100%;
   display: flex;
@@ -1346,10 +1346,11 @@ body[data-page-category="Tutti"] .articles-grid,
 
 .modal-hero-cover-img {
   width: 100%;
-  max-height: 54vh;
-  object-fit: contain; /* 100% COMPLETE VISIBILITY - UNCROPPED PHOTO */
+  height: auto;
+  max-height: 70vh;
+  object-fit: contain; /* 100% UNCROPPED FULL PHOTO - DYNAMICALLY LARGER */
   border-radius: 16px;
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.15);
   display: block;
 }
@@ -1362,16 +1363,16 @@ body[data-page-category="Tutti"] .articles-grid,
 }
 
 .modal-category-badge-wrapper {
-  margin-bottom: 1rem;
+  margin-bottom: 1.2rem;
 }
 
 .modal-category-badge {
   display: inline-block;
   background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
   color: #FFFFFF;
-  padding: 0.45rem 1.25rem;
+  padding: 0.45rem 1.3rem;
   border-radius: 9999px;
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.06em;
@@ -1380,13 +1381,13 @@ body[data-page-category="Tutti"] .articles-grid,
 
 .modal-article-title {
   font-family: var(--font-heading);
-  font-size: clamp(1.75rem, 3.2vw, 2.4rem);
+  font-size: clamp(1.85rem, 3.4vw, 2.6rem);
   font-weight: 900;
-  line-height: 1.25;
+  line-height: 1.24;
   color: #FFFFFF;
-  margin-bottom: 1.75rem;
+  margin-bottom: 1.85rem;
   letter-spacing: -0.02em;
-  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
 }
 
 /* Author & Publication Metadata Card */
@@ -1394,12 +1395,12 @@ body[data-page-category="Tutti"] .articles-grid,
   display: flex;
   align-items: center;
   gap: 1.25rem;
-  padding: 0.9rem 1.25rem;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: 18px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  padding: 1rem 1.35rem;
+  background: rgba(255, 255, 255, 0.09);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 20px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
 }
 
 @media (max-width: 640px) {
@@ -1411,12 +1412,12 @@ body[data-page-category="Tutti"] .articles-grid,
 }
 
 .modal-author-avatar-initials {
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--brand-primary), var(--brand-accent));
   color: #FFFFFF;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 800;
   display: flex;
   align-items: center;
@@ -1433,13 +1434,13 @@ body[data-page-category="Tutti"] .articles-grid,
 
 .modal-author-name {
   font-weight: 800;
-  font-size: 1rem;
+  font-size: 1.02rem;
   color: #FFFFFF;
   line-height: 1.2;
 }
 
 .modal-author-role {
-  font-size: 0.75rem;
+  font-size: 0.76rem;
   color: var(--brand-accent);
   font-weight: 700;
   text-transform: uppercase;
@@ -1449,7 +1450,7 @@ body[data-page-category="Tutti"] .articles-grid,
 .modal-meta-divider {
   width: 1px;
   height: 28px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.22);
 }
 
 @media (max-width: 640px) {
@@ -1474,19 +1475,34 @@ body[data-page-category="Tutti"] .articles-grid,
 }
 
 .modal-date {
-  font-size: 0.86rem;
-  color: rgba(255, 255, 255, 0.78);
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.82);
   font-weight: 500;
 }
 
 .modal-read-time {
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   font-weight: 700;
   color: #FFFFFF;
-  background: rgba(255, 255, 255, 0.16);
-  padding: 0.3rem 0.85rem;
+  background: rgba(255, 255, 255, 0.18);
+  padding: 0.35rem 0.9rem;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+}
+
+/* White Paper Container for Article Content */
+.modal-paper-container {
+  padding: 4rem 3.5rem 5rem 3.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  width: 100%;
+  background-color: #FFFFFF;
+}
+
+@media (max-width: 640px) {
+  .modal-paper-container {
+    padding: 2.25rem 1.5rem 3.5rem 1.5rem;
+  }
 }
 
 /* Article Text Content */
