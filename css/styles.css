@@ -282,52 +282,62 @@ button, input, textarea {
 /* --------------------------------------------------------------------------
    Clean & High-End Homepage Hero Layout
    -------------------------------------------------------------------------- */
+/* --------------------------------------------------------------------------
+   Clean & High-End Homepage Hero Layout with Full Background foto1.jpeg
+   -------------------------------------------------------------------------- */
 .hero-section {
   position: relative;
   background-color: var(--bg-primary);
-  padding: 1.5rem 1.25rem 3rem 1.25rem;
+  padding: 2.5rem 1.25rem 3.5rem 1.25rem;
 }
 
 .hero-showcase-wrapper {
-  max-width: 1060px;
+  max-width: 1280px;
   margin: 0 auto;
+  position: relative;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 25px 65px rgba(0, 0, 0, 0.35), 0 0 0 1px rgba(122, 40, 18, 0.2);
+  background: #0B0A08;
+  min-height: 480px;
   display: flex;
-  flex-direction: column;
   align-items: center;
 }
 
-/* Brand Logo Header */
-.hero-brand-header {
-  position: relative;
+.hero-bg-image-stage {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  text-align: center;
-  margin-bottom: 2rem;
-  padding: 1.5rem 1rem;
+  height: 100%;
+  z-index: 1;
+  overflow: hidden;
 }
 
-.hero-brand-flex-layout {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 3.5rem;
+.hero-full-bg-img {
   width: 100%;
-  position: relative;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: scale(1.02);
+  transition: transform 6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+  filter: brightness(0.95);
+}
+
+.hero-showcase-wrapper:hover .hero-full-bg-img {
+  transform: scale(1.07);
+}
+
+.hero-full-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, 
+    rgba(11, 10, 8, 0.88) 0%, 
+    rgba(18, 16, 14, 0.72) 45%, 
+    rgba(122, 40, 18, 0.45) 100%
+  );
   z-index: 2;
+  pointer-events: none;
 }
-
-@media (max-width: 900px) {
-  .hero-brand-flex-layout {
-    flex-direction: column;
-    gap: 2rem;
-  }
-}
-
-.hero-side-pattern-wrapper {
-  position: relative;
-  max-width: 320px;
-  margin-left: auto;
-  background: transparent;
-  box-shadow: none;
   border: none;
   border-radius: 0;
   overflow: visible;
@@ -616,21 +626,21 @@ button, input, textarea {
 }
 
 .hero-content-container {
-  max-width: var(--max-width);
-  margin: 0.25rem auto 0 auto;
+  max-width: 100%;
+  width: 100%;
   position: relative;
   z-index: 10;
-  padding: 0 1.5rem;
+  padding: 3.5rem 3rem;
 }
 
 .hero-grid {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(18, 16, 14, 0.45);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: 20px;
-  padding: 2.5rem;
-  box-shadow: var(--shadow-lg);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 24px;
+  padding: 3rem;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
   display: flex;
   gap: 3rem;
   align-items: center;
@@ -642,11 +652,12 @@ button, input, textarea {
 
 .hero-title {
   font-family: var(--font-heading);
-  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-size: clamp(2.2rem, 4.2vw, 3.6rem);
   font-weight: 900;
-  line-height: 1.1;
-  color: var(--text-primary);
-  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: #FFFFFF;
+  letter-spacing: -0.025em;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
 }
 
 .hero-desc-col {
@@ -656,9 +667,21 @@ button, input, textarea {
 }
 
 .hero-description {
-  font-size: 1.1rem;
-  color: var(--text-secondary);
-  line-height: 1.7;
+  font-size: 1.12rem;
+  color: rgba(255, 255, 255, 0.92);
+  line-height: 1.75;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+@media (max-width: 900px) {
+  .hero-content-container {
+    padding: 2.25rem 1.5rem;
+  }
+  .hero-grid {
+    flex-direction: column;
+    gap: 1.75rem;
+    padding: 2rem 1.5rem;
+  }
 }
 
 .hero-action-buttons {
