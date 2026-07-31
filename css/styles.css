@@ -1245,7 +1245,7 @@ body[data-page-category="Tutti"] .articles-grid,
   opacity: 1;
 }
 
-/* Floating Close Button */
+/* Floating Close Button (100% Geometrically Centered) */
 .modal-close-btn {
   position: fixed;
   top: 1.75rem;
@@ -1256,7 +1256,8 @@ body[data-page-category="Tutti"] .articles-grid,
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  font-size: 1.6rem;
+  padding: 0;
+  margin: 0;
   cursor: pointer;
   z-index: 99999;
   display: flex;
@@ -1268,10 +1269,24 @@ body[data-page-category="Tutti"] .articles-grid,
   transition: all 0.3s ease;
 }
 
+.modal-close-btn svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+  stroke: #FFFFFF;
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+
 .modal-close-btn:hover {
   background: var(--brand-primary);
+  border-color: rgba(255, 255, 255, 0.6);
   transform: scale(1.12);
   box-shadow: 0 10px 28px rgba(122, 40, 18, 0.6);
+}
+
+.modal-close-btn:hover svg {
+  transform: scale(1.1);
 }
 
 /* Inner Scrollable Body */
@@ -2417,7 +2432,8 @@ body[data-page-category="Tutti"] .articles-grid,
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  font-size: 1.6rem;
+  padding: 0;
+  margin: 0;
   cursor: pointer;
   z-index: 99999;
   display: flex;
@@ -2429,10 +2445,24 @@ body[data-page-category="Tutti"] .articles-grid,
   transition: all 0.3s ease;
 }
 
+.team-modal-close-btn svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+  stroke: #FFFFFF;
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+
 .team-modal-close-btn:hover {
   background: var(--brand-primary);
+  border-color: rgba(255, 255, 255, 0.6);
   transform: scale(1.12);
   box-shadow: 0 10px 28px rgba(122, 40, 18, 0.6);
+}
+
+.team-modal-close-btn:hover svg {
+  transform: scale(1.1);
 }
 
 .team-modal-scroll-body {
