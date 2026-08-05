@@ -162,6 +162,43 @@
       align-items: center !important;
     }
 
+    /* Color Pickers Custom Styling */
+    input[type="color"] {
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      appearance: none !important;
+      width: 28px !important;
+      height: 28px !important;
+      background-color: transparent !important;
+      border: none !important;
+      cursor: pointer !important;
+      padding: 0 !important;
+      vertical-align: middle !important;
+    }
+    input[type="color"]::-webkit-color-swatch-wrapper {
+      padding: 0 !important;
+    }
+    input[type="color"]::-webkit-color-swatch {
+      border: 2px solid rgba(255, 255, 255, 0.25) !important;
+      border-radius: 50% !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35) !important;
+      transition: transform 0.2s ease, border-color 0.2s ease !important;
+    }
+    input[type="color"]:hover::-webkit-color-swatch {
+      transform: scale(1.15) !important;
+      border-color: var(--admin-accent) !important;
+    }
+    input[type="color"]::-moz-color-swatch {
+      border: 2px solid rgba(255, 255, 255, 0.25) !important;
+      border-radius: 50% !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35) !important;
+      transition: transform 0.2s ease, border-color 0.2s ease !important;
+    }
+    input[type="color"]:hover::-moz-color-swatch {
+      transform: scale(1.15) !important;
+      border-color: var(--admin-accent) !important;
+    }
+
     /* Header Tabs */
     .admin-header-tabs {
       display: flex !important;
