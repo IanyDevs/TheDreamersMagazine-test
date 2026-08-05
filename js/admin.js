@@ -299,10 +299,10 @@ window.renderFullArticlePreview = function() {
   const lowerAuthor = author.toLowerCase();
   if (lowerAuthor.includes('enzo')) {
     initials = 'EP';
-    role = 'Fondatore & Redattore Chief';
+    role = 'Co-Fondatore-Vice Direttore & Redattore';
   } else if (lowerAuthor.includes('francesco')) {
     initials = 'FP';
-    role = 'Fondatore & Redattore Chief';
+    role = 'Fondatore-Direttore & Capo-Redattore ';
   } else {
     const parts = author.split(' ').filter(Boolean);
     if (parts.length >= 2) initials = (parts[0][0] + parts[1][0]).toUpperCase();
