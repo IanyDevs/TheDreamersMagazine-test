@@ -828,6 +828,167 @@
         border-radius: 14px !important;
       }
     }
+
+    /* ==========================================================================
+       EXCLUSIVE MOBILE & TABLET PREMIUM RESTYLING (MAX-WIDTH: 768px)
+       ========================================================================== */
+    @media (max-width: 768px) {
+      /* 1. Header Fluttuante a Capsula con Sfocatura */
+      header.navbar {
+        position: sticky !important;
+        top: 0.5rem !important;
+        margin: 0 0.5rem 1rem 0.5rem !important;
+        border-radius: 16px !important;
+        background: rgba(20, 18, 16, 0.88) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        border: 1px solid var(--admin-card-border) !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3) !important;
+        z-index: 9999 !important;
+      }
+      [data-admin-theme="light"] header.navbar {
+        background: rgba(255, 255, 255, 0.88) !important;
+      }
+      .navbar-container {
+        padding: 0.4rem 0.75rem !important;
+      }
+      .nav-actions {
+        gap: 0.35rem !important;
+      }
+      .nav-actions .btn {
+        border-radius: 10px !important;
+        padding: 0.45rem 0.65rem !important;
+        font-size: 0.72rem !important;
+      }
+
+      /* 2. Menu Tab Orizzontale a Segmento Unificato */
+      .admin-header-tabs {
+        background: var(--bg-secondary) !important;
+        padding: 0.25rem !important;
+        border-radius: 12px !important;
+        border: 1px solid var(--border-color) !important;
+        display: flex !important;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+        scrollbar-width: none !important;
+        margin-bottom: 1.25rem !important;
+        gap: 0.2rem !important;
+      }
+      .admin-header-tabs::-webkit-scrollbar {
+        display: none !important;
+      }
+      .tab-link {
+        flex: 1 !important;
+        text-align: center !important;
+        justify-content: center !important;
+        padding: 0.55rem 0.85rem !important;
+        font-size: 0.78rem !important;
+        border-radius: 9px !important;
+        font-weight: 700 !important;
+      }
+      .tab-link.active {
+        background: var(--admin-accent-gradient) !important;
+        box-shadow: 0 4px 12px rgba(200, 90, 50, 0.3) !important;
+      }
+
+      /* 3. Modali stile Native Drawer (Bottom Sheet) */
+      .modal-overlay {
+        align-items: flex-end !important;
+        justify-content: center !important;
+      }
+      #cropperModal .modal-container,
+      .cropper-modal-card {
+        width: 100% !important;
+        max-width: 100% !important;
+        border-radius: 24px 24px 0 0 !important;
+        max-height: 85vh !important;
+        padding: 1.25rem 1rem !important;
+        border-bottom: none !important;
+        box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5) !important;
+        transform: translateY(0) !important;
+        animation: slideUpDrawer 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+      }
+      @keyframes slideUpDrawer {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+      }
+      /* Indicatore a barretta per trascinamento modale drawer */
+      .cropper-modal-header::before {
+        content: "" !important;
+        display: block !important;
+        width: 36px !important;
+        height: 4px !important;
+        background: rgba(255, 255, 255, 0.18) !important;
+        border-radius: 2px !important;
+        margin: -0.5rem auto 0.75rem auto !important;
+      }
+      [data-admin-theme="light"] .cropper-modal-header::before {
+        background: rgba(0, 0, 0, 0.12) !important;
+      }
+      
+      /* Layout a 1 colonna per impostazioni cropper */
+      .cropper-grid-2, .cropper-grid-3 {
+        grid-template-columns: 1fr !important;
+        gap: 0.75rem !important;
+      }
+    }
+
+    @media (max-width: 576px) {
+      /* 4. KPI Cards in Griglia 2x2 compatta */
+      .admin-kpi-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 0.6rem !important;
+      }
+      .admin-kpi-grid > div {
+        padding: 0.85rem !important;
+        border-radius: 12px !important;
+      }
+      .admin-kpi-grid div {
+        font-size: 0.65rem !important;
+      }
+      .admin-kpi-grid div[id*="Count"] {
+        font-size: 1.3rem !important;
+        margin-top: 0.15rem !important;
+      }
+
+      /* 5. Card e Bordi Ultra-Ottimizzati per mobile */
+      .admin-card-section {
+        padding: 1rem 0.75rem !important;
+        border-radius: 12px !important;
+        box-shadow: 0 4px 16px rgba(0,0,0,0.15) !important;
+      }
+      .section-badge-number {
+        width: 22px !important;
+        height: 22px !important;
+        font-size: 0.72rem !important;
+        border-radius: 6px !important;
+        margin-right: 0.45rem !important;
+      }
+      .section-title-text {
+        font-size: 0.85rem !important;
+      }
+      
+      /* 6. Spaziature Input e Pulsanti a dimensione di tap (minimo 44px) */
+      .form-control, input[type="text"], input[type="url"], select {
+        padding: 0.6rem 0.8rem !important;
+        font-size: 0.85rem !important;
+        border-radius: 8px !important;
+      }
+      .input-large-title {
+        font-size: 1.15rem !important;
+        padding: 0.75rem 0.95rem !important;
+        border-radius: 10px !important;
+      }
+      .input-large-subtitle {
+        font-size: 0.88rem !important;
+        padding: 0.65rem 0.85rem !important;
+        border-radius: 8px !important;
+      }
+      .btn {
+        min-height: 38px !important;
+        font-size: 0.8rem !important;
+      }
+    }
   </style>
 </head>
 <body>
