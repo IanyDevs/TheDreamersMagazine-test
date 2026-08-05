@@ -700,6 +700,152 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'X / Twitter', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>', handle: '-', url: '#' },
         { name: 'Email', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>', handle: '-', url: '#' }
       ]
+    },
+    'marco-rossi': {
+      name: 'Marco Rossi',
+      role: 'Critico Cinematografico',
+      initials: 'MR',
+      badge: 'Redazione',
+      location: 'Milano, Italia',
+      bio: 'Critico accanito, specializzato in cinema d\'autore europeo, retrospettive storiche e saggi di teoria del cinema.',
+      bioExtended: 'Marco collabora con diverse riviste di settore e cura per The Dreamers Magazine la sezione dedicata al grande schermo classico e ai film d\'autore premiati nei principali festival europei.',
+      socials: [
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' },
+        { name: 'Email', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>', handle: '-', url: '#' }
+      ]
+    },
+    'giulia-bianchi': {
+      name: 'Giulia Bianchi',
+      role: 'Specialista Serie TV & Anime',
+      initials: 'GB',
+      badge: 'Redazione',
+      location: 'Torino, Italia',
+      bio: 'Grande appassionata di serie TV cult americane, drama coreani e animazione giapponese d\'avanguardia.',
+      bioExtended: 'Giulia analizza la cultura pop asiatica e la serialità televisiva contemporanea con un focus approfondito sulla sceneggiatura e la caratterizzazione dei personaggi complessi.',
+      socials: [
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+      ]
+    },
+    'alessandro-neri': {
+      name: 'Alessandro Neri',
+      role: 'Editor & Copywriter',
+      initials: 'AN',
+      badge: 'Redazione',
+      location: 'Bologna, Italia',
+      bio: 'Scrittore e curatore di testi, attento alla forma e allo stile delle recensioni che popolano il nostro magazine.',
+      bioExtended: 'Alessandro si assicura che ogni recensione e approfondimento rispetti standard qualitativi elevati ed ha un debole per il cinema indipendente americano e i registi emergenti.',
+      socials: [
+        { name: 'Email', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>', handle: '-', url: '#' }
+      ]
+    },
+    'chiara-viola': {
+      name: 'Chiara Viola',
+      role: 'Redattrice Cinema Indipendente',
+      initials: 'CV',
+      badge: 'Redazione',
+      location: 'Firenze, Italia',
+      bio: 'Sempre alla ricerca di perle nascoste e documentari d\'impatto sociale nei circuiti dei festival minori.',
+      bioExtended: 'Chiara copre l\'area dei film low-budget e della cinematografia underground, scrivendo recensioni che aiutano i lettori a scoprire gemme introvabili del cinema d\'autore.',
+      socials: [
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+      ]
+    },
+    'davide-russo': {
+      name: 'Davide Russo',
+      role: 'Critico Fantascienza & Fantasy',
+      initials: 'DR',
+      badge: 'Redazione',
+      location: 'Genova, Italia',
+      bio: 'Esperto di fantascienza classica e contemporanea, space opera, cyberpunk e narrazioni distopiche.',
+      bioExtended: 'Davide analizza come i futuri speculativi e la fantascienza riflettono la società odierna, curando saggi dedicati alle opere di Villeneuve, Nolan e alle pietre miliari del genere.',
+      socials: [
+        { name: 'X / Twitter', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>', handle: '-', url: '#' }
+      ]
+    },
+    'elena-gallo': {
+      name: 'Elena Gallo',
+      role: 'Responsabile Interviste',
+      initials: 'EG',
+      badge: 'Redazione',
+      location: 'Roma, Italia',
+      bio: 'Intervistatrice instancabile. Dialoga con attori, registi e doppiatori del panorama italiano ed estero.',
+      bioExtended: 'Grazie alla sua esperienza nel giornalismo, Elena riesce ad ottenere conversazioni intime e stimolanti, portando i lettori direttamente nel backstage del processo creativo delle produzioni moderne.',
+      socials: [
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' },
+        { name: 'Email', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>', handle: '-', url: '#' }
+      ]
+    },
+    'federico-ferrari': {
+      name: 'Federico Ferrari',
+      role: 'Inviato Festival',
+      initials: 'FF',
+      badge: 'Redazione',
+      location: 'Venezia, Italia',
+      bio: 'Inviato sul campo, segue i red carpet, le proiezioni stampa ed i panel dei festival cinematografici.',
+      bioExtended: 'Federico si muove tra Venezia, Cannes e Locarno per portare in anteprima le recensioni calde e le impressioni a caldo sui film che faranno discutere il pubblico l\'anno successivo.',
+      socials: [
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+      ]
+    },
+    'sofia-fontana': {
+      name: 'Sofia Fontana',
+      role: 'Social Media Editor',
+      initials: 'SF',
+      badge: 'Redazione',
+      location: 'Napoli, Italia',
+      bio: 'Gestisce la presenza online e il visual storytelling del magazine sulle principali piattaforme social.',
+      bioExtended: 'Sofia si occupa di creare pillole video, reel, recensioni brevi e grafiche capaci di connettere la nostra testata con una community di cinefili appassionata ed attiva sui social.',
+      socials: [
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+      ]
+    },
+    'gabriele-romano': {
+      name: 'Gabriele Romano',
+      role: 'Esperto Retro-Cinema & Cult',
+      initials: 'GR',
+      badge: 'Redazione',
+      location: 'Palermo, Italia',
+      bio: 'Amante della pellicola e del cinema analogico, collezionista e studioso delle correnti cinematografiche del passato.',
+      bioExtended: 'Gabriele cura speciali d\'archivio su pellicole vintage, B-movie, spaghetti western ed il glorioso cinema noir degli anni quaranta e cinquanta.',
+      socials: [
+        { name: 'Email', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>', handle: '-', url: '#' }
+      ]
+    },
+    'michela-bruno': {
+      name: 'Michela Bruno',
+      role: 'Recensore Horror & Thriller',
+      initials: 'MB',
+      badge: 'Redazione',
+      location: 'Bari, Italia',
+      bio: 'Coraggiosa recensitrice di horror psicologici, slasher insanguinati, sci-fi horror e thriller mozzafiato.',
+      bioExtended: 'Michela analizza la cinematografia del brivido da una prospettiva tecnica e psicologica, sviscerando l\'uso della suspense e della colonna sonora per indurre tensione nello spettatore.',
+      socials: [
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+      ]
+    },
+    'riccardo-leone': {
+      name: 'Riccardo Leone',
+      role: 'Podcaster & Creator',
+      initials: 'RL',
+      badge: 'Redazione',
+      location: 'Roma, Italia',
+      bio: 'Voce dei podcast di approfondimento del magazine. Realizza formati audio incentrati sulle ultime uscite cinematografiche.',
+      bioExtended: 'Riccardo unisce l\'amore per la radio al cinema, strutturando discussioni avvincenti con ospiti ed esperti del settore per analizzare le tendenze calde del cinema contemporaneo.',
+      socials: [
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+      ]
+    },
+    'sara-esposito': {
+      name: 'Sara Esposito',
+      role: 'Specialista Documentari',
+      initials: 'SE',
+      badge: 'Redazione',
+      location: 'Napoli, Italia',
+      bio: 'Attenta osservatrice del reale, recensisce documentari storici, inchieste giornalistiche e biografie d\'autore.',
+      bioExtended: 'Sara analizza il cinema non-fiction evidenziandone l\'importanza sociale, culturale e l\'impatto nel cinema d\'inchiesta contemporaneo.',
+      socials: [
+        { name: 'Email', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>', handle: '-', url: '#' }
+      ]
     }
   };
 
