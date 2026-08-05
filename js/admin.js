@@ -1508,9 +1508,11 @@ window.insertFormattingTag = function(tag) {
 };
 
 window.changeArticleFont = function(fontName) {
-  const textarea = document.getElementById('artContent');
-  const area = document.getElementById('liveTextPreviewArea');
-  if (!fontName) return;
+  const editor = document.getElementById('artContent');
+  if (!editor || !fontName) return;
+
+  restoreEditorSelection();
+  editor.focus();
 
   const fontFallbackMap = {
     'Inter': "'Inter', sans-serif",
@@ -1544,8 +1546,25 @@ window.changeArticleFont = function(fontName) {
 
   const fontFamilyCss = fontFallbackMap[fontName] || `'${fontName}', sans-serif`;
 
-  if (textarea) textarea.style.fontFamily = fontFamilyCss;
-  if (area) area.style.fontFamily = fontFamilyCss;
+  const sel = window.getSelection();
+  if (sel && !sel.isCollapsed) {
+    const range = sel.getRangeAt(0);
+    const span = document.createElement('span');
+    span.style.fontFamily = fontFamilyCss;
+    span.appendChild(range.extractContents());
+    range.insertNode(span);
+  } else {
+    document.execCommand('fontName', false, fontName);
+    const fontEls = editor.querySelectorAll(`font[face="${fontName}"]`);
+    fontEls.forEach(el => {
+      const span = document.createElement('span');
+      span.style.fontFamily = fontFamilyCss;
+      span.innerHTML = el.innerHTML;
+      el.parentNode.replaceChild(span, el);
+    });
+  }
+
+  window.renderLiveTextPreview();
 };
 
 window.insertSpecialTool = function(type) {
