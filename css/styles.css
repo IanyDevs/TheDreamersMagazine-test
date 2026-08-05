@@ -3165,7 +3165,7 @@ html.body-menu-open, body.body-menu-open {
   .nav-menu-wrapper .nav-link[href="serie-tv.html"]::before { content: '03' !important; }
   .nav-menu-wrapper .nav-link[href="news.html"]::before { content: '04' !important; }
   .nav-menu-wrapper .nav-link[href="approfondimenti.html"]::before { content: '05' !important; }
-  .nav-menu-wrapper .nav-link[href="tutti-gli-articoli.html"]::before { content: '06' !important; }
+  .nav-menu-wrapper .nav-link[href="interviste.html"]::before { content: '06' !important; }
   .nav-menu-wrapper .nav-link[href="informazioni.html"]::before { content: '07' !important; }
 
   .nav-menu-wrapper .nav-link::after {
