@@ -250,6 +250,18 @@
       box-shadow: 0 0 0 3px rgba(200, 90, 50, 0.25) !important;
     }
 
+    select.form-control {
+      appearance: none !important;
+      -webkit-appearance: none !important;
+      -moz-appearance: none !important;
+      background-image: url("data:image/svg+xml;utf8,<svg fill='%23C85A32' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>") !important;
+      background-repeat: no-repeat !important;
+      background-position: right 0.75rem center !important;
+      background-size: 1.25rem !important;
+      padding-right: 2rem !important;
+      cursor: pointer !important;
+    }
+
     .btn-crop-opt, .btn-ratio-opt, .btn-pos-opt, .btn-font-opt, .btn-filter-opt {
       background: var(--admin-input-bg) !important;
       color: var(--admin-text-main) !important;
@@ -1334,6 +1346,181 @@
         padding-bottom: 1rem !important;
       }
     }
+
+    /* Custom Select Component */
+    .custom-select-wrapper {
+      position: relative;
+      user-select: none;
+      width: 100%;
+    }
+    
+    .custom-select-trigger {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--admin-input-bg) !important;
+      border: 1px solid var(--admin-input-border) !important;
+      color: var(--admin-text-main) !important;
+      padding: 0.55rem 0.85rem !important;
+      border-radius: 10px !important;
+      cursor: pointer;
+      font-size: 0.82rem;
+      transition: all 0.2s ease;
+    }
+    
+    .custom-select-trigger:hover {
+      border-color: rgba(200, 90, 50, 0.4) !important;
+    }
+    
+    .custom-select-wrapper.open .custom-select-trigger {
+      border-color: var(--admin-accent) !important;
+      box-shadow: 0 0 0 3px rgba(200, 90, 50, 0.25) !important;
+    }
+    
+    .custom-select-trigger-content {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    
+    .author-avatar-mini {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-size: 0.72rem;
+      background: var(--admin-accent-gradient);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+    
+    .author-avatar-mini img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .select-arrow {
+      color: var(--admin-text-muted);
+      transition: transform 0.25s ease;
+    }
+    
+    .custom-select-wrapper.open .select-arrow {
+      transform: rotate(180deg);
+      color: var(--admin-accent);
+    }
+    
+    .custom-select-options-panel {
+      position: absolute;
+      top: calc(100% + 6px);
+      left: 0;
+      width: 100%;
+      background: var(--admin-card-bg, #1A1815) !important;
+      border: 1px solid var(--admin-card-border, rgba(225, 218, 210, 0.18)) !important;
+      border-radius: 12px !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+      z-index: 9999;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    
+    .custom-select-wrapper.open .custom-select-options-panel {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    .select-search-wrapper {
+      padding: 0.6rem;
+      border-bottom: 1px solid var(--admin-card-border);
+    }
+    
+    .select-search-input {
+      width: 100%;
+      background: var(--admin-input-bg) !important;
+      border: 1px solid var(--admin-input-border) !important;
+      color: var(--admin-text-main) !important;
+      border-radius: 8px !important;
+      padding: 0.45rem 0.65rem !important;
+      font-size: 0.8rem;
+    }
+    
+    .custom-select-options-list {
+      max-height: 240px;
+      overflow-y: auto;
+      padding: 0.4rem;
+    }
+    
+    .custom-select-options-list::-webkit-scrollbar {
+      width: 5px;
+    }
+    .custom-select-options-list::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .custom-select-options-list::-webkit-scrollbar-thumb {
+      background: rgba(200, 90, 50, 0.3);
+      border-radius: 10px;
+    }
+    
+    .custom-select-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0.6rem;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.15s ease;
+      margin-bottom: 2px;
+    }
+    
+    .custom-select-option:hover {
+      background: rgba(200, 90, 50, 0.08) !important;
+    }
+    
+    .custom-select-option.selected {
+      background: rgba(200, 90, 50, 0.16) !important;
+      border: 1px solid rgba(200, 90, 50, 0.3);
+    }
+    
+    .option-author-details {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+    }
+    
+    .option-author-meta {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      text-align: left;
+    }
+    
+    .option-author-name {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--admin-text-main);
+    }
+    
+    .option-author-role {
+      font-size: 0.68rem;
+      color: var(--admin-text-muted);
+    }
+    
+    .option-check-icon {
+      color: var(--admin-accent);
+      opacity: 0;
+      transition: opacity 0.15s ease;
+    }
+    
+    .custom-select-option.selected .option-check-icon {
+      opacity: 1;
+    }
   </style>
 </head>
 <body>
@@ -1928,9 +2115,26 @@
                     <input type="datetime-local" id="artScheduledAt" class="form-control" style="padding: 0.6rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
                   </div>
 
-                  <div style="margin-bottom: 0.5rem;">
-                    <label for="artAuthor" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Autore Articolo</label>
-                    <input type="text" id="artAuthor" class="form-control" value="Admin" style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                  <div style="margin-bottom: 0.5rem; position: relative;">
+                    <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">Autore Articolo</label>
+                    <input type="hidden" id="artAuthor" value="Redazione">
+                    
+                    <div class="custom-select-wrapper" id="customAuthorSelect">
+                      <div class="custom-select-trigger">
+                        <div class="custom-select-trigger-content">
+                          <div class="author-avatar-mini initials">R</div>
+                          <span class="selected-author-name">Redazione</span>
+                        </div>
+                        <svg class="select-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </div>
+                      
+                      <div class="custom-select-options-panel">
+                        <div class="select-search-wrapper">
+                          <input type="text" class="select-search-input" placeholder="Cerca redattore...">
+                        </div>
+                        <div class="custom-select-options-list"></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2553,6 +2757,151 @@
     document.addEventListener('DOMContentLoaded', function() {
       const saved = localStorage.getItem('admin_theme') || 'dark';
       applyAdminTheme(saved);
+
+      // --- CUSTOM SELECT COMPONENT FOR AUTHORS ---
+      const authorWrapper = document.getElementById('customAuthorSelect');
+      const authorInput = document.getElementById('artAuthor');
+      
+      if (authorWrapper && authorInput) {
+        const trigger = authorWrapper.querySelector('.custom-select-trigger');
+        const triggerContent = trigger.querySelector('.custom-select-trigger-content');
+        const searchInput = authorWrapper.querySelector('.select-search-input');
+        const optionsList = authorWrapper.querySelector('.custom-select-options-list');
+        
+        const authorsList = [
+          { name: 'Redazione', initials: 'R', image: '', role: 'Generale' },
+          { name: 'Francesco Pisapia', initials: 'FP', image: 'assets/foto/Francesco Pisapia.jpeg', role: 'Fondatore & Direttore' },
+          { name: 'Enzo Peluso', initials: 'EP', image: 'assets/foto/enzo peluso.jpeg', role: 'Co-Fondatore & ViceDirettore' },
+          { name: 'Francesca Siciliano', initials: 'FS', image: 'assets/foto/Francesca Siciliano.jpeg', role: 'Redattrice' },
+          { name: 'Sarah Bonfanti', initials: 'SB', image: 'assets/foto/Sarah Bonfanti.jpeg', role: 'Redattrice' },
+          { name: 'Benedetta de Martino', initials: 'BdM', image: 'assets/foto/Benedetta de Martino.jpeg', role: 'Redattrice' },
+          { name: 'Elena Curti', initials: 'EC', image: 'assets/foto/Elena Curti.jpeg', role: 'Redattrice' },
+          { name: 'Valerio Padoan', initials: 'VP', image: 'assets/foto/Valerio Padoan.jpeg', role: 'Redattore' },
+          { name: 'Maria Carmela Fedele', initials: 'MCF', image: 'assets/foto/Maria Carmela Fedele.jpeg', role: 'Redattrice' },
+          { name: 'Giulia Zuccolo', initials: 'GZ', image: 'assets/foto/Giulia Zuccolo.jpeg', role: 'Redattrice' },
+          { name: 'Pietro Armenante', initials: 'PA', image: 'assets/foto/Pietrro Armenante.jpeg', role: 'Collaboratore' },
+          { name: 'Gaia Fabozzo', initials: 'GF', image: 'assets/foto/Gaia Fabozzo.jpeg', role: 'Collaboratrice' },
+          { name: 'Pierluigi Esposito', initials: 'PE', image: 'assets/foto/Pierluigi Esposito.jpeg', role: 'Collaboratore' },
+          { name: 'Giulia Ricci', initials: 'GR', image: 'assets/foto/giulia ricci.jpeg', role: 'Collaboratrice' },
+          { name: 'Annapaola Ragosta', initials: 'AR', image: 'assets/foto/Annapaola Ragosta.jpeg', role: 'Collaboratrice' }
+        ];
+
+        function renderOptions(filterText = '') {
+          optionsList.innerHTML = '';
+          const filtered = authorsList.filter(a => a.name.toLowerCase().includes(filterText.toLowerCase()));
+          
+          filtered.forEach(auth => {
+            const isSelected = authorInput.value === auth.name;
+            const opt = document.createElement('div');
+            opt.className = `custom-select-option ${isSelected ? 'selected' : ''}`;
+            opt.setAttribute('data-value', auth.name);
+            
+            const avatarHtml = auth.image 
+              ? `<img src="${auth.image}" alt="${auth.name}">` 
+              : auth.initials;
+              
+            opt.innerHTML = `
+              <div class="option-author-details">
+                <div class="author-avatar-mini ${auth.image ? '' : 'initials'}">
+                  ${avatarHtml}
+                </div>
+                <div class="option-author-meta">
+                  <span class="option-author-name">${auth.name}</span>
+                  <span class="option-author-role">${auth.role}</span>
+                </div>
+              </div>
+              <svg class="option-check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            `;
+            
+            opt.addEventListener('click', function(e) {
+              e.stopPropagation();
+              selectAuthor(auth.name);
+            });
+            
+            optionsList.appendChild(opt);
+          });
+        }
+        
+        function selectAuthor(name) {
+          const auth = authorsList.find(a => a.name === name) || authorsList[0];
+          
+          const avatarHtml = auth.image 
+            ? `<img src="${auth.image}" alt="${auth.name}">` 
+            : auth.initials;
+            
+          triggerContent.innerHTML = `
+            <div class="author-avatar-mini ${auth.image ? '' : 'initials'}">
+              ${avatarHtml}
+            </div>
+            <span class="selected-author-name">${auth.name}</span>
+          `;
+          
+          authorInput.value = auth.name;
+          
+          authorInput.dispatchEvent(new Event('input'));
+          authorInput.dispatchEvent(new Event('change'));
+          
+          authorWrapper.classList.remove('open');
+          renderOptions();
+        }
+        
+        trigger.addEventListener('click', function(e) {
+          e.stopPropagation();
+          const isOpen = authorWrapper.classList.contains('open');
+          if (isOpen) {
+            authorWrapper.classList.remove('open');
+          } else {
+            authorWrapper.classList.add('open');
+            if (searchInput) {
+              searchInput.value = '';
+              searchInput.focus();
+              renderOptions();
+            }
+          }
+        });
+        
+        if (searchInput) {
+          searchInput.addEventListener('input', function() {
+            renderOptions(this.value);
+          });
+          searchInput.addEventListener('click', e => e.stopPropagation());
+        }
+        
+        document.addEventListener('click', function(e) {
+          if (!authorWrapper.contains(e.target)) {
+            authorWrapper.classList.remove('open');
+          }
+        });
+
+        // Intercept value property assignments to update visual trigger
+        const descriptor = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
+        Object.defineProperty(authorInput, 'value', {
+          get: function() {
+            return descriptor.get.call(this);
+          },
+          set: function(val) {
+            descriptor.set.call(this, val);
+            setTimeout(() => {
+              const auth = authorsList.find(a => a.name === val) || authorsList[0];
+              const avHtml = auth.image 
+                ? `<img src="${auth.image}" alt="${auth.name}">` 
+                : auth.initials;
+                
+              triggerContent.innerHTML = `
+                <div class="author-avatar-mini ${auth.image ? '' : 'initials'}">
+                  ${avHtml}
+                </div>
+                <span class="selected-author-name">${auth.name}</span>
+              `;
+              renderOptions();
+            }, 50);
+          }
+        });
+        
+        selectAuthor(authorInput.value);
+      }
 
       // Gestore click per collassare/espandere le schede su mobile
       document.addEventListener('click', function(e) {

@@ -702,7 +702,8 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: '27 anni, la mia passione inizia da bambino grazie al Giffoni Film Festival. Giro i più importanti festival europei con l’obiettivo di avvicinare quante più persone al cinema',
       image: 'assets/foto/enzo peluso.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '@enzopelusoo', url: 'https://www.instagram.com/enzopelusoo?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' },
+        { name: 'TikTok', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>', handle: '@enzopelusoo', url: 'https://www.tiktok.com/@enzopelusoo' }
       ]
     },
     'francesco-pisapia': {
@@ -710,10 +711,11 @@ document.addEventListener('DOMContentLoaded', () => {
       role: 'Fondatore-Direttore & Caporedattore',
       initials: 'FP',
       badge: 'Redattore Capo',
-      bio: 'Lavoro al sito con l’obiettivo di raccontare il cinema con passione, cura e attenzione. Ho fondato questo progetto per condividere il mio amore per il cinema e seguo con costanza i principali festival cinematografici italiani, senza perdermi le nuove uscite in sala e tutto ciò che accade nel panorama cinematografico.',
+      bio: 'Lavoro al sito con l’obiettivo di raccontare il cinema con passione, cura e attention. Ho fondato questo progetto per condividere il mio amore per il cinema e seguo con costanza i principali festival cinematografici italiani, senza perdermi le nuove uscite in sala e tutto ciò che accade nel panorama cinematografico.',
       image: 'assets/foto/Francesco Pisapia.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '@checcopisapia', url: 'https://www.instagram.com/checcopisapia?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' },
+        { name: 'TikTok', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>', handle: '@checcopisapia', url: 'https://www.tiktok.com/@checcopisapia' }
       ]
     },
     'francesca-siciliano': {
@@ -724,7 +726,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: '25 anni, laureata in DAMS. Da 4 anni partecipo ai principali festival cinematografici italiani e internazionali dove posso vivere la mia passione per il cinema a 360º. Scrivere per The Dreamers Magazine significa per me avere la possibilità di approfondire ogni giorno le mie conoscenze nel meraviglioso ambito dell’arte cinematografica.',
       image: 'assets/foto/Francesca Siciliano.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '@_francescasiciliano_', url: 'https://www.instagram.com/_francescasiciliano_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' }
       ]
     },
     'sarah-bonfanti': {
@@ -735,7 +737,8 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: '21 anni, laureata in Comunicazione, Media e Pubblicità. Passo il tempo a guardare film, parlarne e fare la professional fangirl. Scrivo per The Dreamers Magazine fin dagli inizi e ho un talento particolare per perdere la cognizione del tempo quando c\'è una news di cinema da inseguire.',
       image: 'assets/foto/Sarah Bonfanti.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '@sarah_bonfantii_', url: 'https://www.instagram.com/sarah_bonfantii_?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' },
+        { name: 'TikTok', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>', handle: '@sarah.bonfanti', url: 'https://www.tiktok.com/@sarah.bonfanti' }
       ]
     },
     'Benedetta de Martino': {
@@ -746,7 +749,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: 'Tra una colonna sonora indimenticabile e una sala cinematografica: è lì che mi trovate. Vivo di cinema e musica: amo raccontare le emozioni che nascono quando immagini e note si incontrano. Scrivo per condividere questa crescente passione.',
       image: 'assets/foto/Benedetta de Martino.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '@bbenniluu', url: 'https://www.instagram.com/bbenniluu?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' }
       ]
     },
     'Elena Curti': {
@@ -757,7 +760,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: 'Sono una ragazza sulla ventina che sogna il cinema, non quello d\'autore né quello mainstream ma il cinema che ti fa viaggiare con la fantasia, vivere nuove esperienze, senza troppe pretese. Mi piace viaggiare e conoscere nuove culture. Parlo inglese, coreano e un pochito di spagnolo.',
       image: 'assets/foto/Elena Curti.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '@eelecurti', url: 'https://www.instagram.com/eelecurti?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' }
       ]
     },
     'Valerio Padoan': {
@@ -768,7 +771,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: 'Mi piace viaggiare con la fantasia ma sempre mantenendo i piedi per terra e uno sguardo sulla realtà. Studio cinema perché amo le storie e gli infiniti modi in cui possono essere rappresentate sul grande schermo. Scrivere per The Dreamers Magazine mi dà la possibilità di approfondire questo mondo.',
       image: 'assets/foto/Valerio Padoan.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '@valerio.padoan', url: 'https://www.instagram.com/valerio.padoan/?utm_source=ig_web_button_share_sheet' }
       ]
     },
     'Maria Carmela Fedele': {
@@ -779,7 +782,8 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: 'Studio musica, una passione che condivido con il cinema e che considero un linguaggio capace di raccontare emozioni e persone. Oltre a scrivere articoli, gestisco la pagina X (Twitter) del Magazine, seguendo e condividendo le ultime novità sul mondo del cinema.',
       image: 'assets/foto/Maria Carmela Fedele.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '@mar.lb0ro777', url: 'https://www.instagram.com/mar.lb0ro777?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' },
+        { name: 'TikTok', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>', handle: '@mar.lb0ro777', url: 'https://www.tiktok.com/@mar.lb0ro777' }
       ]
     },
     'Giulia Zuccolo': {
@@ -790,7 +794,8 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: 'Classe 2002, cresciuta tra videocassette e il genere horror, ho sviluppato fin da piccola una passione per il cinema. Anche se il mio percorso mi ha portato nel sociale, continuo a credere che il cinema sia uno dei modi più autentici e affascinanti per raccontare la propria storia: sullo schermo come nella vita, può lasciare il segno',
       image: 'assets/foto/Giulia Zuccolo.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '@itsgiuliaz', url: 'https://www.instagram.com/itsgiuliaz?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' },
+        { name: 'TikTok', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>', handle: '@boludaenlavida', url: 'https://www.tiktok.com/@boludaenlavida' }
       ]
     },
     'Pietro Armenante': {
@@ -801,7 +806,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: 'Vivo letteralmente di pane e cinema. La mia grande passione per il cinema mi ha sempre spinto a confrontarmi con chiunque condividesse questo amore per la settima arte. E quindi, eccomi qui.',
       image: 'assets/foto/Pietrro Armenante.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '@_pieeee__', url: 'https://www.instagram.com/_pieeee__?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' }
       ]
     },
     'Gaia Fabozzo': {
@@ -812,7 +817,8 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: '21 anni, amo il cinema perché è il mio rifugio, mi piace imparare da esso e immergermi in nuove vite e storie. Spero che qui possiate incuriosirvi e amare il cinema con me',
       image: 'assets/foto/Gaia Fabozzo.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '@gaiafabozzoo', url: 'https://www.instagram.com/gaiafabozzoo?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' },
+        { name: 'TikTok', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>', handle: '@gaiafabozzo', url: 'https://www.tiktok.com/@gaiafabozzo' }
       ]
     },
     'Pierluigi Esposito': {
@@ -823,7 +829,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: '22 anni, reputo che il cinema e la musica siano importantissimi mezzi di comunicazione e forme d’arte che ci permettono di esprimere sentimenti complessi e sopravvivere. È per questo che parlarne è necessario.',
       image: 'assets/foto/Pierluigi Esposito.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '@pierluigiespositoo_', url: 'https://www.instagram.com/pierluigiespositoo_/?utm_source=ig_web_button_share_sheet' }
       ]
     },
     'Giulia Ricci': {
@@ -834,7 +840,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: 'Appassionata di cinema fin dall\'infanzia grazie alla passione trasmessa dai nonni. Ad oggi studentessa in Scienze della Comunicazione con il sogno di poter collaborare con diverse testate giornalistiche e poter continuare a parlare di cinema ed intrattenimento',
       image: 'assets/foto/giulia ricci.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '@riccigiuliw', url: 'https://www.instagram.com/riccigiuliw/?utm_source=ig_web_button_share_sheet' }
       ]
     },
     'Annapaola Ragosta': {
@@ -845,7 +851,8 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: '24 anni, il mio amore per il cinema nasce da bambina grazie alle grandi interpretazioni di Sophia Loren e in seguito Cate Blanchett. Partecipo ai più importanti festival con l’obiettivo e la speranza di trasmettere la mia passione e che un giorno questa possa diventare il mio principale lavoro',
       image: 'assets/foto/Annapaola Ragosta.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '@annapaolaerre', url: 'https://www.instagram.com/annapaolaerre?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' },
+        { name: 'TikTok', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>', handle: '@annapaolarago', url: 'https://www.tiktok.com/@annapaolarago' }
       ]
     }
   };

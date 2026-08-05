@@ -67,7 +67,7 @@ if (isset($pdo)) {
                 `username` VARCHAR(100) NOT NULL UNIQUE,
                 `email` VARCHAR(150) NOT NULL UNIQUE,
                 `password` VARCHAR(255) NOT NULL,
-                `name` VARCHAR(150) NOT NULL DEFAULT 'Francesco Pisapia',
+                `name` VARCHAR(150) NOT NULL DEFAULT 'Redazione',
                 `role` VARCHAR(50) NOT NULL DEFAULT 'owner',
                 `avatar` TEXT DEFAULT NULL,
                 `status` VARCHAR(50) NOT NULL DEFAULT 'active',
@@ -76,16 +76,16 @@ if (isset($pdo)) {
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
         }
 
-        // Assicura che l'utente ufficiale Francesco Pisapia con password123 sia l'unico presente nel DB
+        // Assicura che l'utente ufficiale Redazione con password123 sia l'unico presente nel DB
         $stmtCheck = $pdo->prepare("SELECT * FROM `tdm_users` WHERE `email` = ?");
         $stmtCheck->execute(['admin@thedreamersmagazine.it']);
         $existingAdmin = $stmtCheck->fetch();
 
         if (!$existingAdmin) {
             $stmtIns = $pdo->prepare("INSERT INTO `tdm_users` (`username`, `email`, `password`, `name`, `role`, `status`) VALUES (?, ?, ?, ?, ?, 'active')");
-            $stmtIns->execute(['admin', 'admin@thedreamersmagazine.it', 'password123', 'Francesco Pisapia', 'owner']);
+            $stmtIns->execute(['admin', 'admin@thedreamersmagazine.it', 'password123', 'Redazione', 'owner']);
         } else if ($existingAdmin['password'] !== 'password123') {
-            $stmtUpd = $pdo->prepare("UPDATE `tdm_users` SET `password` = 'password123', `name` = 'Francesco Pisapia', `role` = 'owner' WHERE `email` = ?");
+            $stmtUpd = $pdo->prepare("UPDATE `tdm_users` SET `password` = 'password123', `name` = 'Redazione', `role` = 'owner' WHERE `email` = ?");
             $stmtUpd->execute(['admin@thedreamersmagazine.it']);
         }
     } catch (Exception $e) {
@@ -130,7 +130,7 @@ if ($email === 'admin@thedreamersmagazine.it' && $password === 'password123') {
         'message' => 'Autenticazione effettuata con successo',
         'user' => [
             'id' => 1,
-            'name' => 'Francesco Pisapia',
+            'name' => 'Redazione',
             'email' => 'admin@thedreamersmagazine.it',
             'role' => 'owner'
         ]

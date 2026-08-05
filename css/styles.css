@@ -2600,21 +2600,7 @@ button, input, textarea {
 
 
 
-/* Elemento decorativo per non lasciare la card vuota */
-.team-card-role::after {
-  content: '';
-  display: block;
-  width: 40px;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, var(--brand-primary), transparent);
-  margin: 1.25rem auto 0 auto;
-  transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
-}
 
-.team-card-trigger:hover .team-card-role::after {
-  width: 90px;
-  background: linear-gradient(90deg, transparent, var(--brand-accent), transparent);
-}
 
 .team-card-btn-action {
   display: inline-flex;

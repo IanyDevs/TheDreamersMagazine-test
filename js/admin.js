@@ -1960,7 +1960,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem(AUTH_KEY, 'true');
         sessionStorage.setItem(AUTH_KEY, 'true');
         checkAuth();
-        showToast('Benvenuto ' + (data.user ? data.user.name : 'Francesco Pisapia') + '!');
+        showToast('Benvenuto ' + (data.user ? data.user.name : 'Redazione') + '!');
         if (loginError) loginError.style.display = 'none';
       } else {
         if (loginError) {
@@ -1973,7 +1973,7 @@ document.addEventListener('DOMContentLoaded', () => {
         localStorage.setItem(AUTH_KEY, 'true');
         sessionStorage.setItem(AUTH_KEY, 'true');
         checkAuth();
-        showToast('Benvenuto Francesco Pisapia!');
+        showToast('Benvenuto Redazione!');
         if (loginError) loginError.style.display = 'none';
       } else {
         if (loginError) {
@@ -3354,7 +3354,7 @@ ${escapeHtml(msg.message)}
     if (artSubCategoryInput) artSubCategoryInput.value = article.subCategory || '';
     
     const authorEl = document.getElementById('artAuthor');
-    if (authorEl) authorEl.value = article.author || 'Admin';
+    if (authorEl) authorEl.value = article.author || 'Redazione';
 
     const readTimeEl = document.getElementById('artReadTime');
     if (readTimeEl) readTimeEl.value = article.readTime || '3 min';
@@ -3527,7 +3527,7 @@ ${escapeHtml(msg.message)}
       const slug = artSlugInput && artSlugInput.value ? artSlugInput.value.trim() : generateSlug(title);
       const category = artCategorySelect ? artCategorySelect.value : 'News';
       const subCategory = artSubCategoryInput ? artSubCategoryInput.value.trim() : '';
-      const author = artAuthorInput ? artAuthorInput.value.trim() : 'Francesco Pisapia';
+      const author = artAuthorInput ? artAuthorInput.value.trim() : 'Redazione';
       const artContentEl = document.getElementById('artContent');
       const content = artContentEl ? (artContentEl.innerHTML || artContentEl.value || '').trim() : '';
 

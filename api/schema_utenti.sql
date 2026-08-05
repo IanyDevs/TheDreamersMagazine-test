@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `tdm_users` (
   `username` VARCHAR(100) NOT NULL UNIQUE COMMENT 'Nome utente o nickname',
   `email` VARCHAR(150) NOT NULL UNIQUE COMMENT 'Indirizzo email di login',
   `password` VARCHAR(255) NOT NULL COMMENT 'Password criptata con password_hash() Bcrypt o testo semplice',
-  `name` VARCHAR(150) NOT NULL DEFAULT 'Francesco Pisapia' COMMENT 'Nome completo per la firma degli articoli',
+  `name` VARCHAR(150) NOT NULL DEFAULT 'Redazione' COMMENT 'Nome completo per la firma degli articoli',
   `role` ENUM('admin','owner','editor', 'author') NOT NULL DEFAULT 'owner' COMMENT 'Ruolo nel sistema',
   `avatar` TEXT DEFAULT NULL COMMENT 'URL foto profilo dell\'autore',
   `status` ENUM('active', 'disabled') NOT NULL DEFAULT 'active' COMMENT 'Stato account',
@@ -18,9 +18,9 @@ CREATE TABLE IF NOT EXISTS `tdm_users` (
 
 -- Inserimento Unico Utente Admin Ufficiale
 INSERT INTO `tdm_users` (`username`, `email`, `password`, `name`, `role`, `status`) 
-VALUES ('admin', 'admin@thedreamersmagazine.it', 'password123', 'Francesco Pisapia', 'owner', 'active')
+VALUES ('admin', 'admin@thedreamersmagazine.it', 'password123', 'Redazione', 'owner', 'active')
 ON DUPLICATE KEY UPDATE 
   `password` = 'password123',
-  `name` = 'Francesco Pisapia',
+  `name` = 'Redazione',
   `role` = 'owner',
   `status` = 'active';
