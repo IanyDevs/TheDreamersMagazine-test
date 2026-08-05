@@ -1242,9 +1242,49 @@
       .manage-filters-container > * {
         width: 100% !important;
       }
-
-
-
+      /* Collapsible sidebar cards on mobile */
+      .collapsible-card-mobile .section-title-wrapper {
+        cursor: pointer !important;
+        position: relative !important;
+        user-select: none !important;
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+        border-bottom: none !important;
+      }
+      
+      .collapsible-card-mobile .section-title-wrapper::after {
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-right: 2px solid var(--text-secondary);
+        border-bottom: 2px solid var(--text-secondary);
+        transform: rotate(45deg);
+        transition: transform 0.3s ease;
+        margin-left: auto;
+      }
+      
+      .collapsible-card-mobile.collapsed .section-title-wrapper::after {
+        transform: rotate(-135deg);
+      }
+      
+      .collapsible-card-mobile.collapsed .section-content {
+        max-height: 0 !important;
+        overflow: hidden !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        margin: 0 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
+      
+      .collapsible-card-mobile .section-content {
+        max-height: 2000px;
+        overflow: visible;
+        margin-top: 1rem !important;
+        transition: max-height 0.35s ease-out, opacity 0.35s ease-out, padding 0.35s ease-out;
+        opacity: 1;
+      }
       /* Inbox Split Grid scroll on mobile */
       #inboxSplitGrid {
         display: flex !important;
@@ -1702,7 +1742,7 @@
               </div>
 
               <!-- 3. SUITE SEO AVANZATA & SIMULATORI -->
-              <div class="admin-card-section">
+              <div class="admin-card-section collapsible-card-mobile">
                 <div class="section-title-wrapper">
                   <div class="section-title-text">
                     <span class="section-badge-number">3</span>
@@ -1814,7 +1854,7 @@
             <div style="display: flex; flex-direction: column; gap: 1.5rem;">
 
               <!-- CARD STATO & PUBBLICAZIONE -->
-              <div class="admin-card-section">
+              <div class="admin-card-section collapsible-card-mobile">
                 <div class="section-title-wrapper">
                   <div class="section-title-text">
                     <span class="section-badge-number">4</span>
@@ -1846,7 +1886,7 @@
               </div>
 
               <!-- CARD IMMAGINE DI COPERTINA -->
-              <div class="admin-card-section">
+              <div class="admin-card-section collapsible-card-mobile">
                 <div class="section-title-wrapper">
                   <div class="section-title-text">
                     <span class="section-badge-number">5</span>
@@ -1903,7 +1943,7 @@
               </div>
 
               <!-- CARD TASSONOMIE E VETRINA -->
-              <div class="admin-card-section">
+              <div class="admin-card-section collapsible-card-mobile">
                 <div class="section-title-wrapper">
                   <div class="section-title-text">
                     <span class="section-badge-number">6</span>
@@ -2463,6 +2503,17 @@
     document.addEventListener('DOMContentLoaded', function() {
       const saved = localStorage.getItem('admin_theme') || 'dark';
       applyAdminTheme(saved);
+
+      // Gestore click per collassare/espandere le schede su mobile
+      document.addEventListener('click', function(e) {
+        const header = e.target.closest('.collapsible-card-mobile .section-title-wrapper');
+        if (header && window.innerWidth <= 768) {
+          const card = header.closest('.collapsible-card-mobile');
+          if (card) {
+            card.classList.toggle('collapsed');
+          }
+        }
+      });
     });
   </script>
 </body>
