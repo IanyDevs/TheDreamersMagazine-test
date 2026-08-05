@@ -1222,6 +1222,75 @@
         padding: 0.5rem 0 !important;
         min-height: 38px !important;
       }
+
+      /* Stack filters and search inputs on mobile */
+      .manage-filters-container {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 1rem !important;
+        gap: 0.75rem !important;
+        border-radius: 14px !important;
+      }
+      .manage-filters-container > * {
+        width: 100% !important;
+      }
+
+      /* Collapsible sidebar cards on mobile */
+      .collapsible-card-mobile .section-title-wrapper {
+        cursor: pointer !important;
+        position: relative !important;
+        user-select: none !important;
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+        border-bottom: none !important;
+      }
+      
+      .collapsible-card-mobile .section-title-wrapper::after {
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        border-right: 2px solid var(--text-secondary);
+        border-bottom: 2px solid var(--text-secondary);
+        transform: rotate(45deg);
+        transition: transform 0.3s ease;
+        margin-left: auto;
+      }
+      
+      .collapsible-card-mobile.collapsed .section-title-wrapper::after {
+        transform: rotate(-135deg);
+      }
+      
+      .collapsible-card-mobile.collapsed .section-content {
+        max-height: 0 !important;
+        overflow: hidden !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
+        margin: 0 !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+      }
+      
+      .collapsible-card-mobile .section-content {
+        max-height: 2000px;
+        overflow: visible;
+        margin-top: 1rem !important;
+        transition: max-height 0.35s ease-out, opacity 0.35s ease-out, padding 0.35s ease-out;
+        opacity: 1;
+      }
+
+      /* Inbox Split Grid scroll on mobile */
+      #inboxSplitGrid {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 1.25rem !important;
+      }
+      #inboxSplitGrid > div:first-child {
+        max-height: 280px !important;
+        overflow-y: auto !important;
+        border-bottom: 2px solid var(--border-color) !important;
+        padding-bottom: 1rem !important;
+      }
     }
   </style>
 </head>
@@ -1667,107 +1736,109 @@
               </div>
 
               <!-- 3. SUITE SEO AVANZATA & SIMULATORI -->
-              <div class="admin-card-section">
+              <div class="admin-card-section collapsible-card-mobile collapsed">
                 <div class="section-title-wrapper">
                   <div class="section-title-text">
                     <span class="section-badge-number">3</span>
                     Ottimizzazione SEO & Anteprima Social
                   </div>
-                  <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Google & Social Media</span>
+                  <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;" class="hide-mobile">Google & Social Media</span>
                 </div>
 
-                <div class="seo-inputs-grid">
-                  <div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
-                      <label for="artSeoTitle" style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);">SEO Title</label>
-                      <span style="font-size: 0.72rem; color: var(--text-muted);"><span id="seoTitleCounter">0</span> / 60 car.</span>
-                    </div>
-                    <input type="text" id="artSeoTitle" class="form-control" placeholder="Titolo per i motori di ricerca..." style="padding: 0.6rem 0.8rem; font-size: 0.82rem; border-radius: 8px;">
-                  </div>
-
-                  <div>
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
-                      <label for="artMetaDescription" style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);">Meta Description</label>
-                      <span style="font-size: 0.72rem; color: var(--text-muted);"><span id="metaDescCounter">0</span> / 160 car.</span>
-                    </div>
-                    <input type="text" id="artMetaDescription" class="form-control" placeholder="Sommario per i risultati di ricerca..." style="padding: 0.6rem 0.8rem; font-size: 0.82rem; border-radius: 8px;">
-                  </div>
-                </div>
-
-                <div class="seo-meta-grid">
-                  <div>
-                    <label for="artKeywords" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Keywords Meta</label>
-                    <input type="text" id="artKeywords" class="form-control" placeholder="cinema, film..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
-                  </div>
-                  <div>
-                    <label for="artCanonicalUrl" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Canonical URL</label>
-                    <input type="url" id="artCanonicalUrl" class="form-control" placeholder="https://..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
-                  </div>
-                  <div>
-                    <label for="artRobots" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Meta Robots</label>
-                    <select id="artRobots" class="form-control" style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
-                      <option value="index, follow" selected>index, follow</option>
-                      <option value="noindex, follow">noindex, follow</option>
-                      <option value="noindex, nofollow">noindex, nofollow</option>
-                    </select>
-                  </div>
-                </div>
-
-                <!-- Open Graph -->
-                <div class="seo-og-grid">
-                  <div>
-                    <label for="artOgTitle" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Open Graph Title</label>
-                    <input type="text" id="artOgTitle" class="form-control" placeholder="Titolo per Facebook/LinkedIn..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
-                  </div>
-                  <div>
-                    <label for="artOgDescription" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Open Graph Description</label>
-                    <input type="text" id="artOgDescription" class="form-control" placeholder="Descrizione per i social..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
-                  </div>
-                </div>
-
-                <!-- SIMULATORI GOOGLE & SOCIAL -->
-                <div class="seo-simulators-grid" style="border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
-                  
-                  <!-- Google SERP -->
-                  <div style="background: #ffffff; padding: 1.1rem; border-radius: 12px; color: #202124; font-family: arial, sans-serif;">
-                    <div style="font-size: 0.7rem; font-weight: 700; color: #70757a; text-transform: uppercase; margin-bottom: 0.65rem; letter-spacing: 0.05em;">
-                      Anteprima Risultato Google (SERP)
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.2rem;">
-                      <div style="width: 16px; height: 16px; border-radius: 50%; background: #C85A32; color: #fff; font-size: 0.6rem; display: flex; align-items: center; justify-content: center; font-weight: 800;">D</div>
-                      <div style="font-size: 0.75rem; color: #202124; line-height: 1.2;">The Dreamers Magazine</div>
-                    </div>
-                    <div style="font-size: 0.7rem; color: #4d5156; word-break: break-all; margin-bottom: 0.25rem;" id="serpPreviewUrl">https://thedreamersmagazine.it › articolo</div>
-                    <h3 id="serpPreviewTitle" style="font-size: 1.05rem; color: #1a0dab; font-weight: 400; margin: 0.2rem 0; line-height: 1.3;">
-                      Titolo dell'Articolo su Google
-                    </h3>
-                    <p id="serpPreviewDesc" style="font-size: 0.78rem; color: #4d5156; margin: 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                      Inserisci la Meta Description per vedere l'anteprima del testo esatto su Google.
-                    </p>
-                  </div>
-
-                  <!-- Social Card -->
-                  <div style="background: #18191a; padding: 1rem; border-radius: 12px; border: 1px solid #3a3b3c; color: #e4e6eb;">
-                    <div style="font-size: 0.7rem; font-weight: 700; color: #b0b3b8; text-transform: uppercase; margin-bottom: 0.65rem; letter-spacing: 0.05em;">
-                      Anteprima Condivisione Social
-                    </div>
-                    <div style="border-radius: 10px; overflow: hidden; background: #242526; border: 1px solid #3a3b3c;">
-                      <div style="height: 120px; background: #3a3b3c; overflow: hidden; position: relative;" id="socialPreviewImgBox">
-                        <img id="socialPreviewImg" src="" alt="" style="width: 100%; height: 100%; object-fit: cover; display: none;">
-                        <div id="socialPreviewImgPlaceholder" style="display: flex; align-items: center; justify-content: center; height: 100%; color: #b0b3b8; font-size: 0.75rem;">Copertina Social</div>
+                <div class="section-content">
+                  <div class="seo-inputs-grid">
+                    <div>
+                      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                        <label for="artSeoTitle" style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);">SEO Title</label>
+                        <span style="font-size: 0.72rem; color: var(--text-muted);"><span id="seoTitleCounter">0</span> / 60 car.</span>
                       </div>
-                      <div style="padding: 0.75rem;">
-                        <div style="font-size: 0.68rem; color: #b0b3b8; text-transform: uppercase; font-weight: 600;" id="socialPreviewDomain">THEDREAMERSMAGAZINE.IT</div>
-                        <div id="socialPreviewTitle" style="font-size: 0.88rem; font-weight: 700; color: #e4e6eb; margin: 0.2rem 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                          Titolo Articolo
-                        </div>
-                        <div id="socialPreviewDesc" style="font-size: 0.78rem; color: #b0b3b8; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
-                          Descrizione di anteprima della scheda social...
-                        </div>
+                      <input type="text" id="artSeoTitle" class="form-control" placeholder="Titolo per i motori di ricerca..." style="padding: 0.6rem 0.8rem; font-size: 0.82rem; border-radius: 8px;">
+                    </div>
+
+                    <div>
+                      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                        <label for="artMetaDescription" style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);">Meta Description</label>
+                        <span style="font-size: 0.72rem; color: var(--text-muted);"><span id="metaDescCounter">0</span> / 160 car.</span>
                       </div>
+                      <input type="text" id="artMetaDescription" class="form-control" placeholder="Sommario per i risultati di ricerca..." style="padding: 0.6rem 0.8rem; font-size: 0.82rem; border-radius: 8px;">
                     </div>
                   </div>
 
+                  <div class="seo-meta-grid">
+                    <div>
+                      <label for="artKeywords" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Keywords Meta</label>
+                      <input type="text" id="artKeywords" class="form-control" placeholder="cinema, film..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                    </div>
+                    <div>
+                      <label for="artCanonicalUrl" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Canonical URL</label>
+                      <input type="url" id="artCanonicalUrl" class="form-control" placeholder="https://..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                    </div>
+                    <div>
+                      <label for="artRobots" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Meta Robots</label>
+                      <select id="artRobots" class="form-control" style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                        <option value="index, follow" selected>index, follow</option>
+                        <option value="noindex, follow">noindex, follow</option>
+                        <option value="noindex, nofollow">noindex, nofollow</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- Open Graph -->
+                  <div class="seo-og-grid">
+                    <div>
+                      <label for="artOgTitle" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Open Graph Title</label>
+                      <input type="text" id="artOgTitle" class="form-control" placeholder="Titolo per Facebook/LinkedIn..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                    </div>
+                    <div>
+                      <label for="artOgDescription" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Open Graph Description</label>
+                      <input type="text" id="artOgDescription" class="form-control" placeholder="Descrizione per i social..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                    </div>
+                  </div>
+
+                  <!-- SIMULATORI GOOGLE & SOCIAL -->
+                  <div class="seo-simulators-grid" style="border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
+                    
+                    <!-- Google SERP -->
+                    <div style="background: #ffffff; padding: 1.1rem; border-radius: 12px; color: #202124; font-family: arial, sans-serif;">
+                      <div style="font-size: 0.7rem; font-weight: 700; color: #70757a; text-transform: uppercase; margin-bottom: 0.65rem; letter-spacing: 0.05em;">
+                        Anteprima Risultato Google (SERP)
+                      </div>
+                      <div style="display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.2rem;">
+                        <div style="width: 16px; height: 16px; border-radius: 50%; background: #C85A32; color: #fff; font-size: 0.6rem; display: flex; align-items: center; justify-content: center; font-weight: 800;">D</div>
+                        <div style="font-size: 0.75rem; color: #202124; line-height: 1.2;">The Dreamers Magazine</div>
+                      </div>
+                      <div style="font-size: 0.7rem; color: #4d5156; word-break: break-all; margin-bottom: 0.25rem;" id="serpPreviewUrl">https://thedreamersmagazine.it › articolo</div>
+                      <h3 id="serpPreviewTitle" style="font-size: 1.05rem; color: #1a0dab; font-weight: 400; margin: 0.2rem 0; line-height: 1.3;">
+                        Titolo dell'Articolo su Google
+                      </h3>
+                      <p id="serpPreviewDesc" style="font-size: 0.78rem; color: #4d5156; margin: 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                        Inserisci la Meta Description per vedere l'anteprima del testo esatto su Google.
+                      </p>
+                    </div>
+
+                    <!-- Social Card -->
+                    <div style="background: #18191a; padding: 1rem; border-radius: 12px; border: 1px solid #3a3b3c; color: #e4e6eb;">
+                      <div style="font-size: 0.7rem; font-weight: 700; color: #b0b3b8; text-transform: uppercase; margin-bottom: 0.65rem; letter-spacing: 0.05em;">
+                        Anteprima Condivisione Social
+                      </div>
+                      <div style="border-radius: 10px; overflow: hidden; background: #242526; border: 1px solid #3a3b3c;">
+                        <div style="height: 120px; background: #3a3b3c; overflow: hidden; position: relative;" id="socialPreviewImgBox">
+                          <img id="socialPreviewImg" src="" alt="" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+                          <div id="socialPreviewImgPlaceholder" style="display: flex; align-items: center; justify-content: center; height: 100%; color: #b0b3b8; font-size: 0.75rem;">Copertina Social</div>
+                        </div>
+                        <div style="padding: 0.75rem;">
+                          <div style="font-size: 0.68rem; color: #b0b3b8; text-transform: uppercase; font-weight: 600;" id="socialPreviewDomain">THEDREAMERSMAGAZINE.IT</div>
+                          <div id="socialPreviewTitle" style="font-size: 0.88rem; font-weight: 700; color: #e4e6eb; margin: 0.2rem 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                            Titolo Articolo
+                          </div>
+                          <div id="socialPreviewDesc" style="font-size: 0.78rem; color: #b0b3b8; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                            Descrizione di anteprima della scheda social...
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
                 </div>
               </div>
 
@@ -1777,7 +1848,7 @@
             <div style="display: flex; flex-direction: column; gap: 1.5rem;">
 
               <!-- CARD STATO & PUBBLICAZIONE -->
-              <div class="admin-card-section">
+              <div class="admin-card-section collapsible-card-mobile collapsed">
                 <div class="section-title-wrapper">
                   <div class="section-title-text">
                     <span class="section-badge-number">4</span>
@@ -1785,29 +1856,31 @@
                   </div>
                 </div>
 
-                <div style="margin-bottom: 1rem;">
-                  <label for="artWorkflowStatus" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">Stato Articolo</label>
-                  <select id="artWorkflowStatus" class="form-control" style="padding: 0.6rem 0.75rem; font-size: 0.82rem; border-radius: 8px;">
-                    <option value="published" selected>Pubblicato (Visibile)</option>
-                    <option value="draft">Bozza (Privato)</option>
-                    <option value="review">In Revisione</option>
-                    <option value="archived">Archiviato</option>
-                  </select>
-                </div>
+                <div class="section-content">
+                  <div style="margin-bottom: 1rem;">
+                    <label for="artWorkflowStatus" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">Stato Articolo</label>
+                    <select id="artWorkflowStatus" class="form-control" style="padding: 0.6rem 0.75rem; font-size: 0.82rem; border-radius: 8px;">
+                      <option value="published" selected>Pubblicato (Visibile)</option>
+                      <option value="draft">Bozza (Privato)</option>
+                      <option value="review">In Revisione</option>
+                      <option value="archived">Archiviato</option>
+                    </select>
+                  </div>
 
-                <div style="margin-bottom: 1rem;">
-                  <label for="artScheduledAt" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">Programmazione Data e Ora</label>
-                  <input type="datetime-local" id="artScheduledAt" class="form-control" style="padding: 0.6rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
-                </div>
+                  <div style="margin-bottom: 1rem;">
+                    <label for="artScheduledAt" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">Programmazione Data e Ora</label>
+                    <input type="datetime-local" id="artScheduledAt" class="form-control" style="padding: 0.6rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                  </div>
 
-                <div style="margin-bottom: 0.5rem;">
-                  <label for="artAuthor" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Autore Articolo</label>
-                  <input type="text" id="artAuthor" class="form-control" value="Admin" style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                  <div style="margin-bottom: 0.5rem;">
+                    <label for="artAuthor" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Autore Articolo</label>
+                    <input type="text" id="artAuthor" class="form-control" value="Admin" style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                  </div>
                 </div>
               </div>
 
               <!-- CARD IMMAGINE DI COPERTINA -->
-              <div class="admin-card-section">
+              <div class="admin-card-section collapsible-card-mobile collapsed">
                 <div class="section-title-wrapper">
                   <div class="section-title-text">
                     <span class="section-badge-number">5</span>
@@ -1815,97 +1888,104 @@
                   </div>
                 </div>
 
-                <div class="file-upload-card" id="fileUploadDropzone" style="position: relative; border: 2px dashed rgba(200, 90, 50, 0.4); padding: 1.25rem; text-align: center; border-radius: 14px; background: var(--bg-primary); margin-bottom: 0.85rem; cursor: pointer;">
-                  <input type="file" id="artFileInput" accept="image/png, image/jpeg, image/jpg, image/webp, image/gif, image/bmp, image/avif, image/svg+xml, .png, .jpg, .jpeg, .webp, .gif, .bmp, .avif, .svg" class="file-input-hidden" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10;">
-                  <div style="font-weight: 700; color: var(--admin-text-main, #ffffff); font-size: 0.85rem; margin-bottom: 0.2rem; pointer-events: none;">
-                    Drag & Drop File
+                <div class="section-content">
+                  <div class="file-upload-card" id="fileUploadDropzone" style="position: relative; border: 2px dashed rgba(200, 90, 50, 0.4); padding: 1.25rem; text-align: center; border-radius: 14px; background: var(--bg-primary); margin-bottom: 0.85rem; cursor: pointer;">
+                    <input type="file" id="artFileInput" accept="image/png, image/jpeg, image/jpg, image/webp, image/gif, image/bmp, image/avif, image/svg+xml, .png, .jpg, .jpeg, .webp, .gif, .bmp, .avif, .svg" class="file-input-hidden" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10;">
+                    <div style="font-weight: 700; color: var(--admin-text-main, #ffffff); font-size: 0.85rem; margin-bottom: 0.2rem; pointer-events: none;">
+                      Drag & Drop File
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem; pointer-events: none;">
+                      oppure <span style="color: #e05a2b; text-decoration: underline; cursor: pointer;">sfoglia i file</span>
+                    </div>
+                    <div style="font-size: 0.68rem; color: var(--text-muted); opacity: 0.8; pointer-events: none;">
+                      Formati: JPG, PNG, WebP, AVIF, GIF, BMP, SVG
+                    </div>
+                    <div id="fileSelectedBadge" style="display: none; margin-top: 0.5rem; padding: 0.25rem 0.65rem; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #34d399; border-radius: 9999px; font-size: 0.72rem; font-weight: 600; pointer-events: none;"></div>
                   </div>
-                  <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem; pointer-events: none;">
-                    oppure <span style="color: #e05a2b; text-decoration: underline; cursor: pointer;">sfoglia i file</span>
-                  </div>
-                  <div style="font-size: 0.68rem; color: var(--text-muted); opacity: 0.8; pointer-events: none;">
-                    Formati: JPG, PNG, WebP, AVIF, GIF, BMP, SVG
-                  </div>
-                  <div id="fileSelectedBadge" style="display: none; margin-top: 0.5rem; padding: 0.25rem 0.65rem; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #34d399; border-radius: 9999px; font-size: 0.72rem; font-weight: 600; pointer-events: none;"></div>
-                </div>
 
-                <div style="margin-bottom: 0.85rem;">
-                  <label for="artImage" style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">URL Immagine Online / Data:</label>
-                  <input type="text" id="artImage" class="form-control" placeholder="https://..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
-                </div>
+                  <div style="margin-bottom: 0.85rem;">
+                    <label for="artImage" style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">URL Immagine Online / Data:</label>
+                    <input type="text" id="artImage" class="form-control" placeholder="https://..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                  </div>
 
-                <div class="image-preview-box" id="imgPreviewBox" style="height: 160px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; background: var(--bg-primary); overflow: hidden; position: relative; margin-bottom: 0.85rem;">
-                  <span id="previewPlaceholder" style="font-size: 0.78rem; color: var(--text-muted); text-align: center;">Anteprima Copertina</span>
-                  <img id="previewImg" src="" alt="Anteprima" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: none;">
-                  <button type="button" id="removeCoverImgBtn" title="Elimina Immagine di Copertina" onclick="removeCoverImage()" style="display: none; position: absolute; top: 8px; right: 8px; background: rgba(225, 29, 72, 0.95); color: #fff; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.5); z-index: 10; transition: transform 0.2s ease, background-color 0.2s ease;">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                      <polyline points="3 6 5 6 21 6"></polyline>
-                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                    </svg>
+                  <div class="image-preview-box" id="imgPreviewBox" style="height: 160px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; background: var(--bg-primary); overflow: hidden; position: relative; margin-bottom: 0.85rem;">
+                    <span id="previewPlaceholder" style="font-size: 0.78rem; color: var(--text-muted); text-align: center;">Anteprima Copertina</span>
+                    <img id="previewImg" src="" alt="Anteprima" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: none;">
+                    <button type="button" id="removeCoverImgBtn" title="Elimina Immagine di Copertina" onclick="removeCoverImage()" style="display: none; position: absolute; top: 8px; right: 8px; background: rgba(225, 29, 72, 0.95); color: #fff; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.5); z-index: 10; transition: transform 0.2s ease, background-color 0.2s ease;">
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="3 6 5 6 21 6"></polyline>
+                        <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                      </svg>
+                    </button>
+                  </div>
+
+                  <button type="button" id="openCropperModalBtn" class="btn btn-secondary" style="width: 100%; font-size: 0.78rem; padding: 0.55rem; border-radius: 8px; margin-bottom: 0.85rem;">
+                    Editor Ritaglio Canvas
                   </button>
-                </div>
 
-                <button type="button" id="openCropperModalBtn" class="btn btn-secondary" style="width: 100%; font-size: 0.78rem; padding: 0.55rem; border-radius: 8px; margin-bottom: 0.85rem;">
-                  Editor Ritaglio Canvas
-                </button>
-
-                <div style="display: grid; gap: 0.65rem;">
-                  <div>
-                    <label for="artImageAlt" style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Testo ALT SEO</label>
-                    <input type="text" id="artImageAlt" class="form-control" placeholder="Descrizione immagine..." style="padding: 0.5rem 0.75rem; font-size: 0.78rem; border-radius: 8px;">
-                  </div>
-                  <div>
-                    <label for="artImageCaption" style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Didascalia</label>
-                    <input type="text" id="artImageCaption" class="form-control" placeholder="Fonte / Crediti..." style="padding: 0.5rem 0.75rem; font-size: 0.78rem; border-radius: 8px;">
+                  <div style="display: grid; gap: 0.65rem;">
+                    <div>
+                      <label for="artImageAlt" style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Testo ALT SEO</label>
+                      <input type="text" id="artImageAlt" class="form-control" placeholder="Descrizione immagine..." style="padding: 0.5rem 0.75rem; font-size: 0.78rem; border-radius: 8px;">
+                    </div>
+                    <div>
+                      <label for="artImageCaption" style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Didascalia</label>
+                      <input type="text" id="artImageCaption" class="form-control" placeholder="Fonte / Crediti..." style="padding: 0.5rem 0.75rem; font-size: 0.78rem; border-radius: 8px;">
+                    </div>
                   </div>
                 </div>
               </div>
 
               <!-- CARD TASSONOMIE E VETRINA -->
-              <div class="admin-card-section">
-                <div style="font-size: 0.72rem; font-weight: 800; color: #e05a2b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem;">
-                  Organizzazione e Tag
-                </div>
-
-                <div style="margin-bottom: 0.85rem;">
-                  <label for="artCategorySelect" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Categoria Principale</label>
-                  <select id="artCategorySelect" class="form-control" style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
-                    <option value="Film">Film</option>
-                    <option value="Serie TV">Serie TV</option>
-                    <option value="News" selected>News</option>
-                    <option value="Approfondimenti">Approfondimenti</option>
-                    <option value="Interviste">Interviste</option>
-                  </select>
-                </div>
-
-                <div style="margin-bottom: 0.85rem;">
-                  <label for="artSubCategory" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Sottocategoria</label>
-                  <input type="text" id="artSubCategory" class="form-control" placeholder="Es. Recensioni..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
-                </div>
-
-                <div style="margin-bottom: 0.85rem;">
-                  <label for="artTagsInput" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Tag (Premi Invio)</label>
-                  <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; padding: 0.4rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; min-height: 40px; align-items: center;" id="tagsBoxContainer">
-                    <div id="tagsChipsArea" style="display: flex; gap: 0.3rem; flex-wrap: wrap;"></div>
-                    <input type="text" id="artTagsInput" placeholder="Aggiungi tag..." style="border: none; background: transparent; outline: none; color: var(--text-primary); font-size: 0.78rem; flex: 1; min-width: 90px;">
+              <div class="admin-card-section collapsible-card-mobile collapsed">
+                <div class="section-title-wrapper">
+                  <div class="section-title-text">
+                    <span class="section-badge-number">6</span>
+                    Organizzazione e Tag
                   </div>
                 </div>
 
-                <div style="display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 0.85rem;">
-                  <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; background: var(--bg-primary); padding: 0.6rem 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
-                    <input type="checkbox" id="artIsFeatured" style="width: 16px; height: 16px; accent-color: #C85A32;">
-                    <span style="font-size: 0.78rem; font-weight: 600; color: var(--text-primary);">In Evidenza</span>
-                  </label>
+                <div class="section-content">
+                  <div style="margin-bottom: 0.85rem;">
+                    <label for="artCategorySelect" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Categoria Principale</label>
+                    <select id="artCategorySelect" class="form-control" style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                      <option value="Film">Film</option>
+                      <option value="Serie TV">Serie TV</option>
+                      <option value="News" selected>News</option>
+                      <option value="Approfondimenti">Approfondimenti</option>
+                      <option value="Interviste">Interviste</option>
+                    </select>
+                  </div>
 
-                  <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; background: var(--bg-primary); padding: 0.6rem 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
-                    <input type="checkbox" id="artIsHomeFeatured" style="width: 16px; height: 16px; accent-color: #C85A32;">
-                    <span style="font-size: 0.78rem; font-weight: 600; color: var(--text-primary);">Hero Home Page</span>
-                  </label>
-                </div>
+                  <div style="margin-bottom: 0.85rem;">
+                    <label for="artSubCategory" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Sottocategoria</label>
+                    <input type="text" id="artSubCategory" class="form-control" placeholder="Es. Recensioni..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                  </div>
 
-                <div>
-                  <label for="artSeries" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Serie di Articoli</label>
-                  <input type="text" id="artSeries" class="form-control" placeholder="Es. Speciale Oscar..." style="padding: 0.5rem 0.75rem; font-size: 0.78rem; border-radius: 8px;">
+                  <div style="margin-bottom: 0.85rem;">
+                    <label for="artTagsInput" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Tag (Premi Invio)</label>
+                    <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; padding: 0.4rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; min-height: 40px; align-items: center;" id="tagsBoxContainer">
+                      <div id="tagsChipsArea" style="display: flex; gap: 0.3rem; flex-wrap: wrap;"></div>
+                      <input type="text" id="artTagsInput" placeholder="Aggiungi tag..." style="border: none; background: transparent; outline: none; color: var(--text-primary); font-size: 0.78rem; flex: 1; min-width: 90px;">
+                    </div>
+                  </div>
+
+                  <div style="display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 0.85rem;">
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; background: var(--bg-primary); padding: 0.6rem 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                      <input type="checkbox" id="artIsFeatured" style="width: 16px; height: 16px; accent-color: #C85A32;">
+                      <span style="font-size: 0.78rem; font-weight: 600; color: var(--text-primary);">In Evidenza</span>
+                    </label>
+
+                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; background: var(--bg-primary); padding: 0.6rem 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                      <input type="checkbox" id="artIsHomeFeatured" style="width: 16px; height: 16px; accent-color: #C85A32;">
+                      <span style="font-size: 0.78rem; font-weight: 600; color: var(--text-primary);">Hero Home Page</span>
+                    </label>
+                  </div>
+
+                  <div>
+                    <label for="artSeries" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Serie di Articoli</label>
+                    <input type="text" id="artSeries" class="form-control" placeholder="Es. Speciale Oscar..." style="padding: 0.5rem 0.75rem; font-size: 0.78rem; border-radius: 8px;">
+                  </div>
                 </div>
               </div>
 
@@ -1940,7 +2020,7 @@
           </div>
 
           <!-- BARRA DI RICERCA & FILTRI ARTICOLI -->
-          <div style="background: var(--bg-card); padding: 1.25rem 1.5rem; border-radius: 16px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+          <div class="manage-filters-container" style="background: var(--bg-card); padding: 1.25rem 1.5rem; border-radius: 16px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
             <div style="flex: 1; min-width: 260px;">
               <input type="text" id="manageSearchInput" class="form-control" placeholder="Cerca articolo per titolo, slug o autore..." style="padding: 0.65rem 1rem; font-size: 0.85rem; border-radius: 10px; background: var(--bg-primary);">
             </div>
@@ -2417,6 +2497,17 @@
     document.addEventListener('DOMContentLoaded', function() {
       const saved = localStorage.getItem('admin_theme') || 'dark';
       applyAdminTheme(saved);
+
+      // Gestore click per collassare/espandere le schede su mobile
+      document.addEventListener('click', function(e) {
+        const header = e.target.closest('.collapsible-card-mobile .section-title-wrapper');
+        if (header && window.innerWidth <= 768) {
+          const card = header.closest('.collapsible-card-mobile');
+          if (card) {
+            card.classList.toggle('collapsed');
+          }
+        }
+      });
     });
   </script>
 </body>
