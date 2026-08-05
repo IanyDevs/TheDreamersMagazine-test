@@ -4,8 +4,705 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pannello Admin - The Dreamers Magazine</title>
-  <meta name="description" content="Pannello di controllo e gestione articoli per The Dreamers Magazine.">
-  <link rel="stylesheet" href="css/styles.css">
+  <!-- Google Fonts Library (25+ Typography Styles) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Caveat:wght@400..700&family=Cinzel:wght@400..900&family=Cormorant+Garamond:ital,wght@0,400..700;1,400..700&family=Dancing+Script:wght@400..700&family=Fira+Code:wght@300..700&family=Inter:wght@300..900&family=JetBrains+Mono:ital,wght@0,100..800;1,100..800&family=Lato:ital,wght@0,300..900;1,300..900&family=Lora:ital,wght@0,400..700;1,400..700&family=Merriweather:ital,wght@0,300..900;1,300..900&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&family=Outfit:wght@100..900&family=Pacifico&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100..900;1,100..900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&family=Space+Grotesk:wght@300..700&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Syne:wght@400..800&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css?v=1503">
+  <script>
+    /* Instant Theme Load script to prevent flicker */
+    (function() {
+      var saved = localStorage.getItem('admin_theme') || 'dark';
+      document.documentElement.setAttribute('data-admin-theme', saved);
+    })();
+  </script>
+  <style>
+    /* ==========================================================================
+       THEME SYSTEM (OFFICIAL SITE COLORS: LIGHT & DARK MODE)
+       ========================================================================== */
+    
+    /* DARK THEME (Default) - Complete Overrides */
+    :root, [data-admin-theme="dark"] {
+      --bg-primary: #0E0C0B !important;
+      --bg-secondary: #141210 !important;
+      --bg-tertiary: #1C1916 !important;
+      --bg-card: #1A1815 !important;
+      
+      --text-primary: #F7F5F2 !important;
+      --text-secondary: #D4CEC7 !important;
+      --text-muted: #A8A29A !important;
+      --border-color: rgba(225, 218, 210, 0.14) !important;
+
+      --admin-bg: #12100E;
+      --admin-bg-radial: radial-gradient(circle at 50% 0px, rgba(200, 90, 50, 0.18) 0%, transparent 65%);
+      --admin-card-bg: #1A1815;
+      --admin-card-border: rgba(225, 218, 210, 0.14);
+      --admin-text-main: #F7F5F2;
+      --admin-text-muted: #A8A29A;
+      --admin-input-bg: #0E0C0B;
+      --admin-input-border: rgba(225, 218, 210, 0.18);
+      --admin-nav-bg: rgba(18, 16, 14, 0.94);
+      --admin-tabs-bg: #0E0C0B;
+      --admin-accent: #C85A32;
+      --admin-accent-gradient: linear-gradient(135deg, #C85A32 0%, #7A2812 100%);
+      --admin-shadow: 0 12px 35px rgba(0, 0, 0, 0.45);
+    }
+
+    /* LIGHT THEME (Matches the site's light mode: #F7F5F2, #7A2812, #C85A32) */
+    [data-admin-theme="light"] {
+      --bg-primary: #F7F5F2 !important;
+      --bg-secondary: #EBE7E1 !important;
+      --bg-tertiary: #E2DDD6 !important;
+      --bg-card: #FFFFFF !important;
+      
+      --text-primary: #12100E !important;
+      --text-secondary: #4A453F !important;
+      --text-muted: #7E776F !important;
+      --border-color: #E0DAD2 !important;
+
+      --admin-bg: #F7F5F2;
+      --admin-bg-radial: radial-gradient(circle at 50% 0px, rgba(200, 90, 50, 0.08) 0%, transparent 65%);
+      --admin-card-bg: #FFFFFF;
+      --admin-card-border: #E0DAD2;
+      --admin-text-main: #12100E;
+      --admin-text-muted: #4A453F;
+      --admin-input-bg: #FFFFFF;
+      --admin-input-border: #CBD5E1;
+      --admin-nav-bg: rgba(255, 255, 255, 0.94);
+      --admin-tabs-bg: #EBE7E1;
+      --admin-accent: #C85A32;
+      --admin-accent-gradient: linear-gradient(135deg, #C85A32 0%, #7A2812 100%);
+      --admin-shadow: 0 8px 30px rgba(18, 16, 14, 0.06);
+    }
+
+    body {
+      background-color: var(--admin-bg) !important;
+      background-image: var(--admin-bg-radial) !important;
+      color: var(--admin-text-main) !important;
+      font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, sans-serif !important;
+      min-height: 100vh;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    /* Navigation Bar */
+    header.navbar {
+      background: var(--admin-nav-bg) !important;
+      backdrop-filter: blur(16px) !important;
+      border-bottom: 1px solid var(--admin-card-border) !important;
+      box-shadow: var(--admin-shadow) !important;
+    }
+    header.navbar .brand-logo {
+      color: var(--admin-text-main) !important;
+    }
+    header.navbar .brand-logo span {
+      color: var(--admin-accent) !important;
+    }
+
+    .fullscreen-editor-mode {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 99999 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      border-radius: 0 !important;
+      padding: 1.5rem 2.5rem !important;
+      background: var(--admin-bg) !important;
+      overflow-y: auto !important;
+      box-sizing: border-box !important;
+    }
+    .fullscreen-editor-mode .wysiwyg-editor {
+      min-height: calc(100vh - 220px) !important;
+    }
+
+    /* Cards */
+    .admin-card-section {
+      background: var(--admin-card-bg) !important;
+      border: 1px solid var(--admin-card-border) !important;
+      border-radius: 18px !important;
+      padding: 1.6rem !important;
+      box-shadow: var(--admin-shadow) !important;
+      transition: all 0.25s ease-in-out !important;
+    }
+    .admin-card-section:hover {
+      border-color: var(--admin-accent) !important;
+    }
+
+    .section-badge-number {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 28px !important;
+      height: 28px !important;
+      border-radius: 8px !important;
+      background: rgba(200, 90, 50, 0.15) !important;
+      color: var(--admin-accent) !important;
+      border: 1px solid rgba(200, 90, 50, 0.3) !important;
+      font-size: 0.8rem !important;
+      font-weight: 800 !important;
+      margin-right: 0.6rem !important;
+    }
+
+    .section-title-wrapper {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      margin-bottom: 1.25rem !important;
+      padding-bottom: 0.85rem !important;
+      border-bottom: 1px solid var(--admin-card-border) !important;
+    }
+
+    .section-title-text {
+      font-size: 0.95rem !important;
+      font-weight: 800 !important;
+      color: var(--admin-text-main) !important;
+      letter-spacing: -0.01em !important;
+      display: flex !important;
+      align-items: center !important;
+    }
+
+    /* Header Tabs */
+    .admin-header-tabs {
+      display: flex !important;
+      gap: 0.5rem !important;
+      background: var(--admin-tabs-bg) !important;
+      padding: 0.45rem !important;
+      border-radius: 16px !important;
+      border: 1px solid var(--admin-card-border) !important;
+      margin-bottom: 2rem !important;
+      overflow-x: auto !important;
+    }
+    .admin-header-tabs .tab-link {
+      padding: 0.65rem 1.35rem !important;
+      border-radius: 12px !important;
+      font-weight: 700 !important;
+      font-size: 0.85rem !important;
+      color: var(--admin-text-muted) !important;
+      background: transparent !important;
+      border: none !important;
+      cursor: pointer !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 0.5rem !important;
+      transition: all 0.2s ease !important;
+      white-space: nowrap !important;
+    }
+    .admin-header-tabs .tab-link:hover {
+      color: var(--admin-text-main) !important;
+      background: rgba(200, 90, 50, 0.08) !important;
+    }
+    .admin-header-tabs .tab-link.active {
+      background: var(--admin-accent-gradient) !important;
+      color: #ffffff !important;
+      box-shadow: 0 4px 18px rgba(200, 90, 50, 0.4) !important;
+    }
+
+    /* Form Inputs & Editors */
+    .form-control, input[type="text"], input[type="email"], input[type="password"], input[type="url"], input[type="datetime-local"], select, textarea, .textarea-large-editor {
+      background: var(--admin-input-bg) !important;
+      border: 1px solid var(--admin-input-border) !important;
+      color: var(--admin-text-main) !important;
+      border-radius: 10px !important;
+    }
+    .form-control:focus, input:focus, select:focus, textarea:focus, .wysiwyg-editor:focus {
+      border-color: var(--admin-accent) !important;
+      outline: none !important;
+      box-shadow: 0 0 0 3px rgba(200, 90, 50, 0.25) !important;
+    }
+
+    .btn-crop-opt, .btn-ratio-opt, .btn-pos-opt, .btn-font-opt, .btn-filter-opt {
+      background: var(--admin-input-bg) !important;
+      color: var(--admin-text-main) !important;
+      border: 1px solid var(--admin-input-border) !important;
+      transition: all 0.2s ease !important;
+    }
+    .btn-crop-opt.active, .btn-ratio-opt.active, .btn-pos-opt.active, .btn-font-opt.active, .btn-filter-opt.active {
+      background: var(--admin-accent-gradient) !important;
+      color: #ffffff !important;
+      border-color: var(--admin-accent) !important;
+      box-shadow: 0 4px 14px rgba(200, 90, 50, 0.35) !important;
+    }
+
+    /* Strict Word-Wrap & Anti-Overflow Protection for Editor & Form Fields */
+    #artContent, .wysiwyg-editor, .textarea-large-editor, .form-control {
+      overflow-wrap: break-word !important;
+      word-wrap: break-word !important;
+      word-break: break-word !important;
+      white-space: pre-wrap !important;
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+    }
+
+    #artContent * {
+      max-width: 100% !important;
+      box-sizing: border-box !important;
+      overflow-wrap: break-word !important;
+      word-wrap: break-word !important;
+      word-break: break-word !important;
+    }
+
+    #artContent iframe {
+      pointer-events: none !important;
+    }
+
+    #artContent .video-container, #artContent figure {
+      cursor: pointer !important;
+    }
+
+    #artContent .video-container[draggable="true"], #artContent figure[draggable="true"] {
+      cursor: grab !important;
+    }
+
+    .input-large-title, .input-large-subtitle {
+      color: var(--admin-text-main) !important;
+    }
+
+    /* Toolbar */
+    .editor-toolbar {
+      background: var(--admin-input-bg) !important;
+      border: 1px solid var(--admin-input-border) !important;
+      border-radius: 12px !important;
+    }
+    .tool-btn {
+      background: var(--admin-card-bg) !important;
+      color: var(--admin-text-main) !important;
+      border: 1px solid var(--admin-input-border) !important;
+      border-radius: 8px !important;
+      font-weight: 600 !important;
+      font-size: 0.78rem !important;
+      transition: all 0.15s ease !important;
+    }
+    .tool-btn:hover {
+      background: rgba(200, 90, 50, 0.15) !important;
+      color: var(--admin-accent) !important;
+      border-color: var(--admin-accent) !important;
+    }
+
+    /* Login Card */
+    .login-card {
+      background: var(--admin-card-bg) !important;
+      border: 1px solid var(--admin-card-border) !important;
+      box-shadow: var(--admin-shadow) !important;
+      color: var(--admin-text-main) !important;
+    }
+    .login-card-title {
+      color: var(--admin-text-main) !important;
+    }
+    .login-card-subtitle {
+      color: var(--admin-text-muted) !important;
+    }
+
+    /* Publishing Choice Banner */
+    .wp-choice-banner {
+      background: linear-gradient(135deg, rgba(0, 115, 170, 0.15) 0%, var(--admin-card-bg) 100%) !important;
+      border: 1px solid rgba(0, 115, 170, 0.4) !important;
+      border-radius: 16px !important;
+      padding: 1.25rem 1.5rem !important;
+      box-shadow: var(--admin-shadow) !important;
+    }
+    .wp-choice-banner h4 {
+      color: var(--admin-text-main) !important;
+    }
+    .wp-choice-banner p {
+      color: var(--admin-text-muted) !important;
+    }
+
+    /* Specific Dark Mode Overrides for Hardcoded Modals & Dropdowns */
+    [data-admin-theme="dark"] #customFontDropdownMenu {
+      background-color: #1A1815 !important;
+      border: 1px solid rgba(225, 218, 210, 0.2) !important;
+      color: #F7F5F2 !important;
+    }
+    [data-admin-theme="dark"] #fontSearchInput {
+      background-color: #0E0C0B !important;
+      border-color: rgba(225, 218, 210, 0.2) !important;
+      color: #F7F5F2 !important;
+    }
+    [data-admin-theme="dark"] #customFontDropdownMenu div[onclick*="selectCustomFont"] {
+      background-color: #0E0C0B !important;
+      border-color: rgba(225, 218, 210, 0.16) !important;
+      color: #F7F5F2 !important;
+    }
+    [data-admin-theme="dark"] #customFontDropdownMenu div[onclick*="selectCustomFont"] span {
+      color: #F7F5F2 !important;
+    }
+    [data-admin-theme="dark"] #customFontDropdownMenu div[onclick*="selectCustomFont"]:hover {
+      background-color: rgba(200, 90, 50, 0.25) !important;
+      border-color: #C85A32 !important;
+    }
+
+    [data-admin-theme="light"] #customFontDropdownMenu div[onclick*="selectCustomFont"] {
+      background-color: #FFFFFF !important;
+      border-color: #E0DAD2 !important;
+      color: #12100E !important;
+    }
+    [data-admin-theme="light"] #customFontDropdownMenu div[onclick*="selectCustomFont"] span {
+      color: #12100E !important;
+    }
+    [data-admin-theme="light"] #customFontDropdownMenu div[onclick*="selectCustomFont"]:hover {
+      background-color: rgba(200, 90, 50, 0.1) !important;
+      border-color: #C85A32 !important;
+    }
+
+    [data-admin-theme="dark"] div[style*="font-family: arial, sans-serif"] {
+      background-color: #1A1815 !important;
+      color: #F7F5F2 !important;
+      border: 1px solid rgba(225, 218, 210, 0.16) !important;
+    }
+    [data-admin-theme="dark"] #serpPreviewTitle {
+      color: #818cf8 !important;
+    }
+    [data-admin-theme="dark"] #serpPreviewUrl,
+    [data-admin-theme="dark"] #serpPreviewDesc {
+      color: #A8A29A !important;
+    }
+
+    /* Buttons */
+    .btn-primary {
+      background: var(--admin-accent-gradient) !important;
+      color: #ffffff !important;
+      border: none !important;
+      box-shadow: 0 4px 16px rgba(200, 90, 50, 0.35) !important;
+      font-weight: 800 !important;
+    }
+    .btn-primary:hover {
+      box-shadow: 0 6px 20px rgba(200, 90, 50, 0.5) !important;
+      transform: translateY(-1px);
+    }
+    .btn-secondary {
+      background: var(--admin-card-bg) !important;
+      color: var(--admin-text-main) !important;
+      border: 1px solid var(--admin-card-border) !important;
+    }
+    .btn-secondary:hover {
+      background: rgba(200, 90, 50, 0.1) !important;
+      color: var(--admin-accent) !important;
+      border-color: var(--admin-accent) !important;
+    }
+
+    /* ==========================================================================
+       CROPPING & IMAGE EDITOR MODAL STYLES (DARK/LIGHT ADAPTIVE)
+       ========================================================================== */
+    #cropperModal .modal-container,
+    .cropper-modal-card {
+      background: var(--admin-card-bg, var(--bg-card, #1A1815)) !important;
+      color: var(--admin-text-main, var(--text-primary, #F7F5F2)) !important;
+      border: 1px solid var(--admin-card-border, rgba(225, 218, 210, 0.18)) !important;
+      border-radius: 24px !important;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8) !important;
+      width: 92% !important;
+      max-width: 720px !important;
+      max-height: 92vh !important;
+      overflow-y: auto !important;
+      padding: 1.75rem !important;
+      position: relative !important;
+    }
+
+    .cropper-modal-header {
+      margin-bottom: 0.75rem !important;
+    }
+
+    .cropper-title {
+      font-size: 1.3rem !important;
+      font-weight: 800 !important;
+      color: var(--admin-text-main, var(--text-primary, #F7F5F2)) !important;
+      margin: 0 0 0.2rem 0 !important;
+      letter-spacing: -0.01em !important;
+    }
+
+    .cropper-subtitle {
+      color: var(--admin-text-muted, var(--text-muted, #A8A29A)) !important;
+      font-size: 0.82rem !important;
+      margin: 0 !important;
+      line-height: 1.4 !important;
+    }
+
+    .cropper-canvas-wrap {
+      width: 100% !important;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      background: #050505 !important;
+      border-radius: 16px !important;
+      overflow: hidden !important;
+      border: 1px solid var(--border-color, rgba(255,255,255,0.15)) !important;
+      margin: 0.75rem 0 1rem 0 !important;
+      box-shadow: inset 0 0 20px rgba(0,0,0,0.8) !important;
+      min-height: 280px !important;
+    }
+
+    .cropper-canvas-wrap canvas {
+      max-width: 100% !important;
+      height: auto !important;
+      cursor: grab !important;
+      touch-action: none !important;
+    }
+
+    .cropper-canvas-wrap canvas:active {
+      cursor: grabbing !important;
+    }
+
+    .cropper-section {
+      margin-top: 0.85rem !important;
+    }
+
+    .cropper-label {
+      font-size: 0.76rem !important;
+      font-weight: 700 !important;
+      color: var(--admin-text-main, var(--text-secondary, #D4CEC7)) !important;
+      display: block !important;
+      margin-bottom: 0.35rem !important;
+    }
+
+    .cropper-grid-2 {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 1rem !important;
+      margin-top: 0.85rem !important;
+    }
+
+    .cropper-grid-3 {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr 1fr !important;
+      gap: 0.85rem !important;
+      margin-top: 0.85rem !important;
+    }
+
+    @media (max-width: 640px) {
+      .cropper-grid-2, .cropper-grid-3 {
+        grid-template-columns: 1fr !important;
+      }
+    }
+
+    .cropper-btn-group {
+      display: flex !important;
+      gap: 0.4rem !important;
+      flex-wrap: wrap !important;
+    }
+
+    .cropper-btn-sm {
+      font-size: 0.74rem !important;
+      font-weight: 700 !important;
+      padding: 0.45rem 0.75rem !important;
+      border-radius: 8px !important;
+      background: var(--admin-card-bg, #1A1815) !important;
+      color: var(--admin-text-main, #F7F5F2) !important;
+      border: 1px solid var(--admin-card-border, rgba(225, 218, 210, 0.18)) !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .cropper-btn-sm:hover,
+    .cropper-btn-sm.active {
+      background: var(--admin-accent, #C85A32) !important;
+      color: #ffffff !important;
+      border-color: var(--admin-accent, #C85A32) !important;
+    }
+
+    .btn-aspect-opt, .btn-filter-opt {
+      font-size: 0.74rem !important;
+      font-weight: 700 !important;
+      padding: 0.45rem 0.85rem !important;
+      border-radius: 9999px !important;
+      background: var(--admin-card-bg, #1A1815) !important;
+      color: var(--admin-text-main, #F7F5F2) !important;
+      border: 1px solid var(--admin-card-border, rgba(225, 218, 210, 0.18)) !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .btn-aspect-opt:hover, .btn-filter-opt:hover {
+      background: rgba(200, 90, 50, 0.25) !important;
+      color: #F7F5F2 !important;
+    }
+
+    .btn-aspect-opt.active, .btn-filter-opt.active {
+      background: var(--admin-accent, #C85A32) !important;
+      color: #FFFFFF !important;
+      border-color: var(--admin-accent, #C85A32) !important;
+      box-shadow: 0 4px 12px rgba(200, 90, 50, 0.4) !important;
+    }
+
+    .cropper-range {
+      width: 100% !important;
+      accent-color: var(--admin-accent, #C85A32) !important;
+      cursor: pointer !important;
+      background: transparent !important;
+    }
+
+    .cropper-actions-footer {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      margin-top: 1.25rem !important;
+      padding-top: 0.9rem !important;
+      border-top: 1px solid var(--admin-card-border, rgba(255,255,255,0.12)) !important;
+    }
+
+    .cropper-reset-btn {
+      font-size: 0.78rem !important;
+      font-weight: 700 !important;
+      padding: 0.45rem 0.85rem !important;
+      border-radius: 8px !important;
+      background: rgba(239, 68, 68, 0.12) !important;
+      color: #f87171 !important;
+      border: 1px solid rgba(239, 68, 68, 0.3) !important;
+      cursor: pointer !important;
+      transition: all 0.2s ease !important;
+    }
+
+    .cropper-reset-btn:hover {
+      background: rgba(239, 68, 68, 0.3) !important;
+      color: #ffffff !important;
+    }
+
+    /* Table Adaptive Theme Styles */
+    .admin-table {
+      background: var(--admin-card-bg, var(--bg-card, #1A1815)) !important;
+      color: var(--admin-text-main, var(--text-primary, #F7F5F2)) !important;
+      border: 1px solid var(--admin-card-border, var(--border-color)) !important;
+    }
+    
+    .admin-table tbody tr:hover {
+      background-color: rgba(200, 90, 50, 0.08) !important;
+    }
+    
+    .admin-table td {
+      color: var(--admin-text-main, var(--text-primary, #F7F5F2)) !important;
+      border-bottom: 1px solid var(--admin-card-border, var(--border-color)) !important;
+    }
+
+    .articles-table-wrap {
+      border: 1px solid var(--admin-card-border, var(--border-color)) !important;
+      background: var(--admin-card-bg, var(--bg-card, #1A1815)) !important;
+    }
+
+    .editor-card {
+      background: var(--admin-card-bg, var(--bg-card, #1A1815)) !important;
+      color: var(--admin-text-main, var(--text-primary, #F7F5F2)) !important;
+      border: 1px solid var(--admin-card-border, var(--border-color)) !important;
+    }
+
+    html.modal-open, body.modal-open {
+      overflow: hidden !important;
+      height: 100vh !important;
+      scrollbar-width: none !important;
+      -ms-overflow-style: none !important;
+    }
+
+    html.modal-open::-webkit-scrollbar,
+    body.modal-open::-webkit-scrollbar {
+      display: none !important;
+      width: 0 !important;
+      height: 0 !important;
+    }
+
+    /* Custom Responsive Grid Systems for Admin */
+    .admin-editor-grid {
+      display: grid;
+      grid-template-columns: 2.1fr 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .admin-kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.25rem;
+    }
+
+    .admin-import-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+    }
+
+    #inboxSplitGrid {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 1.5rem;
+      min-height: 520px;
+    }
+
+    @media (max-width: 1024px) {
+      .admin-editor-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .admin-kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+      }
+      #inboxSplitGrid {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .admin-kpi-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+      .admin-import-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Responsive Navbar Utilities */
+    .hide-mobile {
+      display: inline !important;
+    }
+
+    .show-mobile {
+      display: none !important;
+    }
+
+    @media (max-width: 768px) {
+      .hide-mobile {
+        display: none !important;
+      }
+      
+      .show-mobile {
+        display: inline-block !important;
+      }
+      
+      .navbar-container {
+        padding: 0.25rem 0.5rem !important;
+        gap: 0.4rem !important;
+      }
+      
+      .brand-logo span {
+        font-size: 0.95rem !important;
+      }
+      
+      .brand-logo svg {
+        width: 18px !important;
+        height: 18px !important;
+      }
+
+      .nav-actions {
+        gap: 0.35rem !important;
+      }
+
+      .nav-actions .btn {
+        padding: 0.45rem 0.6rem !important;
+        font-size: 0.75rem !important;
+        border-radius: 8px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 0 !important;
+      }
+      
+      .nav-actions .btn svg {
+        margin: 0 !important;
+      }
+    }
+  </style>
 </head>
 <body>
 
@@ -23,15 +720,25 @@
           <line x1="17" y1="17" x2="22" y2="17"></line>
           <line x1="17" y1="7" x2="22" y2="7"></line>
         </svg>
-        <span>Pannello<span style="color: #3b82f6;">Admin</span></span>
+        <span>Pannello<span style="color: var(--brand-accent, #C85A32);">Admin</span></span>
       </a>
 
       <div class="nav-actions">
-        <a href="index.html" class="btn btn-secondary">
-          Vedi Blog
+        <button type="button" id="themeToggleBtn" onclick="toggleAdminTheme()" class="btn btn-secondary" style="font-size: 0.82rem; font-weight: 700; border-radius: 10px; padding: 0.55rem 0.95rem; display: inline-flex; align-items: center; gap: 0.45rem; cursor: pointer;">
+          <span id="themeToggleIcon" style="display: flex; align-items: center;"></span>
+          <span id="themeToggleLabel" class="hide-mobile">Modalità Chiara</span>
+        </button>
+        <a href="https://www.thedreamersmagazine.it/wp-admin/post-new.php" target="_blank" class="btn btn-secondary" style="background: rgba(0, 115, 170, 0.15); color: #3896e0; border: 1px solid rgba(0, 115, 170, 0.4); font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem;" title="Pubblica con WordPress">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12.158 0C5.457 0 0 5.457 0 12.158c0 6.701 5.457 12.158 12.158 12.158 6.701 0 12.158-5.457 12.158-12.158C24.316 5.457 18.859 0 12.158 0zm0 22.825c-5.881 0-10.667-4.786-10.667-10.667 0-2.428.816-4.666 2.19-6.467l5.727 15.69c-2.417-.184-4.81-.989-6.666-2.146.06.012.12.024.18.024 3.738 0 6.071-3.567 6.071-6.726 0-2.28-1.077-4.321-2.464-5.871l-1.096 3.018c.61 1.018.966 2.215.966 3.5 0 2.296-1.196 4.305-3 5.467l4.351-11.967c1.374.966 2.28 2.56 2.28 4.372 0 1.258-.456 2.417-1.2 3.327l-3.327-9.144c1.196-.445 2.493-.7 3.844-.7 5.881 0 10.667 4.786 10.667 10.667 0 5.881-4.786 10.667-10.667 10.667z"/></svg>
+          <span class="hide-mobile">Pubblica con WordPress</span>
         </a>
-        <button class="btn btn-danger" id="logoutBtn" style="display: none;">
-          Esci
+        <a href="index.html" class="btn btn-secondary" title="Vedi Blog">
+          <svg class="show-mobile" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+          <span class="hide-mobile">Vedi Blog</span>
+        </a>
+        <button class="btn btn-danger" id="logoutBtn" style="display: none;" title="Esci">
+          <svg class="show-mobile" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:none;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+          <span class="hide-mobile">Esci</span>
         </button>
       </div>
     </div>
@@ -64,7 +771,7 @@
             <label class="form-label" for="loginEmail" style="font-size: 0.8rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Email</label>
             <div class="input-icon-wrapper">
               <span class="input-icon" style="font-size: 0.85rem; font-weight: 600; color: var(--text-muted);">@</span>
-              <input type="email" id="loginEmail" class="form-control input-with-icon" value="admin@blog.com" placeholder="admin@blog.com" required>
+              <input type="email" id="loginEmail" class="form-control input-with-icon" value="admin@thedreamersmagazine.it" placeholder="admin@thedreamersmagazine.it" required>
             </div>
           </div>
 
@@ -81,13 +788,16 @@
           </button>
         </form>
 
-        <div class="demo-credentials-box">
-          <div style="font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem; font-size: 0.85rem;">Credenziali Demo</div>
-          <div style="font-size: 0.8rem; color: var(--text-secondary);">
-            Email: <code>admin@blog.com</code> | Password: <code>password123</code>
+        <div class="demo-credentials-box" style="margin-top: 1.5rem; background: var(--admin-input-bg, rgba(255,255,255,0.04)); border: 1px dashed var(--admin-accent, #C85A32); border-radius: 14px; padding: 1rem; text-align: left;">
+          <div style="font-weight: 700; color: var(--admin-text-main, #ffffff); margin-bottom: 0.35rem; font-size: 0.85rem; display: flex; align-items: center; gap: 0.4rem;">
+            <span>🔑</span> Credenziali per i Test Redazione
           </div>
-          <button type="button" id="autoFillLoginBtn" class="btn-preset" style="margin-top: 0.6rem; width: 100%; text-align: center; justify-content: center;">
-            Compila Credenziali
+          <div style="font-size: 0.8rem; color: var(--admin-text-muted, #a8a29a); margin-bottom: 0.65rem; line-height: 1.4;">
+            Email: <code style="color: var(--admin-accent, #C85A32);">admin@thedreamersmagazine.it</code><br>
+            Password: <code style="color: var(--admin-accent, #C85A32);">password123</code>
+          </div>
+          <button type="button" id="autoFillLoginBtn" class="btn-preset" style="width: 100%; text-align: center; justify-content: center; background: var(--admin-accent-gradient); color: #ffffff; border: none; padding: 0.55rem; border-radius: 8px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.4rem;">
+            <span>📋</span> Compila & Copia Credenziali
           </button>
         </div>
 
@@ -103,9 +813,116 @@
           <h1 style="font-size: 2.2rem; font-weight: 800;">Pannello Admin</h1>
           <p style="color: var(--text-secondary);">Gestione articoli di prova.</p>
         </div>
-        <button id="resetDataBtn" class="btn btn-danger" style="font-size: 0.85rem; font-weight: 700; background: #dc2626; color: #FFFFFF; border: none; padding: 0.6rem 1.1rem; border-radius: 9999px; cursor: pointer;">
-          🗑️ Svuota Tutti gli Articoli
-        </button>
+        
+        <div style="display: flex; gap: 0.75rem; align-items: center;">
+          <button type="button" id="toggleTutorialBtn" onclick="toggleAdminTutorial()" class="btn btn-secondary" style="font-size: 0.82rem; font-weight: 700; border-radius: 9999px; padding: 0.6rem 1.1rem; background: rgba(200, 90, 50, 0.15); color: #e05a2b; border: 1px solid rgba(200, 90, 50, 0.3); cursor: pointer;">
+            Guida & Tutorial Admin
+          </button>
+
+          <button id="resetDataBtn" class="btn btn-danger" style="font-size: 0.85rem; font-weight: 700; background: #dc2626; color: #FFFFFF; border: none; padding: 0.6rem 1.1rem; border-radius: 9999px; cursor: pointer;">
+            Svuota Tutti gli Articoli
+          </button>
+        </div>
+      </div>
+
+      <!-- BADGE SCELTA METODO PUBBLICAZIONE WORDPRESS / ADMIN CUSTOM -->
+      <div class="wp-choice-banner" style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <div style="background: #4f46e5; color: #ffffff; padding: 0.65rem; border-radius: 12px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12.158 0C5.457 0 0 5.457 0 12.158c0 6.701 5.457 12.158 12.158 12.158 6.701 0 12.158-5.457 12.158-12.158C24.316 5.457 18.859 0 12.158 0zm0 22.825c-5.881 0-10.667-4.786-10.667-10.667 0-2.428.816-4.666 2.19-6.467l5.727 15.69c-2.417-.184-4.81-.989-6.666-2.146.06.012.024.18.024 3.738 0 6.071-3.567 6.071-6.726 0-2.28-1.077-4.321-2.464-5.871l-1.096 3.018c.61 1.018.966 2.215.966 3.5 0 2.296-1.196 4.305-3 5.467l4.351-11.967c1.374.966 2.28 2.56 2.28 4.372 0 1.258-.456 2.417-1.2 3.327l-3.327-9.144c1.196-.445 2.493-.7 3.844-.7 5.881 0 10.667 4.786 10.667 10.667 0 5.881-4.786 10.667-10.667 10.667z"/></svg>
+          </div>
+          <div>
+            <h4 style="margin: 0; font-size: 1.05rem; font-weight: 800; color: #1e1b4b;">Come preferisci pubblicare oggi?</h4>
+            <p style="margin: 0.2rem 0 0 0; font-size: 0.82rem; color: #4338ca;">Puoi usare questo editor oppure la classica bacheca di WordPress. Tutti gli articoli pubblicati appariranno automaticamente sul nuovo sito!</p>
+          </div>
+        </div>
+        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+          <a href="https://www.thedreamersmagazine.it/wp-admin/post-new.php" target="_blank" class="btn" style="background: #4f46e5; color: #ffffff; font-weight: 700; padding: 0.65rem 1.25rem; border-radius: 10px; border: none; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);">
+            🌐 Apri Editor WordPress (wp-admin)
+          </a>
+        </div>
+      </div>
+
+      <!-- TUTORIAL BOX ESPANDIBILE CON GLOSSARIO STRUMENTI -->
+      <div id="adminTutorialBox" style="display: none; margin-bottom: 2rem; background: #151c2c; padding: 1.75rem; border-radius: 20px; border: 1px solid rgba(249, 115, 22, 0.4); box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; border-bottom: 1px solid rgba(255,255,255,0.08); padding-bottom: 0.85rem;">
+          <div>
+            <h3 style="font-size: 1.2rem; font-weight: 800; color: #f97316; margin-bottom: 0.2rem;">Guida & Glossario degli Strumenti Redazionali</h3>
+            <p style="font-size: 0.82rem; color: #94a3b8;">Tutto quello che c'è da sapere sui campi del pannello e come usarli al meglio.</p>
+          </div>
+          <button type="button" id="closeTutorialBtn" onclick="toggleAdminTutorial()" style="background: none; border: none; color: #94a3b8; cursor: pointer; font-size: 1.4rem; font-weight: 800;">×</button>
+        </div>
+
+        <!-- 4 PASSI GUIDA RAPIDA -->
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-bottom: 1.5rem;">
+          <div style="background: #0d1322; padding: 1.1rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
+            <div style="font-weight: 800; color: #f97316; font-size: 0.85rem; margin-bottom: 0.4rem;">1. Scrivi il Contenuto</div>
+            <p style="font-size: 0.78rem; color: #cbd5e1; line-height: 1.5; margin: 0;">
+              Inserisci Titolo e Sottotitolo. Lo **Slug URL** si genera automaticamente. Usa la toolbar per formattare testo, tabelle e video.
+            </p>
+          </div>
+
+          <div style="background: #0d1322; padding: 1.1rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
+            <div style="font-weight: 800; color: #34d399; font-size: 0.85rem; margin-bottom: 0.4rem;">2. Copertina WebP</div>
+            <p style="font-size: 0.78rem; color: #cbd5e1; line-height: 1.5; margin: 0;">
+              Clicca sul box di caricamento a destra o incolla un link URL. L'immagine viene convertita in **WebP** ed espressa nell'anteprima!
+            </p>
+          </div>
+
+          <div style="background: #0d1322; padding: 1.1rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
+            <div style="font-weight: 800; color: #fbbf24; font-size: 0.85rem; margin-bottom: 0.4rem;">3. SEO & Social Live</div>
+            <p style="font-size: 0.78rem; color: #cbd5e1; line-height: 1.5; margin: 0;">
+              Imposta SEO Title e Meta Description. I simulatori in basso mostrano in tempo reale come apparirà su Google e Facebook.
+            </p>
+          </div>
+
+          <div style="background: #0d1322; padding: 1.1rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
+            <div style="font-weight: 800; color: #a78bfa; font-size: 0.85rem; margin-bottom: 0.4rem;">4. Salva Bozza o Pubblica</div>
+            <p style="font-size: 0.78rem; color: #cbd5e1; line-height: 1.5; margin: 0;">
+              Salva come **Bozza** se vuoi completarlo in un secondo momento, oppure clicca **Pubblica Subito** per renderlo subito visibile.
+            </p>
+          </div>
+        </div>
+
+        <!-- GLOSSARIO STRUMENTI DETTAGLIATO -->
+        <div style="background: #0d1322; padding: 1.25rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
+          <div style="font-size: 0.82rem; font-weight: 800; color: #f97316; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.85rem;">
+            Glossario Strumenti: A cosa serve ogni campo
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; font-size: 0.8rem; line-height: 1.6; color: #cbd5e1;">
+            <div>
+              <p style="margin-bottom: 0.65rem;">
+                <strong style="color: #f97316;">Slug URL:</strong> È l'indirizzo web univoco dell'articolo (es. <code>/articolo/titolo-articolo</code>). Serve ai motori di ricerca per indicizzare la pagina ed è utile per condividere un link pulito.
+              </p>
+              <p style="margin-bottom: 0.65rem;">
+                <strong style="color: #f97316;">SEO Title:</strong> Il titolo esatto che appare nei risultati di ricerca di Google. Deve contenere le parole chiave principali dell'articolo (max 60 caratteri).
+              </p>
+              <p style="margin-bottom: 0.65rem;">
+                <strong style="color: #f97316;">Meta Description:</strong> La breve sintesi grigia sotto il titolo nei risultati di ricerca Google. Serve a persuadere gli utenti a cliccare sul tuo link (max 160 caratteri).
+              </p>
+              <p style="margin-bottom: 0.65rem;">
+                <strong style="color: #f97316;">Compressione WebP:</strong> Tecnologia che riduce la dimensione dei file immagine senza perdere qualità grafica, accelerando l'apertura del sito sia da cellulare che da PC.
+              </p>
+            </div>
+
+            <div>
+              <p style="margin-bottom: 0.65rem;">
+                <strong style="color: #f97316;">Open Graph Title & Description:</strong> Titolo e sommario personalizzati che compaiono quando condividi l'articolo su Facebook, LinkedIn, Twitter/X o WhatsApp.
+              </p>
+              <p style="margin-bottom: 0.65rem;">
+                <strong style="color: #f97316;">Meta Robots (index / noindex):</strong> Imposta <code>index, follow</code> per far trovare l'articolo su Google, oppure <code>noindex</code> se si tratta di una pagina privata o provvisoria.
+              </p>
+              <p style="margin-bottom: 0.65rem;">
+                <strong style="color: #f97316;">Canonical URL:</strong> Indica a Google qual è la pagina principale originale nel caso in cui lo stesso articolo sia pubblicato su più indirizzi web.
+              </p>
+              <p style="margin-bottom: 0.65rem;">
+                <strong style="color: #f97316;">Hero Home Page:</strong> Selezionando questa opzione, l'articolo verrà posizionato nel grande banner di copertina in prima pagina.
+              </p>
+            </div>
+          </div>
+        </div>
+
       </div>
 
       <!-- Navigation Tabs: Create vs Manage vs Import -->
@@ -120,230 +937,522 @@
         <button class="tab-link" id="tabImportBtn">
           <span>Importa da WordPress</span>
         </button>
+        <button class="tab-link" id="tabMessagesBtn">
+          <span>Messaggi Ricevuti</span>
+          <span id="totalMessagesBadge" class="badge-status" style="background: rgba(200, 90, 50, 0.15); color: #e05a2b; border: none; padding: 0.15rem 0.6rem; font-size: 0.75rem;">0</span>
+        </button>
       </div>
 
-      <!-- TAB 1: CREATION / EDITING SUITE -->
+      <!-- TAB 1: CREATION / EDITING SUITE AVANZATA -->
       <div id="createTabContent">
-        <div class="editor-card">
-          <form id="articleForm">
-            
-            <!-- Hidden input to track article being edited -->
-            <input type="hidden" id="editingArticleId" value="">
+        <form id="articleForm">
+          <input type="hidden" id="editingArticleId" value="">
+          <input type="hidden" id="artStatus" value="published">
 
-            <!-- 1. Large Title Field -->
-            <div style="margin-bottom: 2rem;">
-              <div class="section-label" id="editorTitleLabel">Titolo Articolo</div>
-              <input type="text" id="artTitle" class="input-large-title" placeholder="Titolo..." required>
+          <!-- TOP ACTION TOOLBAR -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; background: var(--bg-card); padding: 1.25rem 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); flex-wrap: wrap; gap: 1rem;">
+            <div>
+              <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.15rem;" id="editorTitleLabel">
+                Crea Nuovo Articolo
+              </h2>
+              <p style="font-size: 0.82rem; color: var(--text-muted);">
+                Compila i campi redazionali e SEO per la pubblicazione.
+              </p>
             </div>
 
-            <!-- 2. Subtitle / Excerpt Field -->
-            <div style="margin-bottom: 2rem;">
-              <div class="section-label">Sottotitolo</div>
-              <input type="text" id="artExcerpt" class="input-large-subtitle" placeholder="Breve descrizione...">
-            </div>
-
-            <!-- 3. Category Selectors (Visual Pills) -->
-            <div style="margin-bottom: 2rem;">
-              <div class="section-label">Categoria</div>
-              <div class="category-pills-grid">
-                <label class="cat-pill-option">
-                  <input type="radio" name="artCategory" value="Categoria 1" checked>
-                  <span class="cat-pill-label">Categoria 1</span>
-                </label>
-                <label class="cat-pill-option">
-                  <input type="radio" name="artCategory" value="Categoria 2">
-                  <span class="cat-pill-label">Categoria 2</span>
-                </label>
-              </div>
-            </div>
-
-            <!-- 4. Cover Image: File Upload + Crop Controls -->
-            <div style="margin-bottom: 2rem;">
-              <div class="section-label">Copertina</div>
-              <div class="cover-image-container">
-                <div>
-                  
-                  <!-- Option A: File Upload Dropzone from Device (PC/Mobile) -->
-                  <div class="file-upload-card" id="fileUploadDropzone">
-                    <input type="file" id="artFileInput" accept="image/*" class="file-input-hidden">
-                    <div style="font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.2rem;">[ + ]</div>
-                    <div style="font-weight: 600; color: #ffffff; font-size: 0.9rem;">
-                      Carica dal dispositivo
-                    </div>
-                    <div style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.2rem;">
-                      Trascina qui oppure <span style="color: #3b82f6; text-decoration: underline; font-weight: 500;">sfoglia i file</span>
-                    </div>
-                    <div id="fileSelectedBadge" style="display: none; margin-top: 0.6rem; padding: 0.3rem 0.75rem; background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); color: #34d399; border-radius: var(--radius-full); font-size: 0.78rem; font-weight: 600;"></div>
-                  </div>
-
-                  <!-- Option B: URL input -->
-                  <div style="margin-top: 1rem;">
-                    <span style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">URL immagine online:</span>
-                    <input type="url" id="artImage" class="form-control" placeholder="https://..." style="padding: 0.75rem 1rem;">
-                  </div>
-
-                </div>
-
-                <!-- Live Preview Box & Crop Customization Controls -->
-                <div>
-                  <div class="image-preview-box" id="imgPreviewBox">
-                    <span id="previewPlaceholder" style="font-size: 0.82rem; color: var(--text-muted); text-align: center; padding: 1rem;">
-                      Anteprima
-                    </span>
-                    <img id="previewImg" src="" alt="Anteprima" style="object-fit: cover; object-position: center;">
-                  </div>
-
-                  <!-- Interactive Canvas Cropper Trigger Button -->
-                  <button type="button" id="openCropperModalBtn" class="btn btn-secondary" style="width: 100%; margin-top: 0.75rem; font-size: 0.82rem; padding: 0.55rem;">
-                    Editor Ritaglio Canvas
-                  </button>
-
-                  <!-- Crop & Proportion Quick Controls Box -->
-                  <div class="crop-controls-card">
-                    <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.05em;">
-                      Proporzioni
-                    </div>
-
-                    <div style="margin-bottom: 0.5rem;">
-                      <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Adattamento:</span>
-                      <div class="mini-btn-group">
-                        <button type="button" class="btn-crop-opt active" data-fit="cover">Riempi</button>
-                        <button type="button" class="btn-crop-opt" data-fit="contain">Intera</button>
-                      </div>
-                    </div>
-
-                    <div style="margin-bottom: 0.5rem;">
-                      <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Proporzioni:</span>
-                      <div class="mini-btn-group">
-                        <button type="button" class="btn-ratio-opt active" data-ratio="16/9">16:9</button>
-                        <button type="button" class="btn-ratio-opt" data-ratio="4/3">4:3</button>
-                        <button type="button" class="btn-ratio-opt" data-ratio="1/1">1:1</button>
-                      </div>
-                    </div>
-
-                    <div>
-                      <span style="font-size: 0.72rem; color: var(--text-muted); display: block; margin-bottom: 0.2rem;">Allineamento:</span>
-                      <div class="mini-btn-group">
-                        <button type="button" class="btn-pos-opt active" data-pos="center">Centro</button>
-                        <button type="button" class="btn-pos-opt" data-pos="top">Alto</button>
-                        <button type="button" class="btn-pos-opt" data-pos="bottom">Basso</button>
-                      </div>
-                    </div>
-
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
-            <!-- 5. Metadata Row (Author & Read time) -->
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2rem;">
-              <div>
-                <div class="section-label">Autore</div>
-                <input type="text" id="artAuthor" class="form-control" value="Admin">
-              </div>
-              <div>
-                <div class="section-label">Lettura</div>
-                <input type="text" id="artReadTime" class="form-control" value="2 min">
-              </div>
-            </div>
-
-            <!-- 6. Large Content Textarea Editor -->
-            <div style="margin-bottom: 2rem;">
-              <div class="section-label">Contenuto</div>
-              
-              <div class="editor-toolbar">
-                <button type="button" class="tool-btn" data-tag="**"><b>B</b> Grassetto</button>
-                <button type="button" class="tool-btn" data-tag="*"><i>I</i> Corsivo</button>
-                <button type="button" class="tool-btn" data-tag="### ">H3 Titolo</button>
-                <button type="button" class="tool-btn" data-tag="- ">• Lista</button>
-                <button type="button" class="tool-btn" data-tag="> ">Citazione</button>
-              </div>
-
-              <textarea id="artContent" class="textarea-large-editor" placeholder="Scrivi contenuto..." required></textarea>
-            </div>
-
-            <!-- 7. Typography & Color Customization Box -->
-            <div style="margin-bottom: 2.25rem; background: var(--bg-primary); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
-              <div class="section-label" style="color: var(--text-secondary); margin-bottom: 0.85rem;">Font e Colore</div>
-              
-              <!-- Font Selector -->
-              <div style="margin-bottom: 1.1rem;">
-                <span style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Font:</span>
-                <div class="mini-btn-group">
-                  <button type="button" class="btn-font-opt active" data-font="sans">Sans</button>
-                  <button type="button" class="btn-font-opt" data-font="serif">Serif</button>
-                  <button type="button" class="btn-font-opt" data-font="display">Display</button>
-                  <button type="button" class="btn-font-opt" data-font="mono">Mono</button>
-                </div>
-              </div>
-
-              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;">
-                <!-- Title Color Selector -->
-                <div>
-                  <span style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Colore Titolo:</span>
-                  <div class="color-swatches-grid" id="titleColorSwatches">
-                    <div class="color-swatch active" data-color="#ffffff" style="background: #ffffff;"></div>
-                    <div class="color-swatch" data-color="#93c5fd" style="background: #93c5fd;"></div>
-                    <div class="color-swatch" data-color="#cbd5e1" style="background: #cbd5e1;"></div>
-                    <div class="color-swatch" data-color="#fef08a" style="background: #fef08a;"></div>
-                    <input type="color" id="artTitleColorPicker" class="color-input-custom" value="#ffffff" title="Colore personalizzato">
-                  </div>
-                </div>
-
-                <!-- Text Body Color Selector -->
-                <div>
-                  <span style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.35rem;">Colore Testo:</span>
-                  <div class="color-swatches-grid" id="textColorSwatches">
-                    <div class="color-swatch active" data-color="#e2e8f0" style="background: #e2e8f0;"></div>
-                    <div class="color-swatch" data-color="#ffffff" style="background: #ffffff;"></div>
-                    <div class="color-swatch" data-color="#94a3b8" style="background: #94a3b8;"></div>
-                    <div class="color-swatch" data-color="#fef9c3" style="background: #fef9c3;"></div>
-                    <input type="color" id="artTextColorPicker" class="color-input-custom" value="#e2e8f0" title="Colore personalizzato">
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Submit & Cancel Action Row -->
-            <div style="display: flex; gap: 1rem; align-items: center;">
-              <button type="submit" id="submitFormBtn" class="btn btn-primary" style="flex: 1; font-size: 1.05rem; padding: 0.95rem; border-radius: var(--radius-md);">
-                Pubblica Articolo
+            <div style="display: flex; gap: 0.75rem; align-items: center;">
+              <button type="button" id="saveDraftBtn" class="btn btn-secondary" style="font-size: 0.82rem; font-weight: 700; padding: 0.6rem 1.2rem; border-radius: 10px;">
+                Salva Bozza
               </button>
-              <button type="button" id="cancelEditBtn" class="btn btn-secondary" style="display: none; padding: 0.95rem 1.25rem; font-size: 0.9rem; border-radius: var(--radius-md);">
+              <button type="button" id="submitFormBtn" class="btn btn-primary" style="font-size: 0.82rem; font-weight: 800; padding: 0.6rem 1.4rem; border-radius: 10px;">
+                Pubblica Subito
+              </button>
+              <button type="button" id="cancelEditBtn" class="btn btn-secondary" style="display: none; padding: 0.6rem 1.2rem; font-size: 0.82rem; border-radius: 10px;">
                 Annulla
               </button>
             </div>
+          </div>
 
-          </form>
-        </div>
+          <!-- GRID PRINCIPALE: CONTENUTO (SINISTRA 68%) E SIDEBAR (DESTRA 32%) -->
+          <div class="admin-editor-grid">
+            
+            <!-- COLONNA DI SINISTRA: CONTENUTO, TOOLBAR, EDITOR & SEO -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+              
+              <!-- 1. INFORMAZIONI PRINCIPALI -->
+              <div class="admin-card-section">
+                <div class="section-title-wrapper">
+                  <div class="section-title-text">
+                    <span class="section-badge-number">1</span>
+                    Titolo, Sottotitolo e Link URL
+                  </div>
+                  <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Campi Fondamentali</span>
+                </div>
+
+                <div style="margin-bottom: 1.15rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                    <label for="artTitle" style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary);">
+                      Titolo dell'Articolo <span style="color: #ef4444;">*</span>
+                    </label>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                      <label style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">Font & Colore Titolo:</label>
+                      <select id="artTitleFontSelect" onchange="changeTitleFont(this.value)" class="form-control" style="font-size: 0.72rem; padding: 0.2rem 0.5rem; border-radius: 6px; background: var(--bg-primary); font-weight: 600; cursor: pointer;">
+                        <option value="Inter">Inter (Default)</option>
+                        <option value="Playfair Display">Playfair Display (Serif)</option>
+                        <option value="Bodoni Moda">Bodoni Moda (Lusso)</option>
+                        <option value="Cinzel">Cinzel (Lusso)</option>
+                        <option value="Bebas Neue">Bebas Neue (Impatto)</option>
+                        <option value="Montserrat">Montserrat</option>
+                        <option value="Poppins">Poppins</option>
+                        <option value="Outfit">Outfit</option>
+                        <option value="Syne">Syne (Futuristico)</option>
+                        <option value="Dancing Script">Dancing Script (Corsivo)</option>
+                      </select>
+                      <input type="color" id="artTitleColorPicker" value="#ffffff" onchange="changeTitleColor(this.value)" style="width: 26px; height: 26px; border: none; border-radius: 50%; cursor: pointer; background: transparent;" title="Colore Titolo Articolo">
+                    </div>
+                  </div>
+                  <input type="text" id="artTitle" class="input-large-title" placeholder="Inserisci il titolo principale..." required style="background: var(--bg-primary);">
+                </div>
+
+                <div style="margin-bottom: 1.15rem;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                    <label for="artSubtitle" style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary);">
+                      Sottotitolo / Catenaccio
+                    </label>
+                    <div style="display: flex; align-items: center; gap: 0.5rem;">
+                      <label style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">Font & Colore Sottotitolo:</label>
+                      <select id="artSubtitleFontSelect" onchange="changeSubtitleFont(this.value)" class="form-control" style="font-size: 0.72rem; padding: 0.2rem 0.5rem; border-radius: 6px; background: var(--bg-primary); font-weight: 600; cursor: pointer;">
+                        <option value="Inter">Inter (Default)</option>
+                        <option value="Playfair Display">Playfair Display</option>
+                        <option value="Bodoni Moda">Bodoni Moda</option>
+                        <option value="Lora">Lora</option>
+                        <option value="Montserrat">Montserrat</option>
+                        <option value="Poppins">Poppins</option>
+                        <option value="Outfit">Outfit</option>
+                        <option value="Caveat">Caveat (Corsivo)</option>
+                      </select>
+                      <input type="color" id="artSubtitleColorPicker" value="#cbd5e1" onchange="changeSubtitleColor(this.value)" style="width: 26px; height: 26px; border: none; border-radius: 50%; cursor: pointer; background: transparent;" title="Colore Sottotitolo">
+                    </div>
+                  </div>
+                  <input type="text" id="artSubtitle" class="input-large-subtitle" placeholder="Breve testo di introduzione..." style="background: var(--bg-primary);">
+                </div>
+
+                <div>
+                  <label for="artSlug" style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">
+                    Slug URL Personalizzabile
+                  </label>
+                  <div style="display: flex; align-items: center; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 10px; padding: 0 0.75rem;">
+                    <span style="font-size: 0.78rem; color: var(--text-muted); font-family: monospace; white-space: nowrap;">https://thedreamersmagazine.it/articolo/</span>
+                    <input type="text" id="artSlug" class="form-control" placeholder="titolo-articolo" style="border: none; background: transparent; padding: 0.6rem 0.5rem; font-weight: 600; color: #f97316;">
+                    <button type="button" id="autoGenerateSlugBtn" class="btn btn-secondary" style="font-size: 0.72rem; padding: 0.25rem 0.6rem; border-radius: 6px; flex-shrink: 0;">Auto Slug</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 2. EDITOR DI TESTO AVANZATO CON SCHERMO INTERO -->
+              <div id="wysiwygEditorCard" class="admin-card-section">
+                <div class="section-title-wrapper" style="margin-bottom: 1rem;">
+                  <div class="section-title-text">
+                    <span class="section-badge-number">2</span>
+                    Scrittura & Formattazione Contenuto
+                  </div>
+                  <div style="display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+                    <button type="button" id="toggleHomepagePreviewBtn" onclick="toggleHomepagePreviewModal()" class="btn btn-primary" style="font-size: 0.75rem; padding: 0.35rem 0.75rem; border-radius: 8px; background: #C85A32; border: none; color: #fff; font-weight: 800; display: flex; align-items: center; gap: 0.35rem; cursor: pointer;">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                      <span>Anteprima Homepage</span>
+                    </button>
+                    <button type="button" id="toggleFullArticlePreviewBtn" onclick="toggleFullArticlePreviewModal()" class="btn btn-primary" style="font-size: 0.75rem; padding: 0.35rem 0.75rem; border-radius: 8px; background: linear-gradient(135deg, #f97316, #C85A32); border: none; color: #fff; font-weight: 800; display: flex; align-items: center; gap: 0.35rem; cursor: pointer; box-shadow: 0 4px 12px rgba(249,115,22,0.35);">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+                      <span>Articolo Full Screen</span>
+                    </button>
+                    <button type="button" id="toggleFullscreenBtn" onclick="toggleEditorFullscreen()" class="btn btn-secondary" style="font-size: 0.75rem; padding: 0.35rem 0.7rem; border-radius: 8px; display: flex; align-items: center; gap: 0.35rem; font-weight: 700;">
+                      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"></polyline><polyline points="9 21 3 21 3 15"></polyline><line x1="21" y1="3" x2="14" y2="10"></line><line x1="3" y1="21" x2="10" y2="14"></line></svg>
+                      <span>Schermo Intero Editor</span>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Toolbar con Selettore Font Integrato (25+ Google Fonts) -->
+                <div class="editor-toolbar" style="display: flex; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 0.85rem; padding: 0.75rem; background: var(--bg-primary); border-radius: 12px; border: 1px solid var(--border-color);">
+                  
+                  <!-- Custom Font Picker Tipografia Articolo senza Emoji -->
+                  <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%; margin-bottom: 0.5rem; padding-bottom: 0.55rem; border-bottom: 1px solid var(--border-color); position: relative;">
+                    <label style="font-size: 0.75rem; font-weight: 800; color: #e05a2b; text-transform: uppercase; white-space: nowrap; letter-spacing: 0.05em;">
+                      Font Articolo:
+                    </label>
+                    
+                    <div id="customFontPickerContainer" style="position: relative; flex: 1;">
+                      <button type="button" id="customFontPickerBtn" onclick="toggleCustomFontDropdown()" style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0.45rem 0.85rem; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 8px; font-size: 0.85rem; font-weight: 600; color: var(--text-primary); cursor: pointer;">
+                        <span id="currentFontSelectedLabel" style="font-family: 'Inter', sans-serif;">Inter (Default Modern)</span>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                      </button>
+
+                      <div id="customFontDropdownMenu" style="display: none; position: absolute; top: calc(100% + 6px); left: 0; right: 0; background: var(--admin-card-bg); border: 2px solid var(--admin-accent, #C85A32); border-radius: 12px; box-shadow: 0 16px 36px rgba(0,0,0,0.5); z-index: 9999; padding: 0.75rem; max-height: 380px; overflow-y: auto;">
+                        <input type="text" id="fontSearchInput" oninput="filterCustomFonts(this.value)" placeholder="Cerca tra i 25+ font disponibili..." style="width: 100%; padding: 0.55rem 0.75rem; border-radius: 8px; border: 1px solid var(--admin-input-border); background: var(--admin-input-bg); color: var(--admin-text-main); font-size: 0.85rem; margin-bottom: 0.6rem; outline: none; font-weight: 600;">
+                        <div id="fontOptionsList"></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Pulsanti Formattazione WYSIWYG Stile Word -->
+                  <div style="display: inline-flex; align-items: center; gap: 0.35rem; margin-right: 0.35rem;">
+                    <label style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); white-space: nowrap;">Dimensione Font:</label>
+                    <select id="editorFontSizeSelect" onchange="applyFontSize(this.value)" class="form-control" style="font-size: 0.75rem; padding: 0.25rem 0.5rem; border-radius: 6px; background: var(--bg-card); font-weight: 600; cursor: pointer; color: var(--text-primary);">
+                      <option value="12px">12px (Molto Piccolo)</option>
+                      <option value="14px">14px (Piccolo)</option>
+                      <option value="16px" selected>16px (Normale)</option>
+                      <option value="18px">18px (Medio)</option>
+                      <option value="20px">20px (Grande)</option>
+                      <option value="24px">24px (Titolo 4)</option>
+                      <option value="28px">28px (Titolo 3)</option>
+                      <option value="32px">32px (Titolo 2)</option>
+                      <option value="36px">36px (Titolo 1)</option>
+                      <option value="42px">42px (Gigante)</option>
+                    </select>
+                  </div>
+
+                  <button type="button" class="tool-btn" onclick="applyWysiwygCmd('bold')"><b>B</b> Grassetto</button>
+                  <button type="button" class="tool-btn" onclick="applyWysiwygCmd('italic')"><i>I</i> Corsivo</button>
+                  <button type="button" class="tool-btn" onclick="applyWysiwygCmd('h2')">H2 Titolo</button>
+                  <button type="button" class="tool-btn" onclick="applyWysiwygCmd('h3')">H3 Titolo</button>
+                  <button type="button" class="tool-btn" style="display:inline-flex;align-items:center;gap:0.35rem;">
+                    <span>Colore Testo</span>
+                    <input type="color" id="editorTextColorPicker" value="#ffffff" oninput="applyTextColor(this.value)" onchange="applyTextColor(this.value)" style="width:22px;height:22px;border:none;border-radius:50%;cursor:pointer;background:transparent;padding:0;margin:0;" title="Colore del Testo Selezionato">
+                  </button>
+                  <button type="button" class="tool-btn" onclick="openCustomModal('font')">Cambia Font Testo</button>
+                  <button type="button" class="tool-btn" onclick="openCustomModal('img')">Inserisci Immagine</button>
+                  <button type="button" class="tool-btn" onclick="openCustomModal('video')">Video YouTube/Vimeo</button>
+                  <button type="button" class="tool-btn" onclick="applyWysiwygCmd('table')">Tabella</button>
+                  <button type="button" class="tool-btn" onclick="applyWysiwygCmd('quote')">Citazione</button>
+                  <button type="button" class="tool-btn" onclick="applyWysiwygCmd('code')">Blocco Codice</button>
+                  <button type="button" class="tool-btn" onclick="exitBlockCmd()" style="background: rgba(249, 115, 22, 0.15) !important; color: #f97316 !important; border: 1px solid rgba(249, 115, 22, 0.4) !important; font-weight: 800 !important;" title="Esci dal blocco di codice o citazione per continuare a scrivere normalmente">Esci da Blocco ↩</button>
+                  <button type="button" class="tool-btn" onclick="applyWysiwygCmd('ul')">• Lista Puntata</button>
+                  <button type="button" class="tool-btn" onclick="applyWysiwygCmd('ol')">1. Lista Numerata</button>
+                  <button type="button" class="tool-btn" onclick="openCustomModal('cta')">Pulsante CTA</button>
+                  <button type="button" class="tool-btn" onclick="applyWysiwygCmd('box')">Box Info / Alert</button>
+                </div>
+
+                <!-- Visual WYSIWYG Editor Element (Stile Word senza codici Markdown visibili) -->
+                <div id="artContent" contenteditable="true" data-placeholder="Scrivi qui il contenuto dell'articolo come su Microsoft Word..." class="textarea-large-editor wysiwyg-editor" style="min-height: 380px; font-size: 0.95rem; line-height: 1.7; border-radius: 12px; padding: 1.15rem; background: var(--bg-primary); border: 1px solid var(--border-color); color: var(--text-primary); outline: none; overflow-y: auto; overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; white-space: pre-wrap; max-width: 100%; box-sizing: border-box;"></div>
+              </div>
+
+              <!-- 3. SUITE SEO AVANZATA & SIMULATORI -->
+              <div class="admin-card-section">
+                <div class="section-title-wrapper">
+                  <div class="section-title-text">
+                    <span class="section-badge-number">3</span>
+                    Ottimizzazione SEO & Anteprima Social
+                  </div>
+                  <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Google & Social Media</span>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem;">
+                  <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                      <label for="artSeoTitle" style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);">SEO Title</label>
+                      <span style="font-size: 0.72rem; color: var(--text-muted);"><span id="seoTitleCounter">0</span> / 60 car.</span>
+                    </div>
+                    <input type="text" id="artSeoTitle" class="form-control" placeholder="Titolo per i motori di ricerca..." style="padding: 0.6rem 0.8rem; font-size: 0.82rem; border-radius: 8px;">
+                  </div>
+
+                  <div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                      <label for="artMetaDescription" style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);">Meta Description</label>
+                      <span style="font-size: 0.72rem; color: var(--text-muted);"><span id="metaDescCounter">0</span> / 160 car.</span>
+                    </div>
+                    <input type="text" id="artMetaDescription" class="form-control" placeholder="Sommario per i risultati di ricerca..." style="padding: 0.6rem 0.8rem; font-size: 0.82rem; border-radius: 8px;">
+                  </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+                  <div>
+                    <label for="artKeywords" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Keywords Meta</label>
+                    <input type="text" id="artKeywords" class="form-control" placeholder="cinema, film..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                  </div>
+                  <div>
+                    <label for="artCanonicalUrl" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Canonical URL</label>
+                    <input type="url" id="artCanonicalUrl" class="form-control" placeholder="https://..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                  </div>
+                  <div>
+                    <label for="artRobots" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Meta Robots</label>
+                    <select id="artRobots" class="form-control" style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                      <option value="index, follow" selected>index, follow</option>
+                      <option value="noindex, follow">noindex, follow</option>
+                      <option value="noindex, nofollow">noindex, nofollow</option>
+                    </select>
+                  </div>
+                </div>
+
+                <!-- Open Graph -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                  <div>
+                    <label for="artOgTitle" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Open Graph Title</label>
+                    <input type="text" id="artOgTitle" class="form-control" placeholder="Titolo per Facebook/LinkedIn..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                  </div>
+                  <div>
+                    <label for="artOgDescription" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Open Graph Description</label>
+                    <input type="text" id="artOgDescription" class="form-control" placeholder="Descrizione per i social..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                  </div>
+                </div>
+
+                <!-- SIMULATORI GOOGLE & SOCIAL -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
+                  
+                  <!-- Google SERP -->
+                  <div style="background: #ffffff; padding: 1.1rem; border-radius: 12px; color: #202124; font-family: arial, sans-serif;">
+                    <div style="font-size: 0.7rem; font-weight: 700; color: #70757a; text-transform: uppercase; margin-bottom: 0.65rem; letter-spacing: 0.05em;">
+                      Anteprima Risultato Google (SERP)
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 0.4rem; margin-bottom: 0.2rem;">
+                      <div style="width: 16px; height: 16px; border-radius: 50%; background: #C85A32; color: #fff; font-size: 0.6rem; display: flex; align-items: center; justify-content: center; font-weight: 800;">D</div>
+                      <div style="font-size: 0.75rem; color: #202124; line-height: 1.2;">The Dreamers Magazine</div>
+                    </div>
+                    <div style="font-size: 0.7rem; color: #4d5156; word-break: break-all; margin-bottom: 0.25rem;" id="serpPreviewUrl">https://thedreamersmagazine.it › articolo</div>
+                    <h3 id="serpPreviewTitle" style="font-size: 1.05rem; color: #1a0dab; font-weight: 400; margin: 0.2rem 0; line-height: 1.3;">
+                      Titolo dell'Articolo su Google
+                    </h3>
+                    <p id="serpPreviewDesc" style="font-size: 0.78rem; color: #4d5156; margin: 0; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                      Inserisci la Meta Description per vedere l'anteprima del testo esatto su Google.
+                    </p>
+                  </div>
+
+                  <!-- Social Card -->
+                  <div style="background: #18191a; padding: 1rem; border-radius: 12px; border: 1px solid #3a3b3c; color: #e4e6eb;">
+                    <div style="font-size: 0.7rem; font-weight: 700; color: #b0b3b8; text-transform: uppercase; margin-bottom: 0.65rem; letter-spacing: 0.05em;">
+                      Anteprima Condivisione Social
+                    </div>
+                    <div style="border-radius: 10px; overflow: hidden; background: #242526; border: 1px solid #3a3b3c;">
+                      <div style="height: 120px; background: #3a3b3c; overflow: hidden; position: relative;" id="socialPreviewImgBox">
+                        <img id="socialPreviewImg" src="" alt="" style="width: 100%; height: 100%; object-fit: cover; display: none;">
+                        <div id="socialPreviewImgPlaceholder" style="display: flex; align-items: center; justify-content: center; height: 100%; color: #b0b3b8; font-size: 0.75rem;">Copertina Social</div>
+                      </div>
+                      <div style="padding: 0.75rem;">
+                        <div style="font-size: 0.68rem; color: #b0b3b8; text-transform: uppercase; font-weight: 600;" id="socialPreviewDomain">THEDREAMERSMAGAZINE.IT</div>
+                        <div id="socialPreviewTitle" style="font-size: 0.88rem; font-weight: 700; color: #e4e6eb; margin: 0.2rem 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                          Titolo Articolo
+                        </div>
+                        <div id="socialPreviewDesc" style="font-size: 0.78rem; color: #b0b3b8; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                          Descrizione di anteprima della scheda social...
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+            <!-- COLONNA DI DESTRA: STATO, COPERTINA & TASSONOMIE -->
+            <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+
+              <!-- CARD STATO & PUBBLICAZIONE -->
+              <div class="admin-card-section">
+                <div class="section-title-wrapper">
+                  <div class="section-title-text">
+                    <span class="section-badge-number">4</span>
+                    Stato e Pubblicazione
+                  </div>
+                </div>
+
+                <div style="margin-bottom: 1rem;">
+                  <label for="artWorkflowStatus" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">Stato Articolo</label>
+                  <select id="artWorkflowStatus" class="form-control" style="padding: 0.6rem 0.75rem; font-size: 0.82rem; border-radius: 8px;">
+                    <option value="published" selected>Pubblicato (Visibile)</option>
+                    <option value="draft">Bozza (Privato)</option>
+                    <option value="review">In Revisione</option>
+                    <option value="archived">Archiviato</option>
+                  </select>
+                </div>
+
+                <div style="margin-bottom: 1rem;">
+                  <label for="artScheduledAt" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">Programmazione Data e Ora</label>
+                  <input type="datetime-local" id="artScheduledAt" class="form-control" style="padding: 0.6rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                </div>
+
+                <div style="margin-bottom: 0.5rem;">
+                  <label for="artAuthor" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Autore Articolo</label>
+                  <input type="text" id="artAuthor" class="form-control" value="Admin" style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                </div>
+              </div>
+
+              <!-- CARD IMMAGINE DI COPERTINA -->
+              <div class="admin-card-section">
+                <div class="section-title-wrapper">
+                  <div class="section-title-text">
+                    <span class="section-badge-number">5</span>
+                    Immagine in Evidenza
+                  </div>
+                </div>
+
+                <div class="file-upload-card" id="fileUploadDropzone" style="position: relative; border: 2px dashed rgba(200, 90, 50, 0.4); padding: 1.25rem; text-align: center; border-radius: 14px; background: var(--bg-primary); margin-bottom: 0.85rem; cursor: pointer;">
+                  <input type="file" id="artFileInput" accept="image/png, image/jpeg, image/jpg, image/webp, image/gif, image/bmp, image/avif, image/svg+xml, .png, .jpg, .jpeg, .webp, .gif, .bmp, .avif, .svg" class="file-input-hidden" style="position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; z-index: 10;">
+                  <div style="font-weight: 700; color: var(--admin-text-main, #ffffff); font-size: 0.85rem; margin-bottom: 0.2rem; pointer-events: none;">
+                    Drag & Drop File
+                  </div>
+                  <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.25rem; pointer-events: none;">
+                    oppure <span style="color: #e05a2b; text-decoration: underline; cursor: pointer;">sfoglia i file</span>
+                  </div>
+                  <div style="font-size: 0.68rem; color: var(--text-muted); opacity: 0.8; pointer-events: none;">
+                    Formati: JPG, PNG, WebP, AVIF, GIF, BMP, SVG
+                  </div>
+                  <div id="fileSelectedBadge" style="display: none; margin-top: 0.5rem; padding: 0.25rem 0.65rem; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.3); color: #34d399; border-radius: 9999px; font-size: 0.72rem; font-weight: 600; pointer-events: none;"></div>
+                </div>
+
+                <div style="margin-bottom: 0.85rem;">
+                  <label for="artImage" style="font-size: 0.75rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">URL Immagine Online / Data:</label>
+                  <input type="text" id="artImage" class="form-control" placeholder="https://..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                </div>
+
+                <div class="image-preview-box" id="imgPreviewBox" style="height: 160px; border-radius: 12px; border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; background: var(--bg-primary); overflow: hidden; position: relative; margin-bottom: 0.85rem;">
+                  <span id="previewPlaceholder" style="font-size: 0.78rem; color: var(--text-muted); text-align: center;">Anteprima Copertina</span>
+                  <img id="previewImg" src="" alt="Anteprima" style="width: 100%; height: 100%; object-fit: cover; object-position: center; display: none;">
+                  <button type="button" id="removeCoverImgBtn" title="Elimina Immagine di Copertina" onclick="removeCoverImage()" style="display: none; position: absolute; top: 8px; right: 8px; background: rgba(225, 29, 72, 0.95); color: #fff; border: none; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.5); z-index: 10; transition: transform 0.2s ease, background-color 0.2s ease;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                      <polyline points="3 6 5 6 21 6"></polyline>
+                      <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                    </svg>
+                  </button>
+                </div>
+
+                <button type="button" id="openCropperModalBtn" class="btn btn-secondary" style="width: 100%; font-size: 0.78rem; padding: 0.55rem; border-radius: 8px; margin-bottom: 0.85rem;">
+                  Editor Ritaglio Canvas
+                </button>
+
+                <div style="display: grid; gap: 0.65rem;">
+                  <div>
+                    <label for="artImageAlt" style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Testo ALT SEO</label>
+                    <input type="text" id="artImageAlt" class="form-control" placeholder="Descrizione immagine..." style="padding: 0.5rem 0.75rem; font-size: 0.78rem; border-radius: 8px;">
+                  </div>
+                  <div>
+                    <label for="artImageCaption" style="font-size: 0.75rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Didascalia</label>
+                    <input type="text" id="artImageCaption" class="form-control" placeholder="Fonte / Crediti..." style="padding: 0.5rem 0.75rem; font-size: 0.78rem; border-radius: 8px;">
+                  </div>
+                </div>
+              </div>
+
+              <!-- CARD TASSONOMIE E VETRINA -->
+              <div style="background: var(--bg-card); padding: 1.35rem; border-radius: 18px; border: 1px solid var(--border-color);">
+                <div style="font-size: 0.72rem; font-weight: 800; color: #e05a2b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem;">
+                  Organizzazione e Tag
+                </div>
+
+                <div style="margin-bottom: 0.85rem;">
+                  <label for="artCategorySelect" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Categoria Principale</label>
+                  <select id="artCategorySelect" class="form-control" style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                    <option value="Film">Film</option>
+                    <option value="Serie TV">Serie TV</option>
+                    <option value="News" selected>News</option>
+                    <option value="Approfondimenti">Approfondimenti</option>
+                  </select>
+                </div>
+
+                <div style="margin-bottom: 0.85rem;">
+                  <label for="artSubCategory" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Sottocategoria</label>
+                  <input type="text" id="artSubCategory" class="form-control" placeholder="Es. Recensioni..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
+                </div>
+
+                <div style="margin-bottom: 0.85rem;">
+                  <label for="artTagsInput" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Tag (Premi Invio)</label>
+                  <div style="display: flex; gap: 0.4rem; flex-wrap: wrap; padding: 0.4rem; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px; min-height: 40px; align-items: center;" id="tagsBoxContainer">
+                    <div id="tagsChipsArea" style="display: flex; gap: 0.3rem; flex-wrap: wrap;"></div>
+                    <input type="text" id="artTagsInput" placeholder="Aggiungi tag..." style="border: none; background: transparent; outline: none; color: var(--text-primary); font-size: 0.78rem; flex: 1; min-width: 90px;">
+                  </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 0.85rem;">
+                  <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; background: var(--bg-primary); padding: 0.6rem 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <input type="checkbox" id="artIsFeatured" style="width: 16px; height: 16px; accent-color: #C85A32;">
+                    <span style="font-size: 0.78rem; font-weight: 600; color: var(--text-primary);">In Evidenza</span>
+                  </label>
+
+                  <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer; background: var(--bg-primary); padding: 0.6rem 0.8rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                    <input type="checkbox" id="artIsHomeFeatured" style="width: 16px; height: 16px; accent-color: #C85A32;">
+                    <span style="font-size: 0.78rem; font-weight: 600; color: var(--text-primary);">Hero Home Page</span>
+                  </label>
+                </div>
+
+                <div>
+                  <label for="artSeries" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Serie di Articoli</label>
+                  <input type="text" id="artSeries" class="form-control" placeholder="Es. Speciale Oscar..." style="padding: 0.5rem 0.75rem; font-size: 0.78rem; border-radius: 8px;">
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </form>
       </div>
 
-      <!-- TAB 2: MANAGEMENT TABLE -->
+      <!-- TAB 2: MANAGEMENT TABLE & WORKSPACE -->
       <div id="manageTabContent" style="display: none;">
-        <div class="admin-card">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
-            <h2 class="admin-card-title" style="margin-bottom: 0;">
-              <span>Articoli Pubblicati</span>
-            </h2>
+        <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+          
+          <!-- KPI COUNTERS HEADER -->
+          <div class="admin-kpi-grid">
+            <div style="background: var(--bg-card); padding: 1.25rem; border-radius: 16px; border: 1px solid var(--border-color);">
+              <div style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Totale Articoli</div>
+              <div style="font-size: 1.8rem; font-weight: 800; color: var(--text-primary); margin-top: 0.2rem;" id="kpiTotalArtCount">0</div>
+            </div>
+            <div style="background: var(--bg-card); padding: 1.25rem; border-radius: 16px; border: 1px solid var(--border-color);">
+              <div style="font-size: 0.75rem; font-weight: 700; color: #34d399; text-transform: uppercase;">Pubblicati</div>
+              <div style="font-size: 1.8rem; font-weight: 800; color: #34d399; margin-top: 0.2rem;" id="kpiPublishedArtCount">0</div>
+            </div>
+            <div style="background: var(--bg-card); padding: 1.25rem; border-radius: 16px; border: 1px solid var(--border-color);">
+              <div style="font-size: 0.75rem; font-weight: 700; color: #fbbf24; text-transform: uppercase;">Bozze</div>
+              <div style="font-size: 1.8rem; font-weight: 800; color: #fbbf24; margin-top: 0.2rem;" id="kpiDraftArtCount">0</div>
+            </div>
+            <div style="background: var(--bg-card); padding: 1.25rem; border-radius: 16px; border: 1px solid var(--border-color);">
+              <div style="font-size: 0.75rem; font-weight: 700; color: #e05a2b; text-transform: uppercase;">In Evidenza</div>
+              <div style="font-size: 1.8rem; font-weight: 800; color: #e05a2b; margin-top: 0.2rem;" id="kpiFeaturedArtCount">0</div>
+            </div>
           </div>
 
-          <div class="articles-table-wrap">
-            <table class="admin-table">
-              <thead>
-                <tr>
-                  <th>Copertina</th>
-                  <th>Titolo</th>
-                  <th>Categoria</th>
-                  <th>Data</th>
-                  <th>Azioni</th>
-                </tr>
-              </thead>
-              <tbody id="articlesTableBody">
-                <!-- Rendered dynamically by admin.js -->
-              </tbody>
-            </table>
+          <!-- BARRA DI RICERCA & FILTRI ARTICOLI -->
+          <div style="background: var(--bg-card); padding: 1.25rem 1.5rem; border-radius: 16px; border: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 260px;">
+              <input type="text" id="manageSearchInput" class="form-control" placeholder="Cerca articolo per titolo, slug o autore..." style="padding: 0.65rem 1rem; font-size: 0.85rem; border-radius: 10px; background: var(--bg-primary);">
+            </div>
+
+            <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
+              <select id="manageCategoryFilter" class="form-control" style="padding: 0.65rem 1rem; font-size: 0.82rem; border-radius: 10px; background: var(--bg-primary); width: auto;">
+                <option value="ALL">Tutte le Categorie</option>
+                <option value="Film">Film</option>
+                <option value="Serie TV">Serie TV</option>
+                <option value="News">News</option>
+                <option value="Approfondimenti">Approfondimenti</option>
+              </select>
+
+              <select id="manageStatusFilter" class="form-control" style="padding: 0.65rem 1rem; font-size: 0.82rem; border-radius: 10px; background: var(--bg-primary); width: auto;">
+                <option value="ALL">Tutti gli Stati</option>
+                <option value="published">Pubblicati</option>
+                <option value="draft">Bozze</option>
+                <option value="featured">In Evidenza</option>
+              </select>
+            </div>
           </div>
+
+          <!-- TABELLA GESTIONE ARTICOLI -->
+          <div class="admin-card" style="background: var(--bg-card); border-radius: 20px; border: 1px solid var(--border-color); overflow: hidden; padding: 0;">
+            <div class="articles-table-wrap">
+              <table class="admin-table">
+                <thead>
+                  <tr>
+                    <th style="padding-left: 1.5rem;">Copertina</th>
+                    <th>Titolo & Slug</th>
+                    <th>Categoria</th>
+                    <th>Stato</th>
+                    <th>Autore & Data</th>
+                    <th style="text-align: right; padding-right: 1.5rem;">Azioni</th>
+                  </tr>
+                </thead>
+                <tbody id="articlesTableBody">
+                  <!-- Rendered dynamically by admin.js -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -360,7 +1469,7 @@
           <!-- OPTION A: WORDPRESS REST API AUTO IMPORT -->
           <div style="background: var(--bg-primary); padding: 1.5rem; border-radius: 18px; border: 1px solid var(--border-color); margin-bottom: 2rem;">
             <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-              <span>🌐 Opzione 1: Importazione Automatica via URL WordPress</span>
+              <span>Opzione 1: Importazione Automatica via URL WordPress</span>
             </h3>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
               Inserisci il dominio del tuo vecchio sito WordPress. Il sistema collegherà le API REST e scaricherà articoli, copertine, autori e categorie.
@@ -373,7 +1482,7 @@
               <input type="url" id="wpSiteUrlInput" class="form-control" value="https://www.thedreamersmagazine.it" placeholder="https://www.thedreamersmagazine.it" style="padding: 0.75rem 1rem;">
             </div>
 
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+            <div class="admin-import-grid">
               <div>
                 <label for="wpFetchLimitSelect" style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 0.25rem;">
                   Numero di articoli da importare:
@@ -400,7 +1509,7 @@
 
             <div style="display: flex; gap: 1rem; align-items: center;">
               <button type="button" id="startWpFetchBtn" class="btn btn-primary" style="padding: 0.8rem 1.5rem; font-weight: 800;">
-                🚀 Avvia Importazione Automatica
+                Avvia Importazione Automatica
               </button>
             </div>
 
@@ -410,7 +1519,7 @@
           <!-- OPTION B: FILE UPLOAD IMPORT (XML / JSON) -->
           <div style="background: var(--bg-primary); padding: 1.5rem; border-radius: 18px; border: 1px solid var(--border-color);">
             <h3 style="font-size: 1.1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-              <span>📁 Opzione 2: Carica File di Esportazione WordPress (XML / JSON)</span>
+              <span>Opzione 2: Carica File di Esportazione WordPress (XML / JSON)</span>
             </h3>
             <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.25rem;">
               Carica il file scaricato dal vecchio WordPress (Strumenti ➔ Esporta ➔ file <code>.xml</code> o file <code>.json</code>).
@@ -426,68 +1535,315 @@
         </div>
       </div>
 
+      <!-- TAB 4: MESSAGGI DI CONTATTO RICEVUTI -->
+      <div id="messagesTabContent" style="display: none;">
+        <div style="background: var(--bg-card); padding: 2rem; border-radius: 24px; border: 1px solid var(--border-color); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);">
+          
+          <!-- Header Area with KPI Counters -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem;">
+            <div>
+              <h2 style="font-size: 1.6rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.35rem; letter-spacing: -0.02em;">
+                Messaggi Ricevuti
+              </h2>
+              <p style="font-size: 0.88rem; color: var(--text-muted);">
+                Gestione messaggi in arrivo dal form di contatto del sito web.
+              </p>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; align-items: center;">
+              <!-- KPI Badge: Unread -->
+              <div style="background: rgba(200, 90, 50, 0.1); border: 1px solid rgba(200, 90, 50, 0.3); padding: 0.6rem 1.25rem; border-radius: 14px; text-align: center;">
+                <div style="font-size: 0.7rem; color: #f97316; text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em;">Da Leggere</div>
+                <div style="font-size: 1.35rem; font-weight: 800; color: #e05a2b;" id="countUnreadKpi">0</div>
+              </div>
+
+              <!-- KPI Badge: Total -->
+              <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid var(--border-color); padding: 0.6rem 1.25rem; border-radius: 14px; text-align: center;">
+                <div style="font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.05em;">Totali</div>
+                <div style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary);" id="countTotalKpi">0</div>
+              </div>
+
+              <button id="refreshMessagesBtn" class="btn btn-secondary" style="font-size: 0.85rem; font-weight: 700; padding: 0.75rem 1.25rem; border-radius: 12px;">
+                Aggiorna
+              </button>
+            </div>
+          </div>
+
+          <!-- Controls: Filters & Search bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1.5rem; flex-wrap: wrap;">
+            <!-- Filter Pills -->
+            <div style="display: flex; gap: 0.4rem; background: var(--bg-primary); padding: 0.3rem; border-radius: 14px; border: 1px solid var(--border-color);" id="msgFilterGroup">
+              <button class="btn-filter-opt active" data-msg-filter="all" style="padding: 0.45rem 1rem; border-radius: 10px; font-size: 0.82rem;">Tutti (<span id="countAllMsg">0</span>)</button>
+              <button class="btn-filter-opt" data-msg-filter="new" style="padding: 0.45rem 1rem; border-radius: 10px; font-size: 0.82rem;">Non Letti (<span id="countUnreadMsg">0</span>)</button>
+              <button class="btn-filter-opt" data-msg-filter="read" style="padding: 0.45rem 1rem; border-radius: 10px; font-size: 0.82rem;">Letti</button>
+              <button class="btn-filter-opt" data-msg-filter="archived" style="padding: 0.45rem 1rem; border-radius: 10px; font-size: 0.82rem;">Archiviati</button>
+            </div>
+
+            <!-- Search input -->
+            <div style="position: relative; min-width: 260px;">
+              <input type="text" id="msgSearchInput" placeholder="Cerca mittente o oggetto..." class="form-control" style="padding: 0.55rem 1rem; font-size: 0.85rem; border-radius: 12px; background: var(--bg-primary);">
+            </div>
+          </div>
+
+          <!-- Inbox Split View Container -->
+          <div id="inboxSplitGrid">
+            
+            <!-- Left Pane: Message List Cards -->
+            <div id="messagesListContainer" style="display: flex; flex-direction: column; gap: 0.65rem; max-height: 620px; overflow-y: auto; padding-right: 0.4rem;">
+              <div style="text-align: center; padding: 3rem 1rem; color: var(--text-muted);">Caricamento messaggi...</div>
+            </div>
+
+            <!-- Right Pane: Message Detail Reading View -->
+            <div id="messageDetailPane" style="background: var(--bg-primary); border-radius: 20px; border: 1px solid var(--border-color); padding: 2rem; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+              <div style="width: 64px; height: 64px; border-radius: 20px; background: rgba(200, 90, 50, 0.1); color: #e05a2b; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 1rem;">
+                M
+              </div>
+              <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.35rem;">Nessun messaggio selezionato</h3>
+              <p style="font-size: 0.85rem; color: var(--text-muted); max-width: 320px;">Seleziona un messaggio dalla colonna di sinistra per leggerne il contenuto completo e gestire lo stato.</p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
     </section>
 
   </main>
 
   <!-- INTERACTIVE CANVAS CROPPER MODAL -->
   <div class="modal-overlay" id="cropperModal" role="dialog" aria-hidden="true">
-    <div class="modal-container" style="max-width: 680px; padding: 1.75rem;">
+    <div class="modal-container cropper-modal-card">
       <button class="modal-close" id="cropperModalClose" aria-label="Chiudi">✕</button>
       
-      <h2 style="font-size: 1.35rem; margin-bottom: 0.35rem;">Editor Ritaglio Canvas</h2>
-      <p style="color: var(--text-secondary); font-size: 0.85rem; margin-bottom: 1.25rem;">
-        Trascina, zooma e ruota l'immagine.
-      </p>
+      <div class="cropper-modal-header">
+        <h2 class="cropper-title">Editor Ritaglio & Ritocco Copertina</h2>
+        <p class="cropper-subtitle">
+          Trascina l'immagine per riposizionarla. Modifica ritaglio, regolazioni cromatiche, rotazione e filtri in tempo reale.
+        </p>
+      </div>
 
       <!-- Canvas Cropper Workspace -->
       <div class="cropper-canvas-wrap">
-        <canvas id="cropperCanvas" width="600" height="340"></canvas>
+        <canvas id="cropperCanvas" width="640" height="360"></canvas>
       </div>
 
-      <!-- Controls Row -->
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.1rem;">
-        
+      <!-- Quick Aspect Ratio Presets -->
+      <div class="cropper-section">
+        <label class="cropper-label">Proporzioni Ritaglio (Aspect Ratio):</label>
+        <div class="cropper-btn-group">
+          <button type="button" class="btn-aspect-opt active" data-aspect="16/9">16:9 (Hero)</button>
+          <button type="button" class="btn-aspect-opt" data-aspect="4/3">4:3 (Griglia)</button>
+          <button type="button" class="btn-aspect-opt" data-aspect="1/1">1:1 (Social)</button>
+          <button type="button" class="btn-aspect-opt" data-aspect="21/9">21:9 (Ultrawide)</button>
+        </div>
+      </div>
+
+      <!-- Transform & Orientation Row -->
+      <div class="cropper-grid-2">
         <div>
-          <label style="font-size: 0.78rem; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">
-            Zoom: <span id="zoomVal">100%</span>
-          </label>
-          <input type="range" id="cropZoomRange" min="1" max="3" step="0.05" value="1" style="width: 100%;">
+          <label class="cropper-label">Zoom Immagine: <span id="zoomVal">100%</span></label>
+          <input type="range" id="cropZoomRange" min="1" max="3" step="0.05" value="1" class="cropper-range">
         </div>
 
         <div>
-          <label style="font-size: 0.78rem; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">
-            Rotazione: <span id="rotateVal">0°</span>
-          </label>
-          <div style="display: flex; gap: 0.5rem;">
-            <button type="button" id="rotateLeftBtn" class="btn btn-secondary" style="flex: 1; font-size: 0.78rem; padding: 0.35rem;">-90°</button>
-            <button type="button" id="rotateRightBtn" class="btn btn-secondary" style="flex: 1; font-size: 0.78rem; padding: 0.35rem;">+90°</button>
+          <label class="cropper-label">Rotazione & Specchio:</label>
+          <div class="cropper-btn-group">
+            <button type="button" id="rotateLeftBtn" class="cropper-btn-sm" title="Ruota 90° a sinistra">-90°</button>
+            <button type="button" id="rotateRightBtn" class="cropper-btn-sm" title="Ruota 90° a destra">+90°</button>
+            <button type="button" id="flipHBtn" class="cropper-btn-sm" title="Capovolgi orizzontalmente">Specchia H</button>
+            <button type="button" id="flipVBtn" class="cropper-btn-sm" title="Capovolgi verticalmente">Specchia V</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image Adjustments Row (Luminosità, Contrasto, Saturazione) -->
+      <div class="cropper-grid-3">
+        <div>
+          <label class="cropper-label">Luminosità: <span id="brightVal">100%</span></label>
+          <input type="range" id="cropBrightnessRange" min="50" max="150" step="1" value="100" class="cropper-range">
+        </div>
+        <div>
+          <label class="cropper-label">Contrasto: <span id="contrastVal">100%</span></label>
+          <input type="range" id="cropContrastRange" min="50" max="150" step="1" value="100" class="cropper-range">
+        </div>
+        <div>
+          <label class="cropper-label">Saturazione: <span id="saturateVal">100%</span></label>
+          <input type="range" id="cropSaturateRange" min="0" max="200" step="1" value="100" class="cropper-range">
+        </div>
+      </div>
+
+      <!-- Filter Presets Row -->
+      <div class="cropper-section">
+        <label class="cropper-label">Filtri Cromatici:</label>
+        <div class="cropper-btn-group">
+          <button type="button" class="btn-filter-opt active" data-filter="none">Originale</button>
+          <button type="button" class="btn-filter-opt" data-filter="grayscale(100%) contrast(120%)">B&N Drammatico</button>
+          <button type="button" class="btn-filter-opt" data-filter="sepia(70%) contrast(110%)">Sepia Vintage</button>
+          <button type="button" class="btn-filter-opt" data-filter="saturate(160%) contrast(110%)">Cinema Vibrante</button>
+          <button type="button" class="btn-filter-opt" data-filter="sepia(30%) saturate(140%)">Sunset Caldo</button>
+          <button type="button" class="btn-filter-opt" data-filter="hue-rotate(180deg)">Noir Freddo</button>
+        </div>
+      </div>
+
+      <!-- Actions Footer -->
+      <div class="cropper-actions-footer">
+        <button type="button" id="resetCropBtn" class="cropper-reset-btn" title="Ripristina valori iniziali">Ripristina</button>
+        <div style="display: flex; gap: 0.75rem;">
+          <button type="button" id="cancelCropBtn" class="btn btn-secondary">Annulla</button>
+          <button type="button" id="applyCropBtn" class="btn btn-primary">Applica Ritaglio</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Modal Personalizzata per Prompt, Input & Confirm Stile Glassmorphism -->
+  <div id="customModalBackdrop" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.75); backdrop-filter: blur(8px); z-index: 99999; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.25s ease;">
+    <div id="customModalBox" style="background: var(--bg-card, #1e293b); border: 1px solid #C85A32; width: 90%; max-width: 480px; padding: 1.75rem; border-radius: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.6); transform: scale(0.95); transition: transform 0.25s ease; color: var(--text-primary);">
+      <div id="customModalTitle" style="font-size: 1.1rem; font-weight: 800; color: #e05a2b; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 0.05em;"></div>
+      <div id="customModalMessage" style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.25rem; line-height: 1.5;"></div>
+      
+      <div id="customModalSizeGroup" style="margin-bottom: 1rem; display: none;">
+        <label style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">Dimensioni Immagine nel Testo</label>
+        <select id="customModalSizeSelect" class="form-control" style="width: 100%; padding: 0.55rem; border-radius: 10px; font-size: 0.85rem; background: var(--bg-primary); font-weight: 600;">
+          <option value="100%">100% (Larghezza Intera)</option>
+          <option value="75%">75% (Dimensione Grande)</option>
+          <option value="50%">50% (Dimensione Media)</option>
+          <option value="35%">35% (Piccola / Compatta)</option>
+        </select>
+      </div>
+
+      <div id="customModalFileGroup" style="margin-bottom: 1rem; display: none;">
+        <label id="customModalFileLabel" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">Carica dal Dispositivo (JPG, PNG, WebP, GIF, SVG)</label>
+        <input type="file" id="customModalFileInput" accept="image/*" class="form-control" style="width: 100%; padding: 0.55rem; border-radius: 10px; font-size: 0.82rem; background: var(--bg-primary);">
+      </div>
+
+      <div id="customModalInputGroup1" style="margin-bottom: 1rem; display: none;">
+        <label id="customModalLabel1" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;"></label>
+        <input type="text" id="customModalInput1" class="form-control" style="width: 100%; padding: 0.65rem 0.9rem; border-radius: 10px; font-size: 0.88rem; background: var(--bg-primary);">
+      </div>
+
+      <div id="customModalInputGroup2" style="margin-bottom: 1.25rem; display: none;">
+        <label id="customModalLabel2" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;"></label>
+        <input type="text" id="customModalInput2" class="form-control" style="width: 100%; padding: 0.65rem 0.9rem; border-radius: 10px; font-size: 0.88rem; background: var(--bg-primary);">
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 0.75rem;">
+        <button type="button" id="customModalCancelBtn" class="btn btn-secondary" style="padding: 0.55rem 1.15rem; border-radius: 10px; font-size: 0.85rem;">Annulla</button>
+        <button type="button" id="customModalConfirmBtn" class="btn btn-primary" style="padding: 0.55rem 1.25rem; border-radius: 10px; font-size: 0.85rem; background: #C85A32; border: none; color: #fff; font-weight: 700; cursor: pointer;">Conferma</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Anteprima Reale in Homepage -->
+  <div id="homepagePreviewModalBackdrop" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(10px); z-index: 999999; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.25s ease;">
+    <div style="background: #0f172a; border: 2px solid #C85A32; width: 95%; max-width: 860px; padding: 2rem; border-radius: 24px; box-shadow: 0 25px 60px rgba(0,0,0,0.8); max-height: 90vh; overflow-y: auto; color: #fff;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 1rem; flex-wrap: wrap; gap: 1rem;">
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 800; color: #C85A32; text-transform: uppercase; letter-spacing: 0.05em; margin: 0; display: flex; align-items: center; gap: 0.5rem;">
+            <span>Anteprima Reale in Homepage</span>
+          </h2>
+          <p style="font-size: 0.82rem; color: #94a3b8; margin: 0.25rem 0 0 0;">
+            Ecco esattamente come apparirà la scheda di questo articolo in prima pagina. Clicca su una scheda per aprirlo in Full Screen!
+          </p>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <button type="button" onclick="toggleFullArticlePreviewModal()" class="btn btn-primary" style="background: linear-gradient(135deg, #f97316, #C85A32); color: #fff; border: none; padding: 0.55rem 1.15rem; border-radius: 12px; font-weight: 800; font-size: 0.82rem; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; box-shadow: 0 4px 14px rgba(200,90,50,0.4); transition: transform 0.2s ease;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+            <span>Visiona Articolo Full Screen</span>
+          </button>
+          <button type="button" onclick="toggleHomepagePreviewModal()" style="background: rgba(255,255,255,0.1); border: none; color: #fff; width: 36px; height: 36px; border-radius: 50%; cursor: pointer; font-weight: 800; font-size: 1.1rem; display: flex; align-items: center; justify-content: center;">✕</button>
+        </div>
+      </div>
+
+      <div id="homepagePreviewCardsContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem;">
+        <!-- Contenuto Card Inserito via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Anteprima Articolo Completo in Full Screen (Modalità Lettore Reale) -->
+  <div id="fullArticlePreviewModalBackdrop" class="article-modal-overlay" style="display: none; position: fixed; inset: 0; z-index: 9999999; background-color: #12100E; opacity: 0; transition: opacity 0.3s ease, visibility 0.3s ease;">
+    
+    <!-- Floating Admin Control Header Bar -->
+    <div style="position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); z-index: 10000000; background: rgba(15, 23, 42, 0.92); border: 1px solid rgba(249, 115, 22, 0.5); padding: 0.55rem 1.35rem; border-radius: 999px; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 12px 35px rgba(0,0,0,0.8); display: flex; align-items: center; gap: 1rem; color: #fff; max-width: 92vw; flex-wrap: wrap; justify-content: center;">
+      <div style="display: flex; align-items: center; gap: 0.55rem; font-size: 0.78rem; font-weight: 800; color: #f97316; text-transform: uppercase; letter-spacing: 0.05em; white-space: nowrap;">
+        <span style="display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: #f97316; box-shadow: 0 0 10px #f97316;"></span>
+        <span>Anteprima Lettore Full Screen</span>
+      </div>
+      <div style="width: 1px; height: 16px; background: rgba(255,255,255,0.25);"></div>
+      <div style="display: flex; gap: 0.5rem; align-items: center;">
+        <button type="button" onclick="toggleHomepagePreviewModalFromFull()" style="background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #fff; padding: 0.35rem 0.85rem; border-radius: 999px; font-size: 0.75rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.35rem; transition: all 0.2s ease;">
+          <span>Schede Homepage</span>
+        </button>
+        <button type="button" onclick="toggleFullArticlePreviewModal()" style="background: linear-gradient(135deg, #f97316, #C85A32); border: none; color: #fff; padding: 0.35rem 0.95rem; border-radius: 999px; font-size: 0.75rem; font-weight: 800; cursor: pointer; display: flex; align-items: center; gap: 0.35rem; box-shadow: 0 3px 12px rgba(200,90,50,0.5);">
+          <span>✕ Chiudi Full Screen (ESC)</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="article-modal-container" style="background-color: #FFFFFF; width: 100vw; height: 100vh; max-width: 100vw; max-height: 100vh; overflow: hidden; display: flex; flex-direction: column;">
+      
+      <!-- Inner Scroll Body -->
+      <div class="modal-scroll-body" style="padding-top: 3.5rem;">
+        
+        <!-- Top Split Hero Header Stage (Photo Left, Info Right) -->
+        <div class="modal-hero-split-stage">
+          <div class="modal-hero-split-container">
+            
+            <!-- Left Stage: Cover Photo -->
+            <div class="modal-hero-left-stage">
+              <img id="fullPreviewHeroImg" src="" alt="" class="modal-hero-cover-img">
+            </div>
+
+            <!-- Right Info: Category, Title & Author Meta -->
+            <div class="modal-hero-right-info">
+              <div class="modal-category-badge-wrapper">
+                <span class="modal-category-badge" id="fullPreviewCategoryBadge">News</span>
+              </div>
+              
+              <h1 class="modal-article-title" id="fullPreviewTitle" style="margin-bottom: 0.5rem;"></h1>
+              <p id="fullPreviewSubtitle" style="font-size: 1.05rem; color: #475569; margin: 0.5rem 0 1.25rem 0; line-height: 1.5; font-weight: 500;"></p>
+
+              <div class="modal-author-card">
+                <div class="modal-author-avatar-initials" id="fullPreviewAuthorInitials">EP</div>
+                <div class="modal-author-info">
+                  <span class="modal-author-name" id="fullPreviewAuthorName">Enzo Peluso</span>
+                  <span class="modal-author-role" id="fullPreviewAuthorRole">Fondatore &amp; Redattore</span>
+                </div>
+                <div class="modal-meta-divider"></div>
+                <div class="modal-meta-details">
+                  <span class="modal-date" id="fullPreviewDate"></span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
 
-      </div>
+        <!-- Bottom White Paper Reading Container -->
+        <div class="modal-paper-container">
+          <!-- Article Text Content -->
+          <article class="modal-text-content" id="fullPreviewTextContent">
+            <!-- Full article content injected via JS -->
+          </article>
 
-      <!-- Filter Controls -->
-      <div style="margin-top: 0.85rem;">
-        <label style="font-size: 0.78rem; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">
-          Filtri:
-        </label>
-        <div style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
-          <button type="button" class="btn-filter-opt active" data-filter="none">Originale</button>
-          <button type="button" class="btn-filter-opt" data-filter="grayscale(100%)">B&N</button>
-          <button type="button" class="btn-filter-opt" data-filter="sepia(60%)">Sepia</button>
-          <button type="button" class="btn-filter-opt" data-filter="contrast(140%)">Contrasto</button>
+          <!-- Article Footer Signature -->
+          <footer class="modal-article-footer">
+            <div class="modal-footer-author-box">
+              <div class="modal-footer-avatar" id="fullPreviewFooterAvatar">EP</div>
+              <div class="modal-footer-author-details">
+                <span class="modal-footer-written-by">Articolo curato dalla Redazione</span>
+                <h4 class="modal-footer-author-name" id="fullPreviewFooterAuthorName">Enzo Peluso</h4>
+                <p class="modal-footer-tagline">The Dreamers Magazine • Cinema &amp; Serialità</p>
+              </div>
+            </div>
+            <button class="modal-footer-close-action" onclick="toggleFullArticlePreviewModal()">Chiudi Lettura Full Screen</button>
+          </footer>
         </div>
-      </div>
 
-      <!-- Save Cropped Canvas Output -->
-      <div style="display: flex; gap: 0.75rem; margin-top: 1.25rem; justify-content: flex-end;">
-        <button type="button" id="cancelCropBtn" class="btn btn-secondary">Annulla</button>
-        <button type="button" id="applyCropBtn" class="btn btn-primary">
-          Applica Ritaglio
-        </button>
       </div>
-
     </div>
   </div>
 
@@ -497,6 +1853,40 @@
   <!-- JavaScript Scripts -->
   <script src="js/mock-data.js"></script>
   <script src="js/baas-service.js"></script>
-  <script src="js/admin.js"></script>
+  <script src="js/admin.js?v=1502"></script>
+
+  <script>
+    /* Dynamic Theme Switcher Logic for Admin Panel */
+    function updateThemeToggleUI(theme) {
+      const icon = document.getElementById('themeToggleIcon');
+      const label = document.getElementById('themeToggleLabel');
+      if (icon && label) {
+        if (theme === 'dark') {
+          icon.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>';
+          label.textContent = 'Modalità Chiara';
+        } else {
+          icon.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>';
+          label.textContent = 'Modalità Scura';
+        }
+      }
+    }
+
+    function applyAdminTheme(theme) {
+      document.documentElement.setAttribute('data-admin-theme', theme);
+      localStorage.setItem('admin_theme', theme);
+      updateThemeToggleUI(theme);
+    }
+
+    function toggleAdminTheme() {
+      const current = document.documentElement.getAttribute('data-admin-theme') === 'light' ? 'light' : 'dark';
+      const next = current === 'dark' ? 'light' : 'dark';
+      applyAdminTheme(next);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const saved = localStorage.getItem('admin_theme') || 'dark';
+      applyAdminTheme(saved);
+    });
+  </script>
 </body>
 </html>

@@ -1,5 +1,6 @@
 /* ==========================================================================
    BaaS Service - Unified Backend-as-a-Service Layer
+   Supporta MySQL locale/Aruba (api/articoli.php) e fallback LocalStorage
    ========================================================================== */
 
 class BaasService {
@@ -7,15 +8,12 @@ class BaasService {
     this.STORAGE_KEY = 'baas_blog_articles_v1';
     this.LISTENERS = [];
     this.broadcastChannel = null;
+    this.API_URL = 'api/articoli.php';
     
     this.initLocalEngine();
   }
 
   initLocalEngine() {
-    // Clear everything in localStorage as requested by user
-    localStorage.removeItem(this.STORAGE_KEY);
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify([]));
-
     if ('BroadcastChannel' in window) {
       this.broadcastChannel = new BroadcastChannel('baas_blog_sync_channel');
       this.broadcastChannel.onmessage = (event) => {
@@ -29,7 +27,8 @@ class BaasService {
   subscribe(callback) {
     if (typeof callback === 'function') {
       this.LISTENERS.push(callback);
-      callback(this.getArticles());
+      // Caricamento iniziale asincrono da MySQL o LocalStorage
+      this.loadArticlesFromBackend().then(articles => callback(articles));
     }
     return () => {
       this.LISTENERS = this.LISTENERS.filter(fn => fn !== callback);
@@ -37,10 +36,43 @@ class BaasService {
   }
 
   notifyListeners(articles) {
-    this.LISTENERS.forEach(callback => callback(articles));
+    this.LISTENERS.forEach(callback => {
+      try { callback(articles); } catch (e) {}
+    });
   }
 
-  getArticles() {
+  async loadArticlesFromBackend() {
+    try {
+      const response = await fetch(`${this.API_URL}?action=list`);
+      if (response.ok) {
+        const data = await response.json();
+        if (data.success && Array.isArray(data.articles)) {
+          const localArticles = this.getArticlesFromLocal();
+          
+          const mergedMap = new Map();
+          // Prima carica gli articoli dal backend MySQL/SQLite
+          data.articles.forEach(art => {
+            if (art && art.id) mergedMap.set(String(art.id), art);
+          });
+          // Poi unisci gli articoli creati o salvati in locale che non sono ancora a DB (ID temporanei "art-")
+          localArticles.forEach(art => {
+            if (art && art.id && String(art.id).startsWith('art-') && !mergedMap.has(String(art.id))) {
+              mergedMap.set(String(art.id), art);
+            }
+          });
+          
+          const finalArticles = Array.from(mergedMap.values());
+          localStorage.setItem(this.STORAGE_KEY, JSON.stringify(finalArticles));
+          return finalArticles;
+        }
+      }
+    } catch (err) {
+      console.warn('Connessione al backend MySQL non riuscita, uso LocalStorage:', err);
+    }
+    return this.getArticlesFromLocal();
+  }
+
+  getArticlesFromLocal() {
     try {
       const data = localStorage.getItem(this.STORAGE_KEY);
       return data ? JSON.parse(data) : [];
@@ -50,29 +82,95 @@ class BaasService {
     }
   }
 
-  async addArticle(articleData) {
-    const articles = this.getArticles();
-    
-    const newArticle = {
-      id: 'art-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
-      title: articleData.title.trim(),
-      category: articleData.category || 'Categoria 1',
-      image: articleData.image.trim() || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80',
-      imageFit: articleData.imageFit || 'cover',
-      imageRatio: articleData.imageRatio || '16/9',
-      imagePos: articleData.imagePos || 'center',
-      fontFamily: articleData.fontFamily || 'sans',
-      titleColor: articleData.titleColor || '#ffffff',
-      textColor: articleData.textColor || '#e2e8f0',
-      excerpt: articleData.excerpt.trim() || articleData.content.substring(0, 140) + '...',
-      content: articleData.content.trim(),
-      author: articleData.author || 'Admin',
-      createdAt: new Date().toISOString(),
-      readTime: articleData.readTime || '2 min'
-    };
+  getArticles() {
+    return this.getArticlesFromLocal();
+  }
 
-    articles.unshift(newArticle);
-    
+  async addArticle(articleData) {
+    let createdArticle = null;
+
+    // 1. Invio a MySQL via API PHP
+    try {
+      const response = await fetch(`${this.API_URL}?action=create`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(articleData)
+      });
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success && result.id) {
+          createdArticle = {
+            id: String(result.id),
+            ...articleData,
+            createdAt: new Date().toISOString()
+          };
+        }
+      }
+    } catch (err) {
+      console.warn('Salvataggio su MySQL non disponibile, salvo in LocalStorage:', err);
+    }
+
+    if (!createdArticle) {
+      createdArticle = {
+        id: 'art-' + Date.now() + '-' + Math.random().toString(36).substr(2, 4),
+        ...articleData,
+        createdAt: new Date().toISOString()
+      };
+    }
+
+    // 2. Salva SEMPRE in LocalStorage immediatamente per risposta istantanea
+    const articles = this.getArticlesFromLocal();
+    const existingIdx = articles.findIndex(a => String(a.id) === String(createdArticle.id));
+    if (existingIdx >= 0) {
+      articles[existingIdx] = createdArticle;
+    } else {
+      articles.unshift(createdArticle);
+    }
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(articles));
+
+    // 3. Notifica tutte le schede aperte
+    this.notifyListeners(articles);
+    if (this.broadcastChannel) {
+      this.broadcastChannel.postMessage({ type: 'ARTICLES_UPDATED', articles });
+    }
+
+    // 4. Sincronizzazione di sfondo da DB
+    this.loadArticlesFromBackend().then(fresh => {
+      if (Array.isArray(fresh) && fresh.length > 0) {
+        this.notifyListeners(fresh);
+      }
+    });
+
+    return createdArticle;
+  }
+
+  async updateArticle(id, updatedData) {
+    let updatedArticle = { id: String(id), ...updatedData, updatedAt: new Date().toISOString() };
+
+    try {
+      const response = await fetch(`${this.API_URL}?action=update`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...updatedData, id })
+      });
+      if (response.ok) {
+        const result = await response.json();
+        if (result.success) {
+          updatedArticle = { ...updatedArticle, ...result };
+        }
+      }
+    } catch (err) {
+      console.warn('Aggiornamento su MySQL non disponibile, uso LocalStorage:', err);
+    }
+
+    // Salva SEMPRE in LocalStorage
+    let articles = this.getArticlesFromLocal();
+    const index = articles.findIndex(art => String(art.id) === String(id));
+    if (index !== -1) {
+      articles[index] = { ...articles[index], ...updatedArticle };
+    } else {
+      articles.unshift(updatedArticle);
+    }
     localStorage.setItem(this.STORAGE_KEY, JSON.stringify(articles));
 
     this.notifyListeners(articles);
@@ -80,114 +178,41 @@ class BaasService {
       this.broadcastChannel.postMessage({ type: 'ARTICLES_UPDATED', articles });
     }
 
-    return newArticle;
-  }
-
-  async updateArticle(id, updatedData) {
-    let articles = this.getArticles();
-    const index = articles.findIndex(art => art.id === id);
-
-    if (index !== -1) {
-      articles[index] = {
-        ...articles[index],
-        title: updatedData.title.trim(),
-        category: updatedData.category || articles[index].category,
-        image: updatedData.image ? updatedData.image.trim() : articles[index].image,
-        imageFit: updatedData.imageFit || articles[index].imageFit || 'cover',
-        imageRatio: updatedData.imageRatio || articles[index].imageRatio || '16/9',
-        imagePos: updatedData.imagePos || articles[index].imagePos || 'center',
-        fontFamily: updatedData.fontFamily || articles[index].fontFamily || 'sans',
-        titleColor: updatedData.titleColor || articles[index].titleColor || '#ffffff',
-        textColor: updatedData.textColor || articles[index].textColor || '#e2e8f0',
-        excerpt: updatedData.excerpt.trim() || articles[index].excerpt,
-        content: updatedData.content.trim(),
-        author: updatedData.author || articles[index].author,
-        readTime: updatedData.readTime || articles[index].readTime,
-        updatedAt: new Date().toISOString()
-      };
-
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(articles));
-
-      this.notifyListeners(articles);
-      if (this.broadcastChannel) {
-        this.broadcastChannel.postMessage({ type: 'ARTICLES_UPDATED', articles });
-      }
-      return articles[index];
-    }
-    return null;
+    return updatedArticle;
   }
 
   async deleteArticle(id) {
-    let articles = this.getArticles();
-    const initialLength = articles.length;
-    
-    articles = articles.filter(art => art.id !== id);
-
-    if (articles.length !== initialLength) {
-      localStorage.setItem(this.STORAGE_KEY, JSON.stringify(articles));
-      
-      this.notifyListeners(articles);
-      if (this.broadcastChannel) {
-        this.broadcastChannel.postMessage({ type: 'ARTICLES_UPDATED', articles });
-      }
-      return true;
+    try {
+      await fetch(`${this.API_URL}?action=delete`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+      });
+    } catch (err) {
+      console.warn('Eliminazione su MySQL non disponibile:', err);
     }
-    return false;
-  }
 
-  async bulkImportArticles(importedArray, overwrite = false) {
-    let currentArticles = overwrite ? [] : this.getArticles();
-    let importedCount = 0;
+    let articles = this.getArticlesFromLocal();
+    articles = articles.filter(art => String(art.id) !== String(id));
+    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(articles));
 
-    importedArray.forEach((art, index) => {
-      const exists = currentArticles.some(existing => 
-        existing.id === art.id || 
-        (existing.title && art.title && existing.title.toLowerCase().trim() === art.title.toLowerCase().trim())
-      );
-
-      if (!exists || overwrite) {
-        const formattedArt = {
-          id: art.id || ('art-wp-' + Date.now() + '-' + index),
-          title: (art.title || 'Senza Titolo').trim(),
-          category: art.category || 'News',
-          image: art.image || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80',
-          imageFit: art.imageFit || 'cover',
-          imageRatio: art.imageRatio || '16/9',
-          imagePos: art.imagePos || 'center',
-          fontFamily: art.fontFamily || 'sans',
-          titleColor: art.titleColor || '#ffffff',
-          textColor: art.textColor || '#e2e8f0',
-          excerpt: art.excerpt ? art.excerpt.replace(/<[^>]*>?/gm, '').trim() : (art.content ? art.content.replace(/<[^>]*>?/gm, '').substring(0, 150) + '...' : ''),
-          content: art.content ? art.content.trim() : '',
-          author: art.author || 'Redazione',
-          createdAt: art.createdAt || new Date().toISOString(),
-          readTime: art.readTime || '3 min'
-        };
-
-        currentArticles.unshift(formattedArt);
-        importedCount++;
-      }
-    });
-
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify(currentArticles));
-    this.notifyListeners(currentArticles);
+    this.notifyListeners(articles);
     if (this.broadcastChannel) {
-      this.broadcastChannel.postMessage({ type: 'ARTICLES_UPDATED', articles: currentArticles });
+      this.broadcastChannel.postMessage({ type: 'ARTICLES_UPDATED', articles });
     }
-
-    return importedCount;
+    return true;
   }
 
   clearAllArticles() {
-    localStorage.setItem(this.STORAGE_KEY, JSON.stringify([]));
+    try {
+      fetch(`${this.API_URL}?action=clear`, { method: 'POST' });
+    } catch (e) {}
+
+    localStorage.removeItem(this.STORAGE_KEY);
     this.notifyListeners([]);
     if (this.broadcastChannel) {
       this.broadcastChannel.postMessage({ type: 'ARTICLES_UPDATED', articles: [] });
     }
-  }
-
-  resetToMockData() {
-    this.clearAllArticles();
   }
 }
 

@@ -74,6 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
     articlesGrid.innerHTML = '';
 
     const filtered = articles.filter(article => {
+      // Le bozze (draft) sono visibili esclusivamente nel Pannello Admin
+      if (article.status && article.status === 'draft') return false;
+
       const artCat = (article.category || 'News').toLowerCase().trim();
       const pageCat = activeCategory.toLowerCase().trim();
       
@@ -93,11 +96,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const q = searchQuery.toLowerCase().trim();
       const matchSearch = !q || (
-        article.title.toLowerCase().includes(q) ||
-        article.excerpt.toLowerCase().includes(q) ||
+        (article.title && article.title.toLowerCase().includes(q)) ||
+        (article.excerpt && article.excerpt.toLowerCase().includes(q)) ||
         (article.author && article.author.toLowerCase().includes(q)) ||
         artCat.includes(q)
       );
+
       return matchCat && matchSearch;
     });
 
@@ -307,33 +311,95 @@ document.addEventListener('DOMContentLoaded', () => {
   // ------------------------------------------------------------------------
   // 4. Modal Article Reader
   // ------------------------------------------------------------------------
-  function openArticleModal(id) {
+
+  /**
+   * Restituisce il colore originale se il contrasto con lo sfondo target è
+   * sufficiente (ratio >= minRatio), altrimenti restituisce il fallback.
+   * @param {string} hexColor  - colore dell'articolo (es. '#FFFFFF')
+   * @param {'white'|'dark'} bg - tipo di sfondo del contenitore
+   * @param {string} fallback  - colore da usare se il contrasto è scarso
+   */
+  function getReadableColor(hexColor, bg, fallback) {
+    if (!hexColor || typeof hexColor !== 'string') return fallback;
+    // Normalizza hex: #rgb -> #rrggbb
+    let hex = hexColor.replace('#', '');
+    if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+    if (hex.length !== 6) return fallback;
+    const r = parseInt(hex.substring(0, 2), 16) / 255;
+    const g = parseInt(hex.substring(2, 4), 16) / 255;
+    const b = parseInt(hex.substring(4, 6), 16) / 255;
+    // Luminanza relativa (WCAG)
+    const toLinear = c => c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
+    const L = 0.2126 * toLinear(r) + 0.7152 * toLinear(g) + 0.0722 * toLinear(b);
+    // Contrasto con bianco (L=1) o con nero-scuro dell'hero (L≈0.002)
+    const bgL = bg === 'white' ? 1 : 0.002;
+    const contrast = (Math.max(L, bgL) + 0.05) / (Math.min(L, bgL) + 0.05);
+    return contrast >= 3.5 ? hexColor : fallback;
+  }
+
+  function openArticleModal(idOrArticle) {
     if (!articleModal) return;
 
-    const article = articles.find(a => a.id === id);
+    let article = null;
+    if (typeof idOrArticle === 'object' && idOrArticle !== null) {
+      article = idOrArticle;
+    } else {
+      article = articles.find(a => String(a.id) === String(idOrArticle));
+    }
+
     if (!article) return;
 
     if (modalHeroImg) {
-      modalHeroImg.src = article.image;
-      modalHeroImg.alt = article.title;
+      modalHeroImg.src = article.image || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80';
+      modalHeroImg.alt = article.title || 'Copertina';
     }
-    if (modalCategoryBadge) modalCategoryBadge.textContent = article.category;
-    if (modalTitle) modalTitle.textContent = article.title;
+    if (modalCategoryBadge) modalCategoryBadge.textContent = article.category || 'News';
+    if (modalTitle) {
+      modalTitle.textContent = article.title || '';
+      // L'hero ha sfondo scuro: il titolo deve avere buon contrasto con il nero
+      if (article.titleColor) {
+        modalTitle.style.color = getReadableColor(article.titleColor, 'dark', '#FFFFFF');
+      } else {
+        modalTitle.style.color = '#FFFFFF';
+      }
+      if (article.fontFamily) modalTitle.style.fontFamily = article.fontFamily + ', sans-serif';
+    }
 
     const authorKey = article.author && article.author.toLowerCase().indexOf('enzo') !== -1 ? 'enzo-peluso' : 'francesco-pisapia';
-    const memberData = teamMembersData[authorKey] || { initials: 'DM', role: 'Redattore' };
+    const memberData = teamMembersData[authorKey] || { initials: 'FP', role: 'Redattore' };
 
     const initialsEl = document.getElementById('modalAuthorInitials');
-    if (initialsEl) initialsEl.textContent = memberData.initials;
+    if (initialsEl) initialsEl.textContent = memberData.initials || 'FP';
 
-    if (modalAuthorName) modalAuthorName.textContent = article.author;
+    if (modalAuthorName) modalAuthorName.textContent = article.author || 'Francesco Pisapia';
 
     const authorRoleEl = document.getElementById('modalAuthorRole');
     if (authorRoleEl) authorRoleEl.textContent = memberData.role || 'Redattore';
 
-    if (modalDate) modalDate.textContent = article.date;
+    if (modalDate) {
+      const rawDate = article.createdAt || article.date;
+      if (rawDate) {
+        try {
+          const d = new Date(rawDate);
+          modalDate.textContent = isNaN(d.getTime()) ? rawDate : d.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric' });
+        } catch (e) {
+          modalDate.textContent = rawDate;
+        }
+      } else {
+        modalDate.textContent = 'Oggi';
+      }
+    }
 
-    if (modalTextContent) modalTextContent.innerHTML = article.fullContent;
+    if (modalTextContent) {
+      modalTextContent.innerHTML = article.content || article.fullContent || article.excerpt || '';
+      // Il corpo dell'articolo è su sfondo bianco: forza sempre un colore leggibile
+      if (article.textColor) {
+        modalTextContent.style.color = getReadableColor(article.textColor, 'white', '#231F1D');
+      } else {
+        modalTextContent.style.color = '#231F1D';
+      }
+      if (article.fontFamily) modalTextContent.style.fontFamily = article.fontFamily + ', sans-serif';
+    }
 
     const footerAvatar = document.getElementById('modalFooterAvatar');
     if (footerAvatar) footerAvatar.textContent = memberData.initials;
@@ -370,12 +436,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     articleModal.classList.add('open');
+    document.documentElement.classList.add('modal-open');
+    document.body.classList.add('modal-open');
     document.body.style.overflow = 'hidden';
+    
+    // Reset scroll position to top
+    const modalScrollBody = articleModal.querySelector('.modal-scroll-body');
+    if (modalScrollBody) {
+      modalScrollBody.scrollTop = 0;
+    }
   }
 
   function closeArticleModal() {
     if (!articleModal) return;
     articleModal.classList.remove('open');
+    document.documentElement.classList.remove('modal-open');
+    document.body.classList.remove('modal-open');
     document.body.style.overflow = '';
   }
 
@@ -404,14 +480,19 @@ document.addEventListener('DOMContentLoaded', () => {
     if (primaryNavMenu) {
       primaryNavMenu.classList.remove('open');
       if (menuToggleBtn) menuToggleBtn.setAttribute('aria-expanded', 'false');
+      document.documentElement.classList.remove('body-menu-open');
       document.body.classList.remove('body-menu-open');
     }
   }
 
   function openMobileMenu() {
     if (primaryNavMenu) {
+      if (primaryNavMenu.parentNode !== document.body) {
+        document.body.appendChild(primaryNavMenu);
+      }
       primaryNavMenu.classList.add('open');
       if (menuToggleBtn) menuToggleBtn.setAttribute('aria-expanded', 'true');
+      document.documentElement.classList.add('body-menu-open');
       document.body.classList.add('body-menu-open');
     }
   }
@@ -766,6 +847,74 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  function initContactForm() {
+    const contactForm = document.getElementById('contactForm');
+    if (!contactForm) return;
+
+    const submitBtn = document.getElementById('formSubmitBtn');
+    const statusMsg = document.getElementById('formStatusMsg');
+
+    contactForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const name = document.getElementById('contactName')?.value.trim();
+      const email = document.getElementById('contactEmail')?.value.trim();
+      const subject = document.getElementById('contactSubject')?.value.trim();
+      const message = document.getElementById('contactMessage')?.value.trim();
+
+      if (!name || !email || !message) {
+        if (statusMsg) {
+          statusMsg.className = 'form-status-msg error';
+          statusMsg.style.color = '#ef4444';
+          statusMsg.textContent = 'Per favore, compila tutti i campi obbligatori (*).';
+        }
+        return;
+      }
+
+      if (submitBtn) submitBtn.disabled = true;
+      if (statusMsg) {
+        statusMsg.className = 'form-status-msg info';
+        statusMsg.style.color = '#3b82f6';
+        statusMsg.textContent = 'Invio del messaggio in corso...';
+      }
+
+      try {
+        const response = await fetch('api/invia_contatto.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ name, email, subject, message })
+        });
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          if (statusMsg) {
+            statusMsg.className = 'form-status-msg success';
+            statusMsg.style.color = '#22c55e';
+            statusMsg.textContent = result.message || 'Messaggio inviato con successo!';
+          }
+          contactForm.reset();
+        } else {
+          throw new Error(result.message || 'Si è verificato un errore durante l\'invio.');
+        }
+      } catch (err) {
+        if (statusMsg) {
+          statusMsg.className = 'form-status-msg error';
+          statusMsg.style.color = '#ef4444';
+          if (window.location.protocol === 'file:') {
+            statusMsg.textContent = 'Errore: Apri la pagina nel browser scrivendo http://localhost/SitoChecco/contatti.html (non facendo doppio clic sul file .html).';
+          } else {
+            statusMsg.textContent = 'Errore: ' + err.message;
+          }
+        }
+      } finally {
+        if (submitBtn) submitBtn.disabled = false;
+      }
+    });
+  }
+
   // ------------------------------------------------------------------------
   // Init App
   // ------------------------------------------------------------------------
@@ -775,5 +924,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollToTop();
   setupModalReadingProgress();
   initTeamMemberTriggers();
+  initContactForm();
 
 });
+
