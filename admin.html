@@ -149,6 +149,8 @@
       margin-bottom: 1.25rem !important;
       padding-bottom: 0.85rem !important;
       border-bottom: 1px solid var(--admin-card-border) !important;
+      flex-wrap: wrap !important;
+      gap: 0.5rem !important;
     }
 
     .section-title-text {
@@ -723,6 +725,7 @@
       overflow: hidden !important;
       text-overflow: ellipsis !important;
       max-width: 100% !important;
+      min-width: 0 !important;
     }
     .slug-input-group input {
       border: none !important;
@@ -778,6 +781,15 @@
       margin-bottom: 1.5rem !important;
     }
 
+    .field-label-row {
+      display: flex !important;
+      justify-content: space-between !important;
+      align-items: center !important;
+      margin-bottom: 0.35rem !important;
+      flex-wrap: wrap !important;
+      gap: 0.5rem !important;
+    }
+
     @media (max-width: 992px) {
       .tutorial-steps-grid {
         grid-template-columns: repeat(2, 1fr) !important;
@@ -810,6 +822,10 @@
       .seo-og-grid {
         grid-template-columns: 1fr !important;
         gap: 0.75rem !important;
+      }
+      .admin-card-section {
+        padding: 1.1rem 0.85rem !important;
+        border-radius: 14px !important;
       }
     }
   </style>
@@ -1100,7 +1116,7 @@
                 </div>
 
                 <div style="margin-bottom: 1.15rem;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                  <div class="field-label-row">
                     <label for="artTitle" style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary);">
                       Titolo dell'Articolo <span style="color: #ef4444;">*</span>
                     </label>
@@ -1125,7 +1141,7 @@
                 </div>
 
                 <div style="margin-bottom: 1.15rem;">
-                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
+                  <div class="field-label-row">
                     <label for="artSubtitle" style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary);">
                       Sottotitolo / Catenaccio
                     </label>
@@ -1186,7 +1202,7 @@
                 <div class="editor-toolbar" style="display: flex; gap: 0.35rem; flex-wrap: wrap; margin-bottom: 0.85rem; padding: 0.75rem; background: var(--bg-primary); border-radius: 12px; border: 1px solid var(--border-color);">
                   
                   <!-- Custom Font Picker Tipografia Articolo senza Emoji -->
-                  <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%; margin-bottom: 0.5rem; padding-bottom: 0.55rem; border-bottom: 1px solid var(--border-color); position: relative;">
+                  <div style="display: flex; align-items: center; gap: 0.5rem; width: 100%; margin-bottom: 0.5rem; padding-bottom: 0.55rem; border-bottom: 1px solid var(--border-color); position: relative; flex-wrap: wrap;">
                     <label style="font-size: 0.75rem; font-weight: 800; color: #e05a2b; text-transform: uppercase; white-space: nowrap; letter-spacing: 0.05em;">
                       Font Articolo:
                     </label>
