@@ -3650,6 +3650,7 @@ ${escapeHtml(msg.message)}
               if (termName.includes('film') || termName.includes('cinema')) category = 'Film';
               else if (termName.includes('serie') || termName.includes('tv')) category = 'Serie TV';
               else if (termName.includes('approfondiment')) category = 'Approfondimenti';
+              else if (termName.includes('intervist')) category = 'Interviste';
               else category = 'News';
             }
           }
@@ -3784,6 +3785,7 @@ ${escapeHtml(msg.message)}
                     if (lower.includes('film') || lower.includes('cinema')) category = 'Film';
                     else if (lower.includes('serie') || lower.includes('tv')) category = 'Serie TV';
                     else if (lower.includes('approfondiment')) category = 'Approfondimenti';
+                    else if (lower.includes('intervist')) category = 'Interviste';
                     else if (category === 'News') category = cName;
                   }
                 });
