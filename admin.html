@@ -1026,6 +1026,203 @@
         font-size: 0.8rem !important;
       }
     }
+
+    /* Mobile and Desktop Visibility Helpers */
+    .mobile-tab-text, .mobile-slug-prefix {
+      display: none !important;
+    }
+    .desktop-tab-text, .desktop-slug-prefix {
+      display: inline !important;
+    }
+
+    @media (max-width: 768px) {
+      /* Bottom padding so floating nav doesn't cover content */
+      body {
+        padding-bottom: 6.5rem !important;
+      }
+
+      .desktop-tab-text, .desktop-slug-prefix {
+        display: none !important;
+      }
+      .mobile-tab-text {
+        display: block !important;
+      }
+      .mobile-slug-prefix {
+        display: inline !important;
+        font-weight: 800 !important;
+        color: var(--admin-accent) !important;
+      }
+
+      /* Floating Native App style Tab-Bar at the bottom of viewport */
+      .admin-header-tabs {
+        position: fixed !important;
+        bottom: 1rem !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: calc(100% - 1.5rem) !important;
+        max-width: 500px !important;
+        background: rgba(26, 24, 21, 0.94) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(225, 218, 210, 0.1) !important;
+        border-radius: 20px !important;
+        padding: 0.35rem !important;
+        margin-bottom: 0 !important;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.6) !important;
+        z-index: 99999 !important;
+        display: flex !important;
+        justify-content: space-around !important;
+        gap: 0.15rem !important;
+      }
+      
+      .admin-header-tabs .tab-link {
+        flex: 1 !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0.5rem 0.2rem !important;
+        font-size: 0.65rem !important;
+        font-weight: 800 !important;
+        border-radius: 12px !important;
+        color: var(--admin-text-muted) !important;
+        background: transparent !important;
+        border: none !important;
+        gap: 0.25rem !important;
+        display: inline-flex !important;
+      }
+
+      .admin-header-tabs .tab-link svg {
+        display: block !important;
+        width: 18px !important;
+        height: 18px !important;
+      }
+      
+      .admin-header-tabs .tab-link.active {
+        background: rgba(200, 90, 50, 0.14) !important;
+        color: var(--admin-accent) !important;
+        box-shadow: none !important;
+      }
+
+      /* Horizontal Scrollable WYSIWYG Editor Toolbar */
+      .editor-toolbar {
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        scrollbar-width: none !important;
+        gap: 0.4rem !important;
+        padding: 0.6rem !important;
+      }
+      .editor-toolbar::-webkit-scrollbar {
+        display: none !important;
+      }
+      .editor-toolbar > * {
+        flex: 0 0 auto !important;
+      }
+
+      /* Responsive Card List from Table */
+      .admin-table, 
+      .admin-table thead, 
+      .admin-table tbody, 
+      .admin-table th, 
+      .admin-table td, 
+      .admin-table tr {
+        display: block !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+      }
+      
+      .admin-table thead {
+        display: none !important;
+      }
+      
+      .admin-table tr {
+        margin-bottom: 1rem !important;
+        background: var(--bg-card) !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 14px !important;
+        padding: 1rem !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+        position: relative !important;
+      }
+      
+      .admin-table td {
+        border: none !important;
+        padding: 0.35rem 0 !important;
+        text-align: left !important;
+      }
+      
+      /* Image cell position */
+      .admin-table tr td:nth-child(1) {
+        float: left !important;
+        width: 60px !important;
+        height: 60px !important;
+        padding: 0 !important;
+        margin-right: 0.75rem !important;
+      }
+      .admin-table tr td:nth-child(1) img {
+        width: 60px !important;
+        height: 60px !important;
+        border-radius: 8px !important;
+      }
+      
+      /* Title cell */
+      .admin-table tr td:nth-child(2) {
+        display: block !important;
+        width: auto !important;
+        margin-left: 75px !important;
+        min-height: 48px !important;
+        padding: 0 0 0.5rem 0 !important;
+      }
+      
+      /* Category cell */
+      .admin-table tr td:nth-child(3) {
+        clear: both !important;
+        display: inline-flex !important;
+        width: auto !important;
+        margin-top: 0.5rem !important;
+        padding: 0 !important;
+      }
+      
+      /* Status cell */
+      .admin-table tr td:nth-child(4) {
+        display: inline-flex !important;
+        width: auto !important;
+        margin-top: 0.5rem !important;
+        margin-left: 0.5rem !important;
+        padding: 0 !important;
+      }
+      
+      /* Author and Date cell */
+      .admin-table tr td:nth-child(5) {
+        display: flex !important;
+        justify-content: space-between !important;
+        width: 100% !important;
+        border-top: 1px solid var(--border-color) !important;
+        margin-top: 0.75rem !important;
+        padding-top: 0.6rem !important;
+        font-size: 0.75rem !important;
+      }
+      
+      /* Actions cell */
+      .admin-table tr td:nth-child(6) {
+        display: block !important;
+        width: 100% !important;
+        margin-top: 0.75rem !important;
+        padding: 0 !important;
+      }
+      .admin-table tr td:nth-child(6) > div {
+        display: flex !important;
+        gap: 0.5rem !important;
+      }
+      .admin-table tr td:nth-child(6) .btn {
+        flex: 1 !important;
+        text-align: center !important;
+        justify-content: center !important;
+        padding: 0.5rem 0 !important;
+        min-height: 38px !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1252,17 +1449,25 @@
       <!-- Navigation Tabs: Create vs Manage vs Import -->
       <div class="admin-header-tabs">
         <button class="tab-link active" id="tabCreateBtn">
-          <span id="tabCreateLabel">Crea Articolo</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 1 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+          <span id="tabCreateLabel" class="desktop-tab-text">Crea Articolo</span>
+          <span class="mobile-tab-text">Scrivi</span>
         </button>
         <button class="tab-link" id="tabManageBtn">
-          <span>Gestisci Articoli</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+          <span class="desktop-tab-text">Gestisci Articoli</span>
+          <span class="mobile-tab-text">Gestisci</span>
           <span id="totalArticlesBadge" class="badge-status" style="background: rgba(255, 255, 255, 0.05); color: var(--text-secondary); border: none; padding: 0.15rem 0.6rem; font-size: 0.75rem;">0</span>
         </button>
         <button class="tab-link" id="tabImportBtn">
-          <span>Importa da WordPress</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+          <span class="desktop-tab-text">Importa da WordPress</span>
+          <span class="mobile-tab-text">Importa</span>
         </button>
         <button class="tab-link" id="tabMessagesBtn">
-          <span>Messaggi Ricevuti</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <span class="desktop-tab-text">Messaggi Ricevuti</span>
+          <span class="mobile-tab-text">Messaggi</span>
           <span id="totalMessagesBadge" class="badge-status" style="background: rgba(200, 90, 50, 0.15); color: #e05a2b; border: none; padding: 0.15rem 0.6rem; font-size: 0.75rem;">0</span>
         </button>
       </div>
@@ -1366,7 +1571,8 @@
                     Slug URL Personalizzabile
                   </label>
                   <div class="slug-input-group">
-                    <span>https://thedreamersmagazine.it/articolo/</span>
+                    <span class="desktop-slug-prefix">https://thedreamersmagazine.it/articolo/</span>
+                    <span class="mobile-slug-prefix">/articolo/</span>
                     <input type="text" id="artSlug" placeholder="titolo-articolo">
                     <button type="button" id="autoGenerateSlugBtn" class="btn btn-secondary">Auto Slug</button>
                   </div>
