@@ -118,8 +118,8 @@
     .admin-card-section {
       background: var(--admin-card-bg) !important;
       border: 1px solid var(--admin-card-border) !important;
-      border-radius: 18px !important;
-      padding: 1.6rem !important;
+      border-radius: 16px !important;
+      padding: 1.25rem 1.75rem !important;
       box-shadow: var(--admin-shadow) !important;
       transition: all 0.25s ease-in-out !important;
     }
@@ -1076,7 +1076,7 @@
           <input type="hidden" id="artStatus" value="published">
 
           <!-- TOP ACTION TOOLBAR -->
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; background: var(--bg-card); padding: 1.25rem 1.75rem; border-radius: 16px; border: 1px solid var(--border-color); flex-wrap: wrap; gap: 1rem;">
+          <div class="admin-card-section" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: 1rem;">
             <div>
               <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.15rem;" id="editorTitleLabel">
                 Crea Nuovo Articolo
@@ -1458,7 +1458,7 @@
               </div>
 
               <!-- CARD TASSONOMIE E VETRINA -->
-              <div style="background: var(--bg-card); padding: 1.35rem; border-radius: 18px; border: 1px solid var(--border-color);">
+              <div class="admin-card-section">
                 <div style="font-size: 0.72rem; font-weight: 800; color: #e05a2b; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 1rem;">
                   Organizzazione e Tag
                 </div>
@@ -1559,7 +1559,7 @@
           </div>
 
           <!-- TABELLA GESTIONE ARTICOLI -->
-          <div class="admin-card" style="background: var(--bg-card); border-radius: 20px; border: 1px solid var(--border-color); overflow: hidden; padding: 0;">
+          <div class="admin-card-section" style="border-radius: 16px !important; overflow: hidden !important; padding: 0 !important;">
             <div class="articles-table-wrap">
               <table class="admin-table">
                 <thead>
@@ -1584,7 +1584,7 @@
 
       <!-- TAB 3: WORDPRESS & DATA IMPORT SUITE -->
       <div id="importTabContent" style="display: none;">
-        <div class="editor-card">
+        <div class="admin-card-section">
           <h2 style="font-size: 1.5rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem;">
             Importatore Articoli WordPress
           </h2>
@@ -1663,7 +1663,7 @@
 
       <!-- TAB 4: MESSAGGI DI CONTATTO RICEVUTI -->
       <div id="messagesTabContent" style="display: none;">
-        <div style="background: var(--bg-card); padding: 2rem; border-radius: 24px; border: 1px solid var(--border-color); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);">
+        <div class="admin-card-section" style="box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3) !important;">
           
           <!-- Header Area with KPI Counters -->
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1.5rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1.5rem;">
