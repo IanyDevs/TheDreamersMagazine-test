@@ -692,7 +692,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ------------------------------------------------------------------------
+  // ----------------------------------------------------------------
   const teamMembersData = {
     'enzo-peluso': {
       name: 'Enzo Peluso',
@@ -702,9 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: '27 anni, la mia passione inizia da bambino grazie al Giffoni Film Festival. Giro i più importanti festival europei con l’obiettivo di avvicinare quante più persone al cinema',
       image: 'assets/foto/enzo peluso.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' },
-        { name: 'X / Twitter', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>', handle: '-', url: '#' },
-        { name: 'Email', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
       ]
     },
     'francesco-pisapia': {
@@ -715,9 +713,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: 'Lavoro al sito con l’obiettivo di raccontare il cinema con passione, cura e attenzione. Ho fondato questo progetto per condividere il mio amore per il cinema e seguo con costanza i principali festival cinematografici italiani, senza perdermi le nuove uscite in sala e tutto ciò che accade nel panorama cinematografico.',
       image: 'assets/foto/Francesco Pisapia.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' },
-        { name: 'X / Twitter', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>', handle: '-', url: '#' },
-        { name: 'Email', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
       ]
     },
     'francesca-siciliano': {
@@ -728,8 +724,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: '25 anni, laureata in DAMS. Da 4 anni partecipo ai principali festival cinematografici italiani e internazionali dove posso vivere la mia passione per il cinema a 360º. Scrivere per The Dreamers Magazine significa per me avere la possibilità di approfondire ogni giorno le mie conoscenze nel meraviglioso ambito dell’arte cinematografica.',
       image: 'assets/foto/Francesca Siciliano.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' },
-        { name: 'Email', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
       ]
     },
     'sarah-bonfanti': {
@@ -749,8 +744,9 @@ document.addEventListener('DOMContentLoaded', () => {
       initials: 'BdM',
       badge: 'Redazione',
       bio: 'Tra una colonna sonora indimenticabile e una sala cinematografica: è lì che mi trovate. Vivo di cinema e musica: amo raccontare le emozioni che nascono quando immagini e note si incontrano. Scrivo per condividere questa crescente passione.',
+      image: 'assets/foto/Benedetta de Martino.jpeg',
       socials: [
-        { name: 'Email', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
       ]
     },
     'Elena Curti': {
@@ -772,7 +768,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: 'Mi piace viaggiare con la fantasia ma sempre mantenendo i piedi per terra e uno sguardo sulla realtà. Studio cinema perché amo le storie e gli infiniti modi in cui possono essere rappresentate sul grande schermo. Scrivere per The Dreamers Magazine mi dà la possibilità di approfondire questo mondo.',
       image: 'assets/foto/Valerio Padoan.jpeg',
       socials: [
-        { name: 'X / Twitter', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
       ]
     },
     'Maria Carmela Fedele': {
@@ -783,8 +779,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: 'Studio musica, una passione che condivido con il cinema e che considero un linguaggio capace di raccontare emozioni e persone. Oltre a scrivere articoli, gestisco la pagina X (Twitter) del Magazine, seguendo e condividendo le ultime novità sul mondo del cinema.',
       image: 'assets/foto/Maria Carmela Fedele.jpeg',
       socials: [
-        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' },
-        { name: 'Email', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
       ]
     },
     'Giulia Zuccolo': {
@@ -817,11 +812,11 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: '21 anni, amo il cinema perché è il mio rifugio, mi piace imparare da esso e immergermi in nuove vite e storie. Spero che qui possiate incuriosirvi e amare il cinema con me',
       image: 'assets/foto/Gaia Fabozzo.jpeg',
       socials: [
-        { name: 'Email', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
       ]
     },
-    'Pierluigi': {
-      name: 'Pierluigi',
+    'Pierluigi Esposito': {
+      name: 'Pierluigi Esposito',
       role: 'Collaboratore',
       initials: 'P',
       badge: 'Redazione',
@@ -850,7 +845,7 @@ document.addEventListener('DOMContentLoaded', () => {
       bio: '24 anni, il mio amore per il cinema nasce da bambina grazie alle grandi interpretazioni di Sophia Loren e in seguito Cate Blanchett. Partecipo ai più importanti festival con l’obiettivo e la speranza di trasmettere la mia passione e che un giorno questa possa diventare il mio principale lavoro',
       image: 'assets/foto/Annapaola Ragosta.jpeg',
       socials: [
-        { name: 'Email', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>', handle: '-', url: '#' }
+        { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '-', url: '#' }
       ]
     }
   };
@@ -870,7 +865,7 @@ document.addEventListener('DOMContentLoaded', () => {
     'Giulia Zuccolo',
     'Pietro Armenante',
     'Gaia Fabozzo',
-    'Pierluigi',
+    'Pierluigi Esposito',
     'Giulia Ricci',
     'Annapaola Ragosta'
   ];
@@ -945,10 +940,6 @@ document.addEventListener('DOMContentLoaded', () => {
               <div class="team-stat-item">
                 <div class="team-stat-val" id="teamModalArticlesCount">0</div>
                 <div class="team-stat-lbl">Articoli Pubblicati</div>
-              </div>
-              <div class="team-stat-item">
-                <div class="team-stat-val">Dreamers</div>
-                <div class="team-stat-lbl">Testata Editoriale</div>
               </div>
             </div>
 
