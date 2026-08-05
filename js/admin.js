@@ -418,7 +418,71 @@ function restoreEditorSelection() {
 
 document.addEventListener('selectionchange', () => {
   saveEditorSelection();
+  syncToolbarWithSelection();
 });
+
+function syncToolbarWithSelection() {
+  const editor = document.getElementById('artContent');
+  if (!editor) return;
+
+  const sel = window.getSelection();
+  if (sel && sel.rangeCount > 0) {
+    let node = sel.anchorNode;
+    // Risaliamo la catena DOM fino all'editor
+    while (node && node !== editor) {
+      if (node.nodeType === Node.ELEMENT_NODE) {
+        const style = window.getComputedStyle(node);
+        
+        // 1. Sincronizzazione Font Family
+        let fontName = style.fontFamily;
+        if (fontName) {
+          fontName = fontName.replace(/['"]/g, '').split(',')[0].trim();
+          const labelEl = document.getElementById('currentFontSelectedLabel');
+          if (labelEl && labelEl.textContent !== fontName) {
+            labelEl.textContent = fontName;
+            labelEl.style.fontFamily = style.fontFamily;
+          }
+          window.currentFont = fontName;
+        }
+
+        // 2. Sincronizzazione Dimensione Font
+        let fontSize = style.fontSize;
+        if (fontSize) {
+          const selectEl = document.getElementById('editorFontSizeSelect');
+          if (selectEl) {
+            for (let option of selectEl.options) {
+              if (option.value === fontSize || (option.text && option.text.includes(fontSize))) {
+                if (selectEl.value !== option.value) selectEl.value = option.value;
+                break;
+              }
+            }
+          }
+        }
+
+        // 3. Sincronizzazione Colore Testo
+        let color = style.color;
+        if (color) {
+          const pickerEl = document.getElementById('editorTextColorPicker');
+          if (pickerEl) {
+            const hex = rgbToHex(color);
+            if (hex && pickerEl.value !== hex) pickerEl.value = hex;
+          }
+        }
+        break;
+      }
+      node = node.parentNode;
+    }
+  }
+}
+
+function rgbToHex(rgbStr) {
+  const match = rgbStr.match(/^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*\d+(?:\.\d+)?)?\)$/);
+  if (!match) return null;
+  const r = parseInt(match[1]).toString(16).padStart(2, '0');
+  const g = parseInt(match[2]).toString(16).padStart(2, '0');
+  const b = parseInt(match[3]).toString(16).padStart(2, '0');
+  return `#${r}${g}${b}`;
+}
 
 window.applyTextColor = function(color) {
   const editor = document.getElementById('artContent');
@@ -427,17 +491,7 @@ window.applyTextColor = function(color) {
   restoreEditorSelection();
   editor.focus();
 
-  const sel = window.getSelection();
-  if (sel && !sel.isCollapsed) {
-    const range = sel.getRangeAt(0);
-    const span = document.createElement('span');
-    span.style.color = color;
-    span.appendChild(range.extractContents());
-    range.insertNode(span);
-  } else {
-    document.execCommand('foreColor', false, color);
-  }
-
+  document.execCommand('foreColor', false, color);
   window.renderLiveTextPreview();
 };
 
@@ -448,23 +502,14 @@ window.applyFontSize = function(size) {
   restoreEditorSelection();
   editor.focus();
 
-  const sel = window.getSelection();
-  if (sel && !sel.isCollapsed) {
-    const range = sel.getRangeAt(0);
+  document.execCommand('fontSize', false, '7');
+  const fontEls = editor.querySelectorAll('font[size="7"]');
+  fontEls.forEach(el => {
     const span = document.createElement('span');
     span.style.fontSize = size;
-    span.appendChild(range.extractContents());
-    range.insertNode(span);
-  } else {
-    document.execCommand('fontSize', false, '7');
-    const fontEls = editor.querySelectorAll('font[size="7"]');
-    fontEls.forEach(el => {
-      const span = document.createElement('span');
-      span.style.fontSize = size;
-      span.innerHTML = el.innerHTML;
-      el.parentNode.replaceChild(span, el);
-    });
-  }
+    span.innerHTML = el.innerHTML;
+    el.parentNode.replaceChild(span, el);
+  });
 
   window.renderLiveTextPreview();
 };
@@ -1546,23 +1591,14 @@ window.changeArticleFont = function(fontName) {
 
   const fontFamilyCss = fontFallbackMap[fontName] || `'${fontName}', sans-serif`;
 
-  const sel = window.getSelection();
-  if (sel && !sel.isCollapsed) {
-    const range = sel.getRangeAt(0);
+  document.execCommand('fontName', false, 'tempfont');
+  const fontEls = editor.querySelectorAll('font[face="tempfont"]');
+  fontEls.forEach(el => {
     const span = document.createElement('span');
     span.style.fontFamily = fontFamilyCss;
-    span.appendChild(range.extractContents());
-    range.insertNode(span);
-  } else {
-    document.execCommand('fontName', false, fontName);
-    const fontEls = editor.querySelectorAll(`font[face="${fontName}"]`);
-    fontEls.forEach(el => {
-      const span = document.createElement('span');
-      span.style.fontFamily = fontFamilyCss;
-      span.innerHTML = el.innerHTML;
-      el.parentNode.replaceChild(span, el);
-    });
-  }
+    span.innerHTML = el.innerHTML;
+    el.parentNode.replaceChild(span, el);
+  });
 
   window.renderLiveTextPreview();
 };
