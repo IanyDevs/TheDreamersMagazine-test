@@ -702,6 +702,116 @@
         margin: 0 !important;
       }
     }
+
+    /* Responsive custom admin styles */
+    .slug-input-group {
+      display: flex !important;
+      align-items: center !important;
+      background: var(--bg-primary) !important;
+      border: 1px solid var(--border-color) !important;
+      border-radius: 10px !important;
+      padding: 0 0.75rem !important;
+      flex-wrap: wrap !important;
+      gap: 0.5rem !important;
+      width: 100% !important;
+    }
+    .slug-input-group span {
+      font-size: 0.78rem !important;
+      color: var(--text-muted) !important;
+      font-family: monospace !important;
+      white-space: nowrap !important;
+      overflow: hidden !important;
+      text-overflow: ellipsis !important;
+      max-width: 100% !important;
+    }
+    .slug-input-group input {
+      border: none !important;
+      background: transparent !important;
+      padding: 0.6rem 0.5rem !important;
+      font-weight: 600 !important;
+      color: #f97316 !important;
+      flex: 1 !important;
+      min-width: 120px !important;
+    }
+    .slug-input-group button {
+      font-size: 0.72rem !important;
+      padding: 0.25rem 0.6rem !important;
+      border-radius: 6px !important;
+      flex-shrink: 0 !important;
+    }
+
+    .tutorial-steps-grid {
+      display: grid !important;
+      grid-template-columns: repeat(4, 1fr) !important;
+      gap: 1.25rem !important;
+      margin-bottom: 1.5rem !important;
+    }
+    .tutorial-glossary-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 1.25rem !important;
+      font-size: 0.8rem !important;
+      line-height: 1.6 !important;
+      color: #cbd5e1 !important;
+    }
+    .seo-simulators-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 1.25rem !important;
+    }
+    .seo-inputs-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 1.25rem !important;
+      margin-bottom: 1.25rem !important;
+    }
+    .seo-meta-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr 1fr !important;
+      gap: 1rem !important;
+      margin-bottom: 1.25rem !important;
+    }
+    .seo-og-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 1rem !important;
+      margin-bottom: 1.5rem !important;
+    }
+
+    @media (max-width: 992px) {
+      .tutorial-steps-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .seo-simulators-grid,
+      .seo-meta-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .slug-input-group {
+        padding: 0.5rem 0.75rem !important;
+      }
+      .slug-input-group span {
+        width: 100% !important;
+        border-bottom: 1px dashed var(--border-color) !important;
+        padding-bottom: 0.35rem !important;
+      }
+      .slug-input-group input {
+        padding: 0.4rem 0 !important;
+      }
+      .tutorial-steps-grid,
+      .tutorial-glossary-grid,
+      .seo-inputs-grid,
+      .seo-og-grid {
+        grid-template-columns: 1fr !important;
+        gap: 0.75rem !important;
+      }
+    }
   </style>
 </head>
 <body>
@@ -814,7 +924,7 @@
           <p style="color: var(--text-secondary);">Gestione articoli di prova.</p>
         </div>
         
-        <div style="display: flex; gap: 0.75rem; align-items: center;">
+        <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
           <button type="button" id="toggleTutorialBtn" onclick="toggleAdminTutorial()" class="btn btn-secondary" style="font-size: 0.82rem; font-weight: 700; border-radius: 9999px; padding: 0.6rem 1.1rem; background: rgba(200, 90, 50, 0.15); color: #e05a2b; border: 1px solid rgba(200, 90, 50, 0.3); cursor: pointer;">
             Guida & Tutorial Admin
           </button>
@@ -854,7 +964,7 @@
         </div>
 
         <!-- 4 PASSI GUIDA RAPIDA -->
-        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-bottom: 1.5rem;">
+        <div class="tutorial-steps-grid">
           <div style="background: #0d1322; padding: 1.1rem; border-radius: 14px; border: 1px solid rgba(255,255,255,0.08);">
             <div style="font-weight: 800; color: #f97316; font-size: 0.85rem; margin-bottom: 0.4rem;">1. Scrivi il Contenuto</div>
             <p style="font-size: 0.78rem; color: #cbd5e1; line-height: 1.5; margin: 0;">
@@ -890,7 +1000,7 @@
             Glossario Strumenti: A cosa serve ogni campo
           </div>
 
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; font-size: 0.8rem; line-height: 1.6; color: #cbd5e1;">
+          <div class="tutorial-glossary-grid">
             <div>
               <p style="margin-bottom: 0.65rem;">
                 <strong style="color: #f97316;">Slug URL:</strong> È l'indirizzo web univoco dell'articolo (es. <code>/articolo/titolo-articolo</code>). Serve ai motori di ricerca per indicizzare la pagina ed è utile per condividere un link pulito.
@@ -960,7 +1070,7 @@
               </p>
             </div>
 
-            <div style="display: flex; gap: 0.75rem; align-items: center;">
+            <div style="display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap;">
               <button type="button" id="saveDraftBtn" class="btn btn-secondary" style="font-size: 0.82rem; font-weight: 700; padding: 0.6rem 1.2rem; border-radius: 10px;">
                 Salva Bozza
               </button>
@@ -1041,10 +1151,10 @@
                   <label for="artSlug" style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.35rem;">
                     Slug URL Personalizzabile
                   </label>
-                  <div style="display: flex; align-items: center; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 10px; padding: 0 0.75rem;">
-                    <span style="font-size: 0.78rem; color: var(--text-muted); font-family: monospace; white-space: nowrap;">https://thedreamersmagazine.it/articolo/</span>
-                    <input type="text" id="artSlug" class="form-control" placeholder="titolo-articolo" style="border: none; background: transparent; padding: 0.6rem 0.5rem; font-weight: 600; color: #f97316;">
-                    <button type="button" id="autoGenerateSlugBtn" class="btn btn-secondary" style="font-size: 0.72rem; padding: 0.25rem 0.6rem; border-radius: 6px; flex-shrink: 0;">Auto Slug</button>
+                  <div class="slug-input-group">
+                    <span>https://thedreamersmagazine.it/articolo/</span>
+                    <input type="text" id="artSlug" placeholder="titolo-articolo">
+                    <button type="button" id="autoGenerateSlugBtn" class="btn btn-secondary">Auto Slug</button>
                   </div>
                 </div>
               </div>
@@ -1146,7 +1256,7 @@
                   <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 600;">Google & Social Media</span>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; margin-bottom: 1.25rem;">
+                <div class="seo-inputs-grid">
                   <div>
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.35rem;">
                       <label for="artSeoTitle" style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);">SEO Title</label>
@@ -1164,7 +1274,7 @@
                   </div>
                 </div>
 
-                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+                <div class="seo-meta-grid">
                   <div>
                     <label for="artKeywords" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Keywords Meta</label>
                     <input type="text" id="artKeywords" class="form-control" placeholder="cinema, film..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
@@ -1184,7 +1294,7 @@
                 </div>
 
                 <!-- Open Graph -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem;">
+                <div class="seo-og-grid">
                   <div>
                     <label for="artOgTitle" style="font-size: 0.78rem; font-weight: 700; color: var(--text-secondary); display: block; margin-bottom: 0.25rem;">Open Graph Title</label>
                     <input type="text" id="artOgTitle" class="form-control" placeholder="Titolo per Facebook/LinkedIn..." style="padding: 0.55rem 0.75rem; font-size: 0.8rem; border-radius: 8px;">
@@ -1196,7 +1306,7 @@
                 </div>
 
                 <!-- SIMULATORI GOOGLE & SOCIAL -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
+                <div class="seo-simulators-grid" style="border-top: 1px solid var(--border-color); padding-top: 1.25rem;">
                   
                   <!-- Google SERP -->
                   <div style="background: #ffffff; padding: 1.1rem; border-radius: 12px; color: #202124; font-family: arial, sans-serif;">
