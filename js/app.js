@@ -65,6 +65,9 @@ document.addEventListener('DOMContentLoaded', () => {
     return `${mins} min di lettura`;
   }
 
+  // Dynamic articles team data (declared here so renderArticles can access it)
+  let teamMembersData;
+
   // ------------------------------------------------------------------------
   // 2. Render Articles Function (with Pagination support)
   // ------------------------------------------------------------------------
@@ -141,11 +144,35 @@ document.addEventListener('DOMContentLoaded', () => {
     paginatedArticles.forEach(article => {
       const li = document.createElement('li');
       li.className = 'article-card-item';
-      const readTime = calculateReadingTime(article.fullContent || article.excerpt || article.content);
-      const authorInitials = (article.author || 'EP').split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+      
+      // Risolvi immagine autore per la card
+      let authorImg = '';
+      if (article.author) {
+        const artAuthLower = article.author.toLowerCase().trim();
+        if (artAuthLower === 'redazione') {
+          authorImg = 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-cropped-ext-custom-logo-1775128647772-192x192.webp';
+        } else {
+          const matchedKey = Object.keys(teamMembersData).find(key => {
+            const member = teamMembersData[key];
+            const memberNameLower = member.name.toLowerCase().trim();
+            return artAuthLower.includes(key.toLowerCase().trim()) || 
+                   artAuthLower.includes(memberNameLower) || 
+                   memberNameLower.includes(artAuthLower);
+          });
+          if (matchedKey && teamMembersData[matchedKey].image) {
+            authorImg = teamMembersData[matchedKey].image;
+          } else {
+            authorImg = 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-cropped-ext-custom-logo-1775128647772-192x192.webp';
+          }
+        }
+      } else {
+        authorImg = 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-cropped-ext-custom-logo-1775128647772-192x192.webp';
+      }
+
+      const avatarHtml = `<img src="${authorImg}" alt="${article.author || 'Redazione'}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block;">`;
 
       li.innerHTML = `
-        <article class="card">
+        <article class="article-card">
           <div class="card-img-wrapper">
             <div class="card-img-overlay"></div>
             <img src="${article.image}" alt="${article.title}" class="card-img" loading="lazy">
@@ -157,8 +184,8 @@ document.addEventListener('DOMContentLoaded', () => {
             <p class="card-excerpt">${article.excerpt || ''}</p>
             <div class="card-footer-meta">
               <div class="card-author-info">
-                <div class="card-author-avatar-initials">${authorInitials}</div>
-                <span class="card-author-name">${article.author || 'Redazione'}</span>
+                <div class="card-author-avatar-initials" style="overflow: hidden; padding: 0;">${avatarHtml}</div>
+                <span class="card-author-name author-name" style="color: var(--brand-accent) !important;">${article.author || 'Redazione'}</span>
               </div>
               <div class="card-read-action">
                 <span class="card-read-more">Leggi</span>
@@ -177,16 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Bind Subscription & Initial Load AFTER renderArticles is defined
-  loadArticlesFromStore();
-  renderArticles();
-
-  if (window.baas && typeof window.baas.subscribe === 'function') {
-    window.baas.subscribe((updatedArticles) => {
-      articles = updatedArticles || [];
-      renderArticles();
-    });
-  }
 
   // ------------------------------------------------------------------------
   // Render Pagination Bar Controls
@@ -198,32 +215,57 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    let navHtml = '<div class="pagination-container">';
+    // Smart window: show at most 5 page numbers around current page
+    const delta = 2;
+    const rangeStart = Math.max(2, currentPage - delta);
+    const rangeEnd = Math.min(totalPages - 1, currentPage + delta);
 
-    // Previous Button
+    let navHtml = `
+      <div class="pagination-container">
+        <div class="pagination-info">
+          Pagina <strong>${currentPage}</strong> di <strong>${totalPages}</strong>
+        </div>
+        <div class="pagination-controls">
+    `;
+
+    // Prev button
     navHtml += `
-      <button class="page-btn prev-btn" ${currentPage === 1 ? 'disabled' : ''} aria-label="Pagina precedente">
-        &laquo;
+      <button class="page-btn nav-arrow prev-btn" ${currentPage === 1 ? 'disabled' : ''} aria-label="Pagina precedente">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
       </button>
     `;
 
-    // Numeric Buttons
-    for (let i = 1; i <= totalPages; i++) {
-      navHtml += `
-        <button class="page-btn num-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">
-          ${i}
-        </button>
-      `;
+    // First page
+    navHtml += `<button class="page-btn num-btn ${currentPage === 1 ? 'active' : ''}" data-page="1">1</button>`;
+
+    // Left ellipsis
+    if (rangeStart > 2) {
+      navHtml += `<span class="page-ellipsis">…</span>`;
     }
 
-    // Next Button
+    // Middle pages
+    for (let i = rangeStart; i <= rangeEnd; i++) {
+      navHtml += `<button class="page-btn num-btn ${i === currentPage ? 'active' : ''}" data-page="${i}">${i}</button>`;
+    }
+
+    // Right ellipsis
+    if (rangeEnd < totalPages - 1) {
+      navHtml += `<span class="page-ellipsis">…</span>`;
+    }
+
+    // Last page
+    if (totalPages > 1) {
+      navHtml += `<button class="page-btn num-btn ${currentPage === totalPages ? 'active' : ''}" data-page="${totalPages}">${totalPages}</button>`;
+    }
+
+    // Next button
     navHtml += `
-      <button class="page-btn next-btn" ${currentPage === totalPages ? 'disabled' : ''} aria-label="Pagina successiva">
-        &raquo;
+      <button class="page-btn nav-arrow next-btn" ${currentPage === totalPages ? 'disabled' : ''} aria-label="Pagina successiva">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
       </button>
     `;
 
-    navHtml += '</div>';
+    navHtml += `</div></div>`;
     paginationWrapper.innerHTML = navHtml;
 
     // Attach Event Handlers
@@ -365,19 +407,43 @@ document.addEventListener('DOMContentLoaded', () => {
       if (article.fontFamily) modalTitle.style.fontFamily = article.fontFamily + ', sans-serif';
     }
 
-    let authorKey = 'francesco-pisapia';
+    let authorKey = null;
+    let isRedazione = false;
     if (article.author) {
       const artAuthLower = article.author.toLowerCase().trim();
-      const matchedKey = Object.keys(teamMembersData).find(key => {
-        const member = teamMembersData[key];
-        const memberNameLower = member.name.toLowerCase().trim();
-        return artAuthLower.includes(key.toLowerCase().trim()) || 
-               artAuthLower.includes(memberNameLower) || 
-               memberNameLower.includes(artAuthLower);
-      });
-      if (matchedKey) authorKey = matchedKey;
+      if (artAuthLower === 'redazione') {
+        isRedazione = true;
+      } else {
+        const matchedKey = Object.keys(teamMembersData).find(key => {
+          const member = teamMembersData[key];
+          const memberNameLower = member.name.toLowerCase().trim();
+          return artAuthLower.includes(key.toLowerCase().trim()) || 
+                 artAuthLower.includes(memberNameLower) || 
+                 memberNameLower.includes(artAuthLower);
+        });
+        if (matchedKey) {
+          authorKey = matchedKey;
+        } else {
+          isRedazione = true;
+        }
+      }
+    } else {
+      isRedazione = true;
     }
-    const memberData = teamMembersData[authorKey] || { initials: 'FP', role: 'Redattore' };
+    
+    let memberData;
+    if (isRedazione) {
+      memberData = {
+        name: 'Redazione',
+        initials: 'R',
+        image: 'https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-cropped-ext-custom-logo-1775128647772-192x192.webp',
+        role: 'Redazione',
+        bio: 'The Dreamers Magazine è una testata editoriale indipendente dedicata alle ultime novità, recensioni e approfondimenti critici sul mondo del cinema e della serialità televisiva.',
+        socials: []
+      };
+    } else {
+      memberData = teamMembersData[authorKey] || { initials: 'FP', role: 'Redattore', name: 'Francesco Pisapia' };
+    }
 
     const initialsEl = document.getElementById('modalAuthorInitials');
     if (initialsEl) {
@@ -388,7 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    if (modalAuthorName) modalAuthorName.textContent = article.author || 'Francesco Pisapia';
+    if (modalAuthorName) modalAuthorName.textContent = article.author || 'Redazione';
 
     const authorRoleEl = document.getElementById('modalAuthorRole');
     if (authorRoleEl) authorRoleEl.textContent = memberData.role || 'Redattore';
@@ -418,6 +484,30 @@ document.addEventListener('DOMContentLoaded', () => {
       if (article.fontFamily) modalTextContent.style.fontFamily = article.fontFamily + ', sans-serif';
     }
 
+    let writtenByText = document.getElementById('modalFooterWrittenByText');
+    if (!writtenByText) {
+      const footer = articleModal.querySelector('.modal-article-footer');
+      if (footer) {
+        writtenByText = document.createElement('span');
+        writtenByText.id = 'modalFooterWrittenByText';
+        writtenByText.className = 'modal-footer-written-by-clean';
+        const closeBtn = document.getElementById('modalFooterCloseAction');
+        footer.insertBefore(writtenByText, closeBtn);
+      }
+    }
+    if (writtenByText) {
+      const avatarHtml = memberData.image 
+        ? `<img src="${memberData.image}" class="modal-footer-author-pill-img" alt="${memberData.name}">`
+        : `<div class="modal-footer-author-pill-img" style="background:#7a2812; color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.75rem; font-weight:800; border: 1.5px solid #ffffff; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">${memberData.initials || 'R'}</div>`;
+
+      writtenByText.innerHTML = `
+        <div class="modal-footer-author-pill">
+          ${avatarHtml}
+          <span class="modal-footer-author-pill-text">Articolo di <strong>${article.author || 'Redazione'}</strong></span>
+        </div>
+      `;
+    }
+
     const footerAvatar = document.getElementById('modalFooterAvatar');
     if (footerAvatar) {
       if (memberData.image) {
@@ -433,29 +523,94 @@ document.addEventListener('DOMContentLoaded', () => {
     // Connect Author Card & Footer Signature to open Team Member Profile Modal
     const authorCard = articleModal.querySelector('.modal-author-card');
     if (authorCard) {
-      authorCard.title = `Vedi il profilo completo di ${article.author}`;
-      authorCard.onclick = () => {
-        closeArticleModal();
-        setTimeout(() => {
-          openTeamMemberModal(authorKey);
-        }, 150);
-      };
+      if (isRedazione) {
+        authorCard.title = '';
+        authorCard.onclick = null;
+        authorCard.style.cursor = 'default';
+      } else {
+        authorCard.style.cursor = 'pointer';
+        authorCard.title = `Vedi il profilo completo di ${article.author}`;
+        authorCard.onclick = () => {
+          closeArticleModal();
+          setTimeout(() => {
+            openTeamMemberModal(authorKey);
+          }, 150);
+        };
+      }
     }
 
     const footerAuthorBox = articleModal.querySelector('.modal-footer-author-box');
     if (footerAuthorBox) {
-      footerAuthorBox.title = `Vedi il profilo completo di ${article.author}`;
-      footerAuthorBox.onclick = () => {
-        closeArticleModal();
-        setTimeout(() => {
-          openTeamMemberModal(authorKey);
-        }, 150);
-      };
+      if (isRedazione) {
+        footerAuthorBox.title = '';
+        footerAuthorBox.onclick = null;
+        footerAuthorBox.style.cursor = 'default';
+      } else {
+        footerAuthorBox.style.cursor = 'pointer';
+        footerAuthorBox.title = `Vedi il profilo completo di ${article.author}`;
+        footerAuthorBox.onclick = () => {
+          closeArticleModal();
+          setTimeout(() => {
+            openTeamMemberModal(authorKey);
+          }, 150);
+        };
+      }
     }
 
     const footerClose = document.getElementById('modalFooterCloseAction');
     if (footerClose) {
       footerClose.onclick = closeArticleModal;
+    }
+
+    // Gestione frecce di navigazione tra articoli consecutivi
+    const currentIndex = articles.findIndex(a => String(a.id) === String(article.id));
+    let prevBtn = document.getElementById('modalPrevArticleBtn');
+    let nextBtn = document.getElementById('modalNextArticleBtn');
+
+    if (!prevBtn && articleModal) {
+      prevBtn = document.createElement('button');
+      prevBtn.id = 'modalPrevArticleBtn';
+      prevBtn.className = 'modal-nav-btn prev-btn';
+      prevBtn.title = 'Articolo precedente';
+      prevBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>`;
+      articleModal.appendChild(prevBtn);
+    }
+
+    if (!nextBtn && articleModal) {
+      nextBtn = document.createElement('button');
+      nextBtn.id = 'modalNextArticleBtn';
+      nextBtn.className = 'modal-nav-btn next-btn';
+      nextBtn.title = 'Articolo successivo';
+      nextBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>`;
+      articleModal.appendChild(nextBtn);
+    }
+
+    if (prevBtn) {
+      if (currentIndex > 0) {
+        prevBtn.style.display = 'flex';
+        prevBtn.onclick = (e) => {
+          e.stopPropagation();
+          openArticleModal(articles[currentIndex - 1]);
+        };
+      } else {
+        prevBtn.style.display = 'none';
+      }
+    }
+
+    if (nextBtn) {
+      if (currentIndex > -1 && currentIndex < articles.length - 1) {
+        nextBtn.style.display = 'flex';
+        nextBtn.onclick = (e) => {
+          e.stopPropagation();
+          openArticleModal(articles[currentIndex + 1]);
+        };
+      } else {
+        nextBtn.style.display = 'none';
+      }
+    }
+
+    if (typeof renderArticleComments === 'function') {
+      renderArticleComments(article.id);
     }
 
     articleModal.classList.add('open');
@@ -490,9 +645,82 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Inject navigation button CSS styles dynamically
+  const navStyles = document.createElement('style');
+  navStyles.innerHTML = `
+    .modal-nav-btn {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1.5px solid rgba(255, 255, 255, 0.15);
+      color: #FFFFFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 99999999;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-nav-btn:hover {
+      background: var(--brand-accent, #C85A32);
+      border-color: var(--brand-accent, #C85A32);
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 12px 36px rgba(200, 90, 50, 0.5);
+    }
+    .modal-nav-btn.prev-btn {
+      left: 2.5rem;
+    }
+    .modal-nav-btn.next-btn {
+      right: 2.5rem;
+    }
+    .modal-nav-btn svg {
+      width: 26px;
+      height: 26px;
+      stroke: currentColor;
+    }
+    @media (max-width: 1100px) {
+      .modal-nav-btn.prev-btn { left: 1rem; }
+      .modal-nav-btn.next-btn { right: 1rem; }
+    }
+    @media (max-width: 900px) {
+      .modal-nav-btn {
+        width: 44px;
+        height: 44px;
+      }
+      .modal-nav-btn.prev-btn { left: 0.5rem; }
+      .modal-nav-btn.next-btn { right: 0.5rem; }
+      .modal-nav-btn svg { width: 22px; height: 22px; }
+    }
+    @media (max-width: 600px) {
+      .modal-nav-btn {
+        display: none !important;
+      }
+    }
+  `;
+  document.head.appendChild(navStyles);
+
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && articleModal && articleModal.classList.contains('open')) {
-      closeArticleModal();
+    if (articleModal && articleModal.classList.contains('open')) {
+      if (e.key === 'Escape') {
+        closeArticleModal();
+      } else if (e.key === 'ArrowLeft') {
+        const prevBtn = document.getElementById('modalPrevArticleBtn');
+        if (prevBtn && prevBtn.style.display !== 'none') {
+          prevBtn.click();
+        }
+      } else if (e.key === 'ArrowRight') {
+        const nextBtn = document.getElementById('modalNextArticleBtn');
+        if (nextBtn && nextBtn.style.display !== 'none') {
+          nextBtn.click();
+        }
+      }
     }
   });
 
@@ -693,13 +921,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ----------------------------------------------------------------
-  const teamMembersData = {
+  teamMembersData = {
     'enzo-peluso': {
       name: 'Enzo Peluso',
       role: 'Co-Fondatore-ViceDirettore & Redattore',
       initials: 'EP',
       badge: 'Fondatore',
-      bio: '27 anni, la mia passione inizia da bambino grazie al Giffoni Film Festival. Giro i più importanti festival europei con l’obiettivo di avvicinare quante più persone al cinema',
+      bio: '27 anni, la mia passione inizia da bambino grazie al Giffoni Film Festival. Giro i più importanti festival europei con l’obiettivo di avvicinare quante più persone al cinema.',
       image: 'assets/foto/enzo peluso.jpeg',
       socials: [
         { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '@enzopelusoo', url: 'https://www.instagram.com/enzopelusoo?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' },
@@ -741,13 +969,13 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: 'TikTok', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"></path></svg>', handle: '@sarah.bonfanti', url: 'https://www.tiktok.com/@sarah.bonfanti' }
       ]
     },
-    'Benedetta de Martino': {
-      name: 'Benedetta de Martino',
+    'Benedetta De Martino': {
+      name: 'Benedetta De Martino',
       role: 'Redattrice',
       initials: 'BdM',
       badge: 'Redazione',
       bio: 'Tra una colonna sonora indimenticabile e una sala cinematografica: è lì che mi trovate. Vivo di cinema e musica: amo raccontare le emozioni che nascono quando immagini e note si incontrano. Scrivo per condividere questa crescente passione.',
-      image: 'assets/foto/Benedetta de Martino.jpeg',
+      image: 'assets/foto/Benedetta De Martino.jpeg',
       socials: [
         { name: 'Instagram', icon: '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>', handle: '@bbenniluu', url: 'https://www.instagram.com/bbenniluu?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==' }
       ]
@@ -857,15 +1085,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   };
 
+  // Bind Subscription & Initial Load AFTER teamMembersData is fully defined
+  loadArticlesFromStore();
+  renderArticles();
+
+  if (window.baas && typeof window.baas.subscribe === 'function') {
+    window.baas.subscribe((updatedArticles) => {
+      articles = updatedArticles || [];
+      renderArticles();
+    });
+  }
+
   let teamModalOverlay = null;
   let currentMemberKey = null;
 
+  // Order derived from teamMembersData to stay always in sync
   const teamMemberKeysOrder = [
     'francesco-pisapia',
     'enzo-peluso',
     'francesca-siciliano',
     'sarah-bonfanti',
-    'Benedetta de Martino',
+    'Benedetta De Martino',
     'Elena Curti',
     'Valerio Padoan',
     'Maria Carmela Fedele',
@@ -877,10 +1117,18 @@ document.addEventListener('DOMContentLoaded', () => {
     'Annapaola Ragosta'
   ];
 
+  let _navigating = false;
   function navigateTeamMember(direction) {
-    if (!currentMemberKey) return;
-    const currentIndex = teamMemberKeysOrder.indexOf(currentMemberKey);
-    if (currentIndex === -1) return;
+    if (!currentMemberKey || _navigating) return;
+    _navigating = true;
+    setTimeout(() => { _navigating = false; }, 350);
+
+    // Case-insensitive search in order list to handle any key casing mismatch
+    const currentKeyLower = currentMemberKey.toLowerCase();
+    const currentIndex = teamMemberKeysOrder.findIndex(
+      k => k.toLowerCase() === currentKeyLower
+    );
+    if (currentIndex === -1) { _navigating = false; return; }
 
     let nextIndex = currentIndex + direction;
     if (nextIndex < 0) {
@@ -892,6 +1140,7 @@ document.addEventListener('DOMContentLoaded', () => {
     openTeamMemberModal(teamMemberKeysOrder[nextIndex]);
   }
 
+  let _keydownModalListenerAdded = false;
   function createTeamModalDOM() {
     if (document.getElementById('teamMemberModalOverlay')) {
       teamModalOverlay = document.getElementById('teamMemberModalOverlay');
@@ -986,17 +1235,20 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    document.addEventListener('keydown', (e) => {
-      if (teamModalOverlay && teamModalOverlay.classList.contains('open')) {
-        if (e.key === 'Escape') {
-          closeTeamMemberModal();
-        } else if (e.key === 'ArrowLeft') {
-          navigateTeamMember(-1);
-        } else if (e.key === 'ArrowRight') {
-          navigateTeamMember(1);
+    if (!_keydownModalListenerAdded) {
+      _keydownModalListenerAdded = true;
+      document.addEventListener('keydown', (e) => {
+        if (teamModalOverlay && teamModalOverlay.classList.contains('open')) {
+          if (e.key === 'Escape') {
+            closeTeamMemberModal();
+          } else if (e.key === 'ArrowLeft') {
+            navigateTeamMember(-1);
+          } else if (e.key === 'ArrowRight') {
+            navigateTeamMember(1);
+          }
         }
-      }
-    });
+      });
+    }
   }
 
   function openTeamMemberModal(memberKey) {
@@ -1159,9 +1411,192 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ------------------------------------------------------------------------
+  // PUBLIC COMMENTS INTERFACE
+  // ------------------------------------------------------------------------
+  function renderArticleComments(articleId) {
+    const paperContainer = document.querySelector('.modal-paper-container');
+    if (!paperContainer) return;
+
+    let section = document.getElementById('articleCommentsSection');
+    if (!section) {
+      section = document.createElement('div');
+      section.id = 'articleCommentsSection';
+      section.style.cssText = 'margin-top: 4rem; padding-top: 3rem; border-top: 1px solid #e2e8f0; color: #1a202c; text-align: left; font-family: inherit;';
+      paperContainer.appendChild(section);
+    }
+
+    section.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 0.65rem; margin-bottom: 2rem;">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#e05a2b" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+        <h3 style="font-size: 1.4rem; font-weight: 800; margin: 0; color: #111; letter-spacing: -0.02em;">Discussione e Commenti</h3>
+      </div>
+
+      <div id="publicCommentsList" style="display: flex; flex-direction: column; gap: 1.15rem; margin-bottom: 3rem;">
+        <p style="color: #718096; font-size: 0.85rem;">Caricamento commenti in corso...</p>
+      </div>
+      
+      <form id="publicCommentForm" style="background: #f8fafc; padding: 1.75rem; border-radius: 16px; border: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+        <div style="margin-bottom: 0.25rem;">
+          <h4 style="font-size: 1.1rem; font-weight: 800; margin: 0 0 0.25rem 0; color: #1e293b;">Lascia un commento</h4>
+          <p style="font-size: 0.78rem; color: #64748b; margin: 0;">Partecipa alla discussione. I campi contrassegnati con * sono obbligatori.</p>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
+          <div style="display: flex; flex-direction: column; gap: 0.35rem;">
+            <input type="text" id="commAuthorName" placeholder="Il tuo nome *" required style="padding: 0.75rem 1rem; font-size: 0.85rem; border: 1px solid #cbd5e1; border-radius: 10px; background: #fff; color: #0f172a; outline: none; transition: border-color 0.2s; font-family: inherit;">
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 0.35rem;">
+            <input type="email" id="commAuthorEmail" placeholder="La tua email (opzionale)" style="padding: 0.75rem 1rem; font-size: 0.85rem; border: 1px solid #cbd5e1; border-radius: 10px; background: #fff; color: #0f172a; outline: none; transition: border-color 0.2s; font-family: inherit;">
+          </div>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: 0.35rem;">
+          <textarea id="commContent" placeholder="Scrivi qui il tuo messaggio... *" rows="4" required style="padding: 0.75rem 1rem; font-size: 0.85rem; border: 1px solid #cbd5e1; border-radius: 10px; background: #fff; color: #0f172a; outline: none; transition: border-color 0.2s; font-family: inherit; resize: vertical; min-height: 100px;"></textarea>
+        </div>
+        
+        <button type="submit" style="background: #e05a2b; color: #fff; border: none; padding: 0.75rem 1.5rem; font-size: 0.85rem; font-weight: 800; border-radius: 10px; cursor: pointer; align-self: flex-start; transition: background-color 0.2s, transform 0.1s; box-shadow: 0 4px 12px rgba(224, 90, 43, 0.25);">
+          Pubblica Commento
+        </button>
+      </form>
+    `;
+
+    const commentsList = document.getElementById('publicCommentsList');
+    const commentForm = document.getElementById('publicCommentForm');
+
+    // Carica i commenti esistenti approvati
+    fetch(`api/commenti.php?action=list_public&article_id=${encodeURIComponent(articleId)}`)
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && Array.isArray(data.comments)) {
+          if (data.comments.length === 0) {
+            commentsList.innerHTML = '<p style="color: #64748b; font-size: 0.85rem; font-style: italic; background: #f8fafc; padding: 1.25rem; border-radius: 14px; border: 1px dashed #e2e8f0; text-align: center; margin: 0;">Nessun commento approvato ancora. Lascia tu il primo commento!</p>';
+            return;
+          }
+          commentsList.innerHTML = '';
+          data.comments.forEach(c => {
+            const dateObj = new Date(c.created_at);
+            const dateStr = isNaN(dateObj.getTime()) ? '' : dateObj.toLocaleDateString('it-IT', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' });
+            const initials = c.author_name ? c.author_name.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0, 2) : '?';
+            
+            const commentDiv = document.createElement('div');
+            commentDiv.style.cssText = 'background: #ffffff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 1.25rem; display: flex; gap: 1rem; box-shadow: 0 2px 4px rgba(0,0,0,0.02); transition: transform 0.2s;';
+            commentDiv.innerHTML = `
+              <div style="width: 40px; height: 40px; border-radius: 50%; background: #f1f5f9; color: #64748b; font-weight: 800; font-size: 0.85rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; border: 1px solid #e2e8f0;">
+                ${initials}
+              </div>
+              <div style="flex-grow: 1;">
+                <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.4rem; flex-wrap: wrap; gap: 0.5rem;">
+                  <strong style="font-size: 0.9rem; color: #0f172a; font-weight: 700;">${escapeHtml(c.author_name)}</strong>
+                  <span style="font-size: 0.72rem; color: #94a3b8;">${dateStr}</span>
+                </div>
+                <p style="font-size: 0.86rem; color: #334155; line-height: 1.6; margin: 0; white-space: pre-wrap; font-family: inherit;">${escapeHtml(c.content)}</p>
+              </div>
+            `;
+            commentsList.appendChild(commentDiv);
+          });
+        }
+      })
+      .catch(() => {
+        commentsList.innerHTML = '<p style="color: #ef4444; font-size: 0.85rem;">Impossibile caricare i commenti.</p>';
+      });
+
+    // Gestione invio commento
+    commentForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('commAuthorName').value.trim();
+      const email = document.getElementById('commAuthorEmail').value.trim();
+      const content = document.getElementById('commContent').value.trim();
+      
+      const submitBtn = commentForm.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Invio in corso...';
+      
+      try {
+        const res = await fetch('api/commenti.php?action=add', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            article_id: articleId,
+            author_name: name,
+            author_email: email,
+            content: content
+          })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('Grazie! Il tuo commento è stato inviato e apparirà non appena approvato da un moderatore.');
+          commentForm.reset();
+        } else {
+          showToast('Errore: ' + data.message, 'error');
+        }
+      } catch (err) {
+        showToast('Impossibile inviare il commento. Riprova più tardi.', 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Invia Commento';
+      }
+    });
+  }
+
+  function showToast(message, type = 'success') {
+    let container = document.getElementById('publicToastContainer');
+    if (!container) {
+      container = document.createElement('div');
+      container.id = 'publicToastContainer';
+      container.style.cssText = 'position: fixed; bottom: 30px; right: 30px; z-index: 999999; display: flex; flex-direction: column; gap: 10px; pointer-events: none;';
+      document.body.appendChild(container);
+    }
+
+    const toast = document.createElement('div');
+    toast.style.cssText = `
+      padding: 0.9rem 1.4rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #ffffff;
+      background: ${type === 'success' ? '#10b981' : '#ef4444'};
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      min-width: 260px;
+      max-width: 400px;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      border: 1px solid ${type === 'success' ? 'rgba(16,185,129,0.1)' : 'rgba(239,68,68,0.1)'};
+    `;
+
+    const icon = type === 'success' 
+      ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>'
+      : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+
+    toast.innerHTML = `${icon}<span style="line-height:1.4;">${message}</span>`;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+      toast.style.opacity = '1';
+      toast.style.transform = 'translateY(0)';
+    }, 10);
+
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(20px)';
+      setTimeout(() => {
+        toast.remove();
+      }, 300);
+    }, 4500);
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+  }
+
+  // ------------------------------------------------------------------------
   // Init App
   // ------------------------------------------------------------------------
-  renderArticles();
   initCookieBanner();
   initHeaderScroll();
   initScrollToTop();

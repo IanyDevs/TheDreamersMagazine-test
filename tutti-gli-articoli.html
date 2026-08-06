@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
@@ -11,6 +11,14 @@
   <meta property="og:title" content="Tutti gli articoli - The Dreamers Magazine">
   <meta property="og:description" content="L'archivio completo di tutte le pubblicazioni di The Dreamers Magazine.">
   <meta property="og:url" content="https://www.thedreamersmagazine.it/tutti-gli-articoli.html">
+  <meta property="og:image" content="https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/Progetto-senza-titolo-3-scaled.png">
+  <link rel="canonical" href="https://www.thedreamersmagazine.it/tutti-gli-articoli.html">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Tutti gli articoli - The Dreamers Magazine">
+  <meta name="twitter:description" content="L'archivio completo di tutte le pubblicazioni di The Dreamers Magazine.">
+  <meta name="twitter:image" content="https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/Progetto-senza-titolo-3-scaled.png">
 
   <!-- Favicon -->
   <link rel="icon" href="https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-cropped-ext-custom-logo-1775128647772-32x32.webp" sizes="32x32">
@@ -23,7 +31,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
 
   <!-- Custom Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=1503">
+  <link rel="stylesheet" href="css/styles.css?v=1600">
 </head>
 <body class="category-page" data-page-category="Tutti">
 
@@ -131,6 +139,10 @@
       <!-- Articles Grid -->
       <div class="articles-grid-container">
         <ul class="articles-grid grid-2-cols" id="articlesGrid">
+          <?php
+          require_once __DIR__ . '/api/ssr_helper.php';
+          render_articles_ssr('Tutti');
+          ?>
           <!-- Article cards generated dynamically via JS -->
         </ul>
         <!-- Dynamic Pagination Bar -->
@@ -336,6 +348,6 @@
 
   <!-- JavaScript App Logic -->
   <script src="js/baas-service.js"></script>
-  <script src="js/app.js?v=1503"></script>
+  <script src="js/app.js?v=1600"></script>
 </body>
 </html>

@@ -5,9 +5,32 @@
    Utente Admin Ufficiale: admin@thedreamersmagazine.it | Password: password123
    ============================================================================== */
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Controllo timeout inattività sessione (2 ore = 7200 secondi)
+if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
+    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 7200)) {
+        $_SESSION = [];
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+        session_destroy();
+    } else {
+        $_SESSION['last_activity'] = time();
+    }
+}
+
 header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, OPTIONS');
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '*';
+header("Access-Control-Allow-Origin: $origin");
+header('Access-Control-Allow-Credentials: true');
+header('Access-Control-Allow-Methods: POST, OPTIONS, GET');
 header('Access-Control-Allow-Headers: Content-Type');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
@@ -30,6 +53,31 @@ if ($isLocal && file_exists(__DIR__ . '/db_config_local.php')) {
     require_once __DIR__ . '/db_config.php';
 } else if (file_exists(__DIR__ . '/db_config_local.php')) {
     require_once __DIR__ . '/db_config_local.php';
+}
+
+$action = $_GET['action'] ?? '';
+if ($_SERVER['REQUEST_METHOD'] === 'GET') {
+    if ($action === 'check') {
+        if (!empty($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
+            echo json_encode(['success' => true, 'logged_in' => true]);
+        } else {
+            echo json_encode(['success' => false, 'logged_in' => false]);
+        }
+        exit;
+    }
+    if ($action === 'logout') {
+        $_SESSION = [];
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+        session_destroy();
+        echo json_encode(['success' => true, 'message' => 'Logged out']);
+        exit;
+    }
 }
 
 $rawInput = file_get_contents('php://input');
@@ -82,11 +130,13 @@ if (isset($pdo)) {
         $existingAdmin = $stmtCheck->fetch();
 
         if (!$existingAdmin) {
+            $hashedPass = password_hash('password123', PASSWORD_DEFAULT);
             $stmtIns = $pdo->prepare("INSERT INTO `tdm_users` (`username`, `email`, `password`, `name`, `role`, `status`) VALUES (?, ?, ?, ?, ?, 'active')");
-            $stmtIns->execute(['admin', 'admin@thedreamersmagazine.it', 'password123', 'Redazione', 'owner']);
-        } else if ($existingAdmin['password'] !== 'password123') {
-            $stmtUpd = $pdo->prepare("UPDATE `tdm_users` SET `password` = 'password123', `name` = 'Redazione', `role` = 'owner' WHERE `email` = ?");
-            $stmtUpd->execute(['admin@thedreamersmagazine.it']);
+            $stmtIns->execute(['admin', 'admin@thedreamersmagazine.it', $hashedPass, 'Redazione', 'owner']);
+        } else if ($existingAdmin['password'] === 'password123') {
+            $hashedPass = password_hash('password123', PASSWORD_DEFAULT);
+            $stmtUpd = $pdo->prepare("UPDATE `tdm_users` SET `password` = ?, `name` = 'Redazione', `role` = 'owner' WHERE `email` = ?");
+            $stmtUpd->execute([$hashedPass, 'admin@thedreamersmagazine.it']);
         }
     } catch (Exception $e) {
         // Tabella esistente
@@ -99,12 +149,10 @@ if (isset($pdo)) {
         $user = $stmt->fetch();
 
         if ($user) {
-            $isPasswordValid = false;
-            if ($password === $user['password'] || password_verify($password, $user['password'])) {
-                $isPasswordValid = true;
-            }
-
-            if ($isPasswordValid) {
+            if (password_verify($password, $user['password'])) {
+                $_SESSION['admin_logged_in'] = true;
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['last_activity'] = time();
                 echo json_encode([
                     'success' => true,
                     'message' => 'Autenticazione effettuata con successo',
@@ -125,6 +173,9 @@ if (isset($pdo)) {
 
 // 3. Verifica Stretta Fallback (solo se DB temporaneamente offline)
 if ($email === 'admin@thedreamersmagazine.it' && $password === 'password123') {
+    $_SESSION['admin_logged_in'] = true;
+    $_SESSION['user_id'] = 1;
+    $_SESSION['last_activity'] = time();
     echo json_encode([
         'success' => true,
         'message' => 'Autenticazione effettuata con successo',

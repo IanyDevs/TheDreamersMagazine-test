@@ -2009,12 +2009,11 @@ document.addEventListener('DOMContentLoaded', () => {
   logoutBtn.addEventListener('click', () => {
     localStorage.removeItem(AUTH_KEY);
     sessionStorage.removeItem(AUTH_KEY);
+    fetch('api/login.php?action=logout').catch(() => {});
     checkAuth();
     showToast('Disconnessione effettuata.');
   });
 
-  const tabImportBtn = document.getElementById('tabImportBtn');
-  const importTabContent = document.getElementById('importTabContent');
   const tabMessagesBtn = document.getElementById('tabMessagesBtn');
   const messagesTabContent = document.getElementById('messagesTabContent');
   const refreshMessagesBtn = document.getElementById('refreshMessagesBtn');
@@ -2025,26 +2024,18 @@ document.addEventListener('DOMContentLoaded', () => {
   let currentMsgFilter = 'all';
   let cachedMessages = [];
 
-  const startWpFetchBtn = document.getElementById('startWpFetchBtn');
-  const wpSiteUrlInput = document.getElementById('wpSiteUrlInput');
-  const wpFetchLimitSelect = document.getElementById('wpFetchLimitSelect');
-  const wpDefaultCategorySelect = document.getElementById('wpDefaultCategorySelect');
-  const wpImportStatus = document.getElementById('wpImportStatus');
-  const startJsonImportBtn = document.getElementById('startJsonImportBtn');
-  const jsonImportFileInput = document.getElementById('jsonImportFileInput');
-
   function switchTab(activeBtn, activeContent) {
     const allBtns = [
       document.getElementById('tabCreateBtn'),
       document.getElementById('tabManageBtn'),
-      document.getElementById('tabImportBtn'),
-      document.getElementById('tabMessagesBtn')
+      document.getElementById('tabMessagesBtn'),
+      document.getElementById('tabCommentsBtn')
     ];
     const allContents = [
       document.getElementById('createTabContent'),
       document.getElementById('manageTabContent'),
-      document.getElementById('importTabContent'),
-      document.getElementById('messagesTabContent')
+      document.getElementById('messagesTabContent'),
+      document.getElementById('commentsTabContent')
     ];
 
     allBtns.forEach(btn => btn?.classList.remove('active'));
@@ -2065,11 +2056,12 @@ document.addEventListener('DOMContentLoaded', () => {
         switchTab(tabCreateBtn, createTabContent);
       } else if (btnId === 'tabManageBtn') {
         switchTab(tabManageBtn, manageTabContent);
-      } else if (btnId === 'tabImportBtn') {
-        switchTab(tabImportBtn, importTabContent);
       } else if (btnId === 'tabMessagesBtn') {
         switchTab(document.getElementById('tabMessagesBtn'), document.getElementById('messagesTabContent'));
         loadAdminMessages();
+      } else if (btnId === 'tabCommentsBtn') {
+        switchTab(document.getElementById('tabCommentsBtn'), document.getElementById('commentsTabContent'));
+        loadAdminComments();
       }
     });
   }
@@ -2424,6 +2416,178 @@ ${escapeHtml(msg.message)}
     if (!str) return '';
     return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
   }
+
+  // ------------------------------------------------------------------------
+  // MODERAZIONE COMMENTI LOGIC
+  // ------------------------------------------------------------------------
+  window.loadAdminComments = async function() {
+    const tbody = document.getElementById('commentsListBody');
+    if (!tbody) return;
+    
+    tbody.innerHTML = '<tr><td colspan="5" style="padding: 2rem; text-align: center; color: var(--text-muted);">Caricamento commenti...</td></tr>';
+    
+    try {
+      const res = await fetch('api/commenti.php?action=list_admin');
+      const data = await res.json();
+      
+      if (data.success && Array.isArray(data.comments)) {
+        const badge = document.getElementById('totalCommentsBadge');
+        const pendingCount = data.comments.filter(c => c.status === 'pending').length;
+        if (badge) {
+          if (pendingCount > 0) {
+            badge.textContent = pendingCount;
+            badge.style.display = 'inline-flex';
+          } else {
+            badge.style.display = 'none';
+          }
+        }
+        
+        if (data.comments.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="5" style="padding: 2rem; text-align: center; color: var(--text-muted);">Nessun commento presente nel database.</td></tr>';
+          return;
+        }
+        
+        tbody.innerHTML = '';
+        data.comments.forEach(c => {
+          const tr = document.createElement('tr');
+          tr.style.borderBottom = '1px solid var(--border-color)';
+          
+          let statusBadge = '';
+          if (c.status === 'approved') {
+            statusBadge = '<span class="badge-status" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: none; font-weight: 700;">Approvato</span>';
+          } else {
+            statusBadge = '<span class="badge-status" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: none; font-weight: 700;">In Attesa</span>';
+          }
+          
+          const dateStr = c.created_at ? c.created_at.slice(0, 16) : '';
+          
+          const isLongComment = c.content.length > 140;
+          const displayContent = isLongComment 
+            ? `${escapeHtml(c.content.slice(0, 140))}<span class="dots">...</span><span class="more" style="display:none;">${escapeHtml(c.content.slice(140))}</span>` 
+            : escapeHtml(c.content);
+          
+          const readMoreBtn = isLongComment 
+            ? `<button onclick="toggleCommentLength(this)" style="background:none; border:none; color:#e05a2b; cursor:pointer; font-weight:800; padding:0; margin-left:0.25rem; font-size:0.75rem; display:inline-block; outline:none;">Leggi tutto</button>` 
+            : '';
+
+          tr.innerHTML = `
+            <td style="padding: 1rem; font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;" title="${escapeHtml(c.article_id)}">
+              ${escapeHtml(c.article_id)}
+            </td>
+            <td style="padding: 1rem; font-size: 0.82rem;">
+              <div style="font-weight: 700; color: var(--text-primary);">${escapeHtml(c.author_name)}</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted);">${escapeHtml(c.author_email)}</div>
+            </td>
+            <td style="padding: 1rem; font-size: 0.82rem; color: var(--text-secondary); max-width: 320px; line-height: 1.4;">
+              <div style="white-space: pre-wrap; word-break: break-word;">${displayContent}${readMoreBtn}</div>
+              <div style="font-size: 0.72rem; color: var(--text-muted); margin-top: 0.35rem;">Inviato il: ${dateStr}</div>
+            </td>
+            <td style="padding: 1rem;">${statusBadge}</td>
+            <td style="padding: 1rem; text-align: right; white-space: nowrap;">
+              ${c.status === 'pending' ? `
+                <button onclick="approveComment(${c.id})" class="btn" style="font-size: 0.75rem; padding: 0.4rem 0.8rem; background: #059669; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 700; margin-right: 0.4rem;">
+                  Approva
+                </button>
+              ` : ''}
+              <button onclick="deleteComment(${c.id})" class="btn" style="font-size: 0.75rem; padding: 0.4rem 0.8rem; background: #dc2626; color: #fff; border: none; border-radius: 6px; cursor: pointer; font-weight: 700;">
+                Elimina
+              </button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+      } else {
+        tbody.innerHTML = `<tr><td colspan="5" style="padding: 2rem; text-align: center; color: #ef4444;">Errore: ${data.message}</td></tr>`;
+      }
+    } catch (e) {
+      tbody.innerHTML = '<tr><td colspan="5" style="padding: 2rem; text-align: center; color: #ef4444;">Errore di connessione.</td></tr>';
+    }
+  };
+
+  window.approveComment = async function(id) {
+    try {
+      const res = await fetch('api/commenti.php?action=approve', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id })
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast('Commento approvato e pubblicato!');
+        loadAdminComments();
+      } else {
+        showToast('Errore: ' + data.message, 'error');
+      }
+    } catch (e) {
+      showToast('Errore di connessione', 'error');
+    }
+  };
+
+  window.deleteComment = async function(id) {
+    window.showCustomConfirmModal({
+      title: 'Elimina Commento',
+      message: 'Sei sicuro di voler eliminare definitivamente questo commento dal database?',
+      confirmText: 'Elimina Ora',
+      cancelText: 'Annulla',
+      isDanger: true
+    }, async (confirmed) => {
+      if (!confirmed) return;
+      try {
+        const res = await fetch('api/commenti.php?action=delete', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id })
+        });
+        const data = await res.json();
+        if (data.success) {
+          showToast('Commento eliminato.');
+          loadAdminComments();
+        } else {
+          showToast('Errore: ' + data.message, 'error');
+        }
+      } catch (e) {
+        showToast('Errore di connessione', 'error');
+      }
+    });
+  };
+
+  const refreshCommentsBtn = document.getElementById('refreshCommentsBtn');
+  if (refreshCommentsBtn) {
+    refreshCommentsBtn.addEventListener('click', () => loadAdminComments());
+  }
+
+  // Carica il badge dei commenti in sospeso periodicamente all'avvio
+  setTimeout(() => {
+    fetch('api/commenti.php?action=list_admin')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && Array.isArray(data.comments)) {
+          const badge = document.getElementById('totalCommentsBadge');
+          const pendingCount = data.comments.filter(c => c.status === 'pending').length;
+          if (badge && pendingCount > 0) {
+            badge.textContent = pendingCount;
+            badge.style.display = 'inline-flex';
+          }
+        }
+      })
+      .catch(() => {});
+  }, 3000);
+
+  window.toggleCommentLength = function(btn) {
+    const parent = btn.parentElement;
+    const dots = parent.querySelector('.dots');
+    const moreText = parent.querySelector('.more');
+    
+    if (dots.style.display === 'none') {
+      dots.style.display = 'inline';
+      moreText.style.display = 'none';
+      btn.textContent = 'Leggi tutto';
+    } else {
+      dots.style.display = 'none';
+      moreText.style.display = 'inline';
+      btn.textContent = 'Mostra meno';
+    }
+  };
 
   function updateTypographyUI() {
     fontOptBtns.forEach(b => b.classList.toggle('active', b.getAttribute('data-font') === currentFont));
@@ -3638,304 +3802,49 @@ ${escapeHtml(msg.message)}
   });
 
   // ------------------------------------------------------------------------
-  // WORDPRESS REST API AUTOMATIC IMPORTER (WITH CORS PROXY FALLBACK)
+  // BACKUP ARTICOLI
   // ------------------------------------------------------------------------
-  if (startWpFetchBtn && wpSiteUrlInput) {
-    startWpFetchBtn.addEventListener('click', async () => {
-      let siteUrl = wpSiteUrlInput.value.trim().replace(/\/+$/, '');
-      if (!siteUrl) {
-        showToast('Inserisci un URL valido per il sito WordPress', 'error');
-        return;
-      }
-
-      if (!siteUrl.startsWith('http://') && !siteUrl.startsWith('https://')) {
-        siteUrl = 'https://' + siteUrl;
-      }
-
-      const limit = wpFetchLimitSelect ? wpFetchLimitSelect.value : '100';
-      const defaultCat = wpDefaultCategorySelect ? wpDefaultCategorySelect.value : 'News';
-      const endpoint = `${siteUrl}/wp-json/wp/v2/posts?per_page=${limit}&_embed=1`;
-
-      startWpFetchBtn.disabled = true;
-      startWpFetchBtn.textContent = '⌛ Connessione a WordPress in corso...';
-      if (wpImportStatus) {
-        wpImportStatus.style.display = 'block';
-        wpImportStatus.style.color = '#3b82f6';
-        wpImportStatus.textContent = 'Connessione al server WordPress in corso...';
-      }
-
+  const backupArticlesBtn = document.getElementById('backupArticlesBtn');
+  if (backupArticlesBtn) {
+    backupArticlesBtn.addEventListener('click', async () => {
       try {
-        let wpPosts = null;
-
-        // Try direct fetch first
-        try {
-          const response = await fetch(endpoint);
-          if (response.ok) {
-            wpPosts = await response.json();
-          }
-        } catch (errDirect) {
-          console.warn('Direct fetch failed or CORS blocked. Trying CORS proxy...', errDirect);
+        backupArticlesBtn.disabled = true;
+        const origText = backupArticlesBtn.innerHTML;
+        backupArticlesBtn.innerHTML = 'Generazione backup...';
+        
+        let articles = [];
+        if (window.baas) {
+          articles = await window.baas.loadArticlesFromBackend();
         }
-
-        // Try CORS Proxy fallback if direct fetch failed
-        if (!wpPosts || !Array.isArray(wpPosts)) {
-          if (wpImportStatus) wpImportStatus.textContent = 'Tentativo tramite Proxy CORS...';
-          const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(endpoint)}`;
-          const proxyRes = await fetch(proxyUrl);
-          if (proxyRes.ok) {
-            wpPosts = await proxyRes.json();
-          }
+        
+        if (!articles || articles.length === 0) {
+          showToast('Nessun articolo disponibile per il backup.', 'error');
+          backupArticlesBtn.disabled = false;
+          backupArticlesBtn.innerHTML = origText;
+          return;
         }
-
-        if (!Array.isArray(wpPosts) || wpPosts.length === 0) {
-          throw new Error('Nessun articolo trovato sul sito WordPress specificato');
-        }
-
-        const parsedArticles = wpPosts.map((post, idx) => {
-          let coverImage = '';
-          if (post._embedded && post._embedded['wp:featuredmedia'] && post._embedded['wp:featuredmedia'][0]) {
-            coverImage = post._embedded['wp:featuredmedia'][0].source_url || '';
-          }
-
-          let category = defaultCat;
-          if (post._embedded && post._embedded['wp:term'] && post._embedded['wp:term'][0]) {
-            const terms = post._embedded['wp:term'][0];
-            if (terms.length > 0) {
-              const termName = terms[0].name.toLowerCase();
-              if (termName.includes('film') || termName.includes('cinema')) category = 'Film';
-              else if (termName.includes('serie') || termName.includes('tv')) category = 'Serie TV';
-              else if (termName.includes('approfondiment')) category = 'Approfondimenti';
-              else if (termName.includes('intervist')) category = 'Interviste';
-              else category = 'News';
-            }
-          }
-
-          let author = 'Redazione';
-          if (post._embedded && post._embedded['author'] && post._embedded['author'][0]) {
-            author = post._embedded['author'][0].name || 'Redazione';
-          }
-
-          const rawExcerpt = post.excerpt ? post.excerpt.rendered : '';
-          const cleanExcerpt = rawExcerpt.replace(/<[^>]*>?/gm, '').trim();
-          const rawContent = post.content ? post.content.rendered : '';
-
-          return {
-            id: 'wp-' + post.id,
-            title: post.title ? post.title.rendered.replace(/&#8211;/g, '-').replace(/&#8217;/g, "'").replace(/&amp;/g, '&') : 'Articolo',
-            category: category,
-            image: coverImage || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80',
-            excerpt: cleanExcerpt,
-            content: rawContent,
-            author: author,
-            createdAt: post.date ? new Date(post.date).toISOString() : new Date().toISOString(),
-            readTime: '3 min'
-          };
-        });
-
-        const count = await window.baas.bulkImportArticles(parsedArticles);
-        showToast(`Importati con successo ${count} articoli da WordPress!`);
-        if (wpImportStatus) {
-          wpImportStatus.style.color = '#10b981';
-          wpImportStatus.textContent = `Importazione completata! ${count} articoli aggiunti con successo al database.`;
-        }
-
+        
+        const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(articles, null, 2));
+        const downloadAnchor = document.createElement('a');
+        downloadAnchor.setAttribute("href", dataStr);
+        
+        const dateStr = new Date().toISOString().slice(0, 10);
+        downloadAnchor.setAttribute("download", `backup_articoli_${dateStr}.json`);
+        document.body.appendChild(downloadAnchor);
+        downloadAnchor.click();
+        downloadAnchor.remove();
+        
+        showToast('Backup scaricato con successo!');
+        backupArticlesBtn.disabled = false;
+        backupArticlesBtn.innerHTML = origText;
       } catch (err) {
-        console.error('Errore importazione WordPress:', err);
-        showToast('Errore durante l\'importazione: ' + err.message, 'error');
-        if (wpImportStatus) {
-          wpImportStatus.style.color = '#ef4444';
-          wpImportStatus.textContent = `Errore: ${err.message}. Prova ad utilizzare l'Opzione 2 (caricamento del file XML esportato da WordPress).`;
-        }
-      } finally {
-        startWpFetchBtn.disabled = false;
-        startWpFetchBtn.textContent = 'Avvia Importazione Automatica';
+        showToast('Errore durante il backup: ' + err.message, 'error');
+        backupArticlesBtn.disabled = false;
       }
     });
   }
 
-  // ------------------------------------------------------------------------
-  // FILE IMPORTER (XML WXR & JSON)
-  // ------------------------------------------------------------------------
-  const fileImportStatus = document.getElementById('fileImportStatus');
 
-  if (startJsonImportBtn && jsonImportFileInput) {
-    startJsonImportBtn.addEventListener('click', () => {
-      const file = jsonImportFileInput.files[0];
-      if (!file) {
-        showToast('Seleziona prima un file XML o JSON da caricare', 'error');
-        return;
-      }
-
-      if (fileImportStatus) {
-        fileImportStatus.style.display = 'block';
-        fileImportStatus.style.color = '#3b82f6';
-        fileImportStatus.textContent = 'Lettura ed elaborazione del file in corso...';
-      }
-
-      const reader = new FileReader();
-      reader.onload = async (e) => {
-        try {
-          const fileContent = e.target.result;
-          let parsedArticles = [];
-
-          if (file.name.endsWith('.xml') || fileContent.trim().startsWith('<?xml') || fileContent.includes('<rss')) {
-            // Robust WordPress XML (WXR Export) Parser
-            try {
-              const parser = new DOMParser();
-              const xmlDoc = parser.parseFromString(fileContent, 'text/xml');
-              const items = xmlDoc.getElementsByTagName('item');
-
-              for (let i = 0; i < items.length; i++) {
-                const item = items[i];
-
-                const getTag = (name) => {
-                  const nsEls = item.getElementsByTagNameNS('*', name);
-                  if (nsEls && nsEls.length > 0 && nsEls[0].textContent) return nsEls[0].textContent;
-                  const directEls = item.getElementsByTagName(name);
-                  if (directEls && directEls.length > 0 && directEls[0].textContent) return directEls[0].textContent;
-                  const wpEls = item.getElementsByTagName('wp:' + name);
-                  if (wpEls && wpEls.length > 0 && wpEls[0].textContent) return wpEls[0].textContent;
-                  const contentEls = item.getElementsByTagName('content:' + name);
-                  if (contentEls && contentEls.length > 0 && contentEls[0].textContent) return contentEls[0].textContent;
-                  const dcEls = item.getElementsByTagName('dc:' + name);
-                  if (dcEls && dcEls.length > 0 && dcEls[0].textContent) return dcEls[0].textContent;
-                  const excerptEls = item.getElementsByTagName('excerpt:' + name);
-                  if (excerptEls && excerptEls.length > 0 && excerptEls[0].textContent) return excerptEls[0].textContent;
-                  return '';
-                };
-
-                const postType = getTag('post_type') || 'post';
-                const status = getTag('status') || 'publish';
-
-                if (postType !== 'post' && postType !== '' && postType !== 'page') continue;
-                if (status === 'trash' || status === 'inherit') continue;
-
-                const title = getTag('title') || 'Articolo senza titolo';
-                let content = getTag('encoded') || getTag('content') || '';
-                let excerpt = getTag('excerpt') || '';
-                const author = getTag('creator') || getTag('author') || 'Redazione';
-                const pubDate = getTag('pubDate') || getTag('post_date') || new Date().toISOString();
-
-                if (!excerpt && content) {
-                  excerpt = content.replace(/<[^>]*>?/gm, '').substring(0, 180).trim() + '...';
-                } else {
-                  excerpt = excerpt.replace(/<[^>]*>?/gm, '').trim();
-                }
-
-                let image = '';
-                const imgMatch = content.match(/<img[^>]+src=["']([^"']+)["']/i);
-                if (imgMatch) image = imgMatch[1];
-                if (!image) {
-                  image = 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80';
-                }
-
-                let category = 'News';
-                const catEls = item.querySelectorAll('category');
-                catEls.forEach(c => {
-                  const domain = c.getAttribute('domain');
-                  const cName = c.textContent.trim();
-                  if (!cName) return;
-                  if (domain === 'category' || !domain) {
-                    const lower = cName.toLowerCase();
-                    if (lower.includes('film') || lower.includes('cinema')) category = 'Film';
-                    else if (lower.includes('serie') || lower.includes('tv')) category = 'Serie TV';
-                    else if (lower.includes('approfondiment')) category = 'Approfondimenti';
-                    else if (lower.includes('intervist')) category = 'Interviste';
-                    else if (category === 'News') category = cName;
-                  }
-                });
-
-                parsedArticles.push({
-                  id: 'wp-xml-' + i + '-' + Date.now(),
-                  title: title.trim(),
-                  category: category,
-                  image: image,
-                  excerpt: excerpt,
-                  content: content,
-                  author: author,
-                  createdAt: new Date(pubDate).toString() !== 'Invalid Date' ? new Date(pubDate).toISOString() : new Date().toISOString(),
-                  readTime: '3 min'
-                });
-              }
-            } catch (domErr) {
-              console.warn('DOMParser failed, trying Regex XML parser:', domErr);
-            }
-
-            // Fallback Regex Parser if DOMParser returned 0 items
-            if (parsedArticles.length === 0) {
-              const itemRegex = /<item>([\s\S]*?)<\/item>/gi;
-              let match;
-              let regIdx = 0;
-              while ((match = itemRegex.exec(fileContent)) !== null) {
-                const itemStr = match[1];
-                const getRegexTag = (tag) => {
-                  const reg = new RegExp(`<(${tag}|[a-z0-9_-]+:${tag})[^>]*>(?:<!\\[CDATA\\[([\\s\\S]*?)\\]\\]>|([\\s\\S]*?))<\\/\\1>`, 'i');
-                  const m = itemStr.match(reg);
-                  if (m) return (m[2] !== undefined ? m[2] : m[3] || '').trim();
-                  return '';
-                };
-
-                const postType = getRegexTag('post_type') || 'post';
-                if (postType !== 'post' && postType !== 'page' && postType !== '') continue;
-
-                const title = getRegexTag('title') || 'Articolo';
-                const content = getRegexTag('encoded') || getRegexTag('content') || '';
-                let excerpt = getRegexTag('excerpt') || content.replace(/<[^>]*>?/gm, '').substring(0, 180) + '...';
-                const author = getRegexTag('creator') || 'Redazione';
-                const pubDate = getRegexTag('pubDate') || new Date().toISOString();
-
-                let image = '';
-                const imgMatch = content.match(/<img[^>]+src=["']([^"']+)["']/i);
-                if (imgMatch) image = imgMatch[1];
-                if (!image) {
-                  image = 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80';
-                }
-
-                parsedArticles.push({
-                  id: 'wp-xml-reg-' + regIdx + '-' + Date.now(),
-                  title: title.trim(),
-                  category: 'News',
-                  image: image,
-                  excerpt: excerpt,
-                  content: content,
-                  author: author,
-                  createdAt: pubDate,
-                  readTime: '3 min'
-                });
-                regIdx++;
-              }
-            }
-
-          } else {
-            // Parse JSON file
-            const data = JSON.parse(fileContent);
-            parsedArticles = Array.isArray(data) ? data : (data.articles || data.posts || []);
-          }
-
-          if (!parsedArticles || parsedArticles.length === 0) {
-            throw new Error('Nessun articolo valido trovato nel file caricato. Assicurati che sia un file XML esportato da WordPress.');
-          }
-
-          const count = await window.baas.bulkImportArticles(parsedArticles, true);
-          showToast(`Importati con successo ${count} articoli dal file!`);
-      if (fileImportStatus) {
-        fileImportStatus.style.color = '#10b981';
-        fileImportStatus.textContent = `Importazione completata! ${count} articoli aggiunti dal file.`;
-      }
-      jsonImportFileInput.value = '';
-
-    } catch (err) {
-      console.error('Errore lettura file:', err);
-      showToast('Errore nel file: ' + err.message, 'error');
-      if (fileImportStatus) {
-        fileImportStatus.style.color = '#ef4444';
-        fileImportStatus.textContent = `Errore: ${err.message}`;
-      }
-    }
-      };
-      reader.readAsText(file);
-    });
-  }
 
 window.initWYSIWYGMediaController = function() {
   const editor = document.getElementById('artContent');
@@ -4265,10 +4174,318 @@ window.initWYSIWYGMediaController = function() {
   });
 };
 
+  // ------------------------------------------------------------------------
+  // AUTOSAVE LOGIC
+  // ------------------------------------------------------------------------
+  const autosaveIndicator = document.getElementById('autosaveIndicator');
+  const restoreDraftBtn = document.getElementById('restoreDraftBtn');
+  const DRAFT_KEY = 'tdm_article_draft';
+
+  // Controlla se esiste una bozza all'avvio
+  function checkExistingDraft() {
+    const draft = localStorage.getItem(DRAFT_KEY);
+    if (draft && restoreDraftBtn) {
+      restoreDraftBtn.style.display = 'inline-flex';
+    }
+  }
+
+  // Ripristina la bozza nel form
+  if (restoreDraftBtn) {
+    restoreDraftBtn.addEventListener('click', () => {
+      try {
+        const draftStr = localStorage.getItem(DRAFT_KEY);
+        if (!draftStr) return;
+        const draft = JSON.parse(draftStr);
+
+        if (document.getElementById('artTitle')) document.getElementById('artTitle').value = draft.title || '';
+        if (document.getElementById('artSubtitle')) document.getElementById('artSubtitle').value = draft.subtitle || '';
+        if (document.getElementById('artSlug')) document.getElementById('artSlug').value = draft.slug || '';
+        if (document.getElementById('artCategory')) document.getElementById('artCategory').value = draft.category || 'News';
+        if (document.getElementById('artSubCategory')) document.getElementById('artSubCategory').value = draft.subCategory || '';
+        if (document.getElementById('artAuthor')) document.getElementById('artAuthor').value = draft.author || 'Redazione';
+        if (document.getElementById('artReadTime')) document.getElementById('artReadTime').value = draft.readTime || '3 min';
+        if (document.getElementById('artExcerpt')) document.getElementById('artExcerpt').value = draft.excerpt || '';
+        if (document.getElementById('artContent')) document.getElementById('artContent').innerHTML = draft.content || '';
+        if (document.getElementById('artImage')) {
+          document.getElementById('artImage').value = draft.image || '';
+          
+          // Aggiornamento anteprima copertina
+          const previewImg = document.getElementById('previewImg');
+          const placeholder = document.getElementById('previewPlaceholder');
+          if (previewImg && draft.image) {
+            previewImg.src = draft.image;
+            previewImg.style.display = 'block';
+            if (placeholder) placeholder.style.display = 'none';
+          }
+        }
+
+        showToast('Bozza ripristinata con successo!');
+        restoreDraftBtn.style.display = 'none';
+      } catch (err) {
+        showToast('Errore nel ripristino della bozza.', 'error');
+      }
+    });
+  }
+
+  // Timer di autosave ogni 30 secondi
+  setInterval(() => {
+    const titleVal = document.getElementById('artTitle') ? document.getElementById('artTitle').value.trim() : '';
+    const contentVal = document.getElementById('artContent') ? document.getElementById('artContent').innerHTML.trim() : '';
+    
+    if (titleVal || (contentVal && contentVal !== '<br>')) {
+      const draftData = {
+        title: titleVal,
+        subtitle: document.getElementById('artSubtitle') ? document.getElementById('artSubtitle').value.trim() : '',
+        slug: document.getElementById('artSlug') ? document.getElementById('artSlug').value.trim() : '',
+        category: document.getElementById('artCategory') ? document.getElementById('artCategory').value : 'News',
+        subCategory: document.getElementById('artSubCategory') ? document.getElementById('artSubCategory').value.trim() : '',
+        author: document.getElementById('artAuthor') ? document.getElementById('artAuthor').value : 'Redazione',
+        readTime: document.getElementById('artReadTime') ? document.getElementById('artReadTime').value.trim() : '3 min',
+        excerpt: document.getElementById('artExcerpt') ? document.getElementById('artExcerpt').value.trim() : '',
+        content: contentVal,
+        image: document.getElementById('artImage') ? document.getElementById('artImage').value.trim() : '',
+        updatedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(DRAFT_KEY, JSON.stringify(draftData));
+      
+      if (autosaveIndicator) {
+        const timeStr = new Date().toLocaleTimeString();
+        autosaveIndicator.innerHTML = `💾 Bozza salvata alle ${timeStr}`;
+        autosaveIndicator.style.display = 'inline-flex';
+        setTimeout(() => {
+          autosaveIndicator.style.display = 'none';
+        }, 3000);
+      }
+    }
+  }, 30000);
+
+  // Pulisci bozza al submit con successo del form
+  document.getElementById('articleForm')?.addEventListener('submit', () => {
+    localStorage.removeItem(DRAFT_KEY);
+    if (restoreDraftBtn) restoreDraftBtn.style.display = 'none';
+  });
+  
+  document.getElementById('submitFormBtn')?.addEventListener('click', () => {
+    setTimeout(() => {
+      localStorage.removeItem(DRAFT_KEY);
+      if (restoreDraftBtn) restoreDraftBtn.style.display = 'none';
+    }, 1000);
+  });
+
+  checkExistingDraft();
+
+  // ------------------------------------------------------------------------
+  // MEDIA LIBRARY LOGIC
+  // ------------------------------------------------------------------------
+  const mediaLibraryModal = document.getElementById('mediaLibraryModal');
+  const browseMediaLibBtn = document.getElementById('browseMediaLibBtn');
+  const closeMediaLibraryBtn = document.getElementById('closeMediaLibraryBtn');
+  const mediaLibraryGrid = document.getElementById('mediaLibraryGrid');
+  const mediaLibDetailsPanel = document.getElementById('mediaLibDetailsPanel');
+  const mediaLibFileInput = document.getElementById('mediaLibFileInput');
+  const mediaLibUploadProgress = document.getElementById('mediaLibUploadProgress');
+  
+  let selectedMediaFile = null;
+
+  async function loadMediaFiles() {
+    if (!mediaLibraryGrid) return;
+    mediaLibraryGrid.innerHTML = '<div style="color: var(--text-muted); font-size: 0.85rem;">Caricamento libreria...</div>';
+    
+    try {
+      const res = await fetch('api/media.php');
+      const data = await res.json();
+      
+      if (data.success && Array.isArray(data.files)) {
+        if (data.files.length === 0) {
+          mediaLibraryGrid.innerHTML = '<div style="color: var(--text-muted); font-size: 0.85rem; grid-column: 1/-1; text-align: center; padding: 2rem 0;">La libreria è vuota. Trascina un file sopra per iniziare!</div>';
+          return;
+        }
+        
+        mediaLibraryGrid.innerHTML = '';
+        data.files.forEach(file => {
+          const item = document.createElement('div');
+          item.className = 'media-grid-item';
+          item.style.cssText = `
+            border: 2px solid transparent;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #0E0C0B;
+            aspect-ratio: 1;
+            cursor: pointer;
+            position: relative;
+            transition: border-color 0.2s, transform 0.2s;
+          `;
+          
+          item.innerHTML = `
+            <img src="${file.url}" alt="${file.name}" style="width: 100%; height: 100%; object-fit: cover;">
+          `;
+          
+          item.addEventListener('click', () => {
+            mediaLibraryGrid.querySelectorAll('.media-grid-item').forEach(el => {
+              el.style.borderColor = 'transparent';
+              el.style.transform = 'none';
+            });
+            
+            item.style.borderColor = 'var(--admin-accent, #C85A32)';
+            item.style.transform = 'scale(0.96)';
+            showMediaDetails(file);
+          });
+          
+          mediaLibraryGrid.appendChild(item);
+        });
+      } else {
+        mediaLibraryGrid.innerHTML = `<div style="color: #ef4444; font-size: 0.85rem;">Errore: ${data.message}</div>`;
+      }
+    } catch (err) {
+      mediaLibraryGrid.innerHTML = '<div style="color: #ef4444; font-size: 0.85rem;">Impossibile caricare i file.</div>';
+    }
+  }
+
+  function showMediaDetails(file) {
+    if (!mediaLibDetailsPanel) return;
+    selectedMediaFile = file;
+    
+    const sizeKB = (file.size / 1024).toFixed(1);
+    
+    mediaLibDetailsPanel.innerHTML = `
+      <div style="text-align: center; border-radius: 8px; overflow: hidden; background: #141210; border: 1px solid var(--border-color); height: 120px; display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem;">
+        <img src="${file.url}" alt="${file.name}" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+      </div>
+      <div style="font-size: 0.78rem; word-break: break-all; font-weight: 700; color: var(--text-primary);">${file.name}</div>
+      <div style="font-size: 0.72rem; color: var(--text-muted);">
+        <div>Dimensione: <strong>${sizeKB} KB</strong></div>
+      </div>
+      
+      <div style="display: flex; flex-direction: column; gap: 0.5rem; margin-top: auto;">
+        <button id="selectMediaBtn" class="btn btn-primary" style="font-size: 0.78rem; padding: 0.5rem; font-weight: 800; border-radius: 8px; width: 100%;">
+          Usa Immagine
+        </button>
+        <button id="deleteMediaBtn" class="btn btn-danger" style="font-size: 0.78rem; padding: 0.5rem; font-weight: 700; border-radius: 8px; width: 100%; background: #dc2626; color:#fff; border:none; cursor:pointer;">
+          Elimina File
+        </button>
+      </div>
+    `;
+    
+    document.getElementById('selectMediaBtn')?.addEventListener('click', () => {
+      if (document.getElementById('artImage')) {
+        document.getElementById('artImage').value = file.url;
+        const previewImg = document.getElementById('previewImg');
+        const placeholder = document.getElementById('previewPlaceholder');
+        if (previewImg) {
+          previewImg.src = file.url;
+          previewImg.style.display = 'block';
+        }
+        if (placeholder) placeholder.style.display = 'none';
+        showToast('Immagine impostata con successo!');
+      }
+      closeMediaLibrary();
+    });
+    
+    document.getElementById('deleteMediaBtn')?.addEventListener('click', async () => {
+      if (confirm('Sei sicuro di voler eliminare definitivamente questo file?')) {
+        try {
+          const res = await fetch('api/media.php?action=delete', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ filename: file.name })
+          });
+          const result = await res.json();
+          if (result.success) {
+            showToast('Immagine eliminata.');
+            resetDetailsPanel();
+            loadMediaFiles();
+          } else {
+            showToast('Errore: ' + result.message, 'error');
+          }
+        } catch (err) {
+          showToast('Errore durante la cancellazione.', 'error');
+        }
+      }
+    });
+  }
+
+  function resetDetailsPanel() {
+    if (!mediaLibDetailsPanel) return;
+    selectedMediaFile = null;
+    mediaLibDetailsPanel.innerHTML = `
+      <div style="text-align: center; font-size: 0.8rem; color: var(--text-muted); margin: auto 0; padding: 1rem 0;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-bottom: 0.5rem; opacity: 0.5; color: var(--text-muted);"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+        <div>Seleziona un'immagine per visualizzarne i dettagli</div>
+      </div>
+    `;
+  }
+
+  function openMediaLibrary() {
+    if (mediaLibraryModal) {
+      mediaLibraryModal.style.display = 'flex';
+      loadMediaFiles();
+    }
+  }
+
+  function closeMediaLibrary() {
+    if (mediaLibraryModal) {
+      mediaLibraryModal.style.display = 'none';
+      resetDetailsPanel();
+    }
+  }
+
+  if (browseMediaLibBtn) browseMediaLibBtn.addEventListener('click', openMediaLibrary);
+  if (closeMediaLibraryBtn) closeMediaLibraryBtn.addEventListener('click', closeMediaLibrary);
+
+  // Upload file nella Media Library
+  if (mediaLibFileInput) {
+    mediaLibFileInput.addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      
+      const formData = new FormData();
+      formData.append('file', file);
+      
+      if (mediaLibUploadProgress) mediaLibUploadProgress.style.display = 'block';
+      
+      try {
+        const res = await fetch('api/media.php', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+        
+        if (data.success) {
+          showToast('Immagine caricata in libreria!');
+          loadMediaFiles();
+        } else {
+          showToast('Errore di caricamento: ' + data.message, 'error');
+        }
+      } catch (err) {
+        showToast('Errore di connessione durante il caricamento.', 'error');
+      } finally {
+        if (mediaLibUploadProgress) mediaLibUploadProgress.style.display = 'none';
+        mediaLibFileInput.value = '';
+      }
+    });
+  }
+
   window.baas.subscribe((articles) => {
     renderAdminTable(articles);
   });
 
   checkAuth();
+
+  // Verify server session on load to keep state synchronized
+  if (localStorage.getItem(AUTH_KEY) === 'true' || sessionStorage.getItem(AUTH_KEY) === 'true') {
+    fetch('api/login.php?action=check')
+      .then(res => res.json())
+      .then(data => {
+        if (!data.logged_in) {
+          localStorage.removeItem(AUTH_KEY);
+          sessionStorage.removeItem(AUTH_KEY);
+          checkAuth();
+          showToast('Sessione scaduta o non valida.', 'error');
+        }
+      })
+      .catch(() => {});
+  }
+
   window.initWYSIWYGMediaController();
 });

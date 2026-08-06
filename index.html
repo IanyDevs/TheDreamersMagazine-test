@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8">
@@ -11,6 +11,24 @@
   <meta property="og:title" content="Home - The Dreamers Magazine">
   <meta property="og:description" content="Non un semplice magazine: notizie, approfondimenti e recensioni sul mondo del cinema e delle serie TV.">
   <meta property="og:url" content="https://www.thedreamersmagazine.it/">
+  <meta property="og:image" content="https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/Progetto-senza-titolo-3-scaled.png">
+  <link rel="canonical" href="https://www.thedreamersmagazine.it/">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Home - The Dreamers Magazine">
+  <meta name="twitter:description" content="Non un semplice magazine: notizie, approfondimenti e recensioni sul mondo del cinema e delle serie TV.">
+  <meta name="twitter:image" content="https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/Progetto-senza-titolo-3-scaled.png">
+
+  <!-- Schema.org JSON-LD -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "The Dreamers Magazine",
+    "url": "https://www.thedreamersmagazine.it/"
+  }
+  </script>
 
   <!-- Favicon -->
   <link rel="icon" href="https://www.thedreamersmagazine.it/wp-content/uploads/2026/04/cropped-cropped-ext-custom-logo-1775128647772-32x32.webp" sizes="32x32">
@@ -23,7 +41,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=Oxanium:wght@400;600;700&display=swap" rel="stylesheet">
 
   <!-- Custom Styles -->
-  <link rel="stylesheet" href="css/styles.css?v=1503">
+  <link rel="stylesheet" href="css/styles.css?v=1600">
   <style>
     html.modal-open, body.modal-open {
       overflow: hidden !important;
@@ -154,6 +172,10 @@
       <!-- Articles Grid -->
       <div class="articles-grid-container">
         <ul class="articles-grid grid-2-cols" id="articlesGrid">
+          <?php
+          require_once __DIR__ . '/api/ssr_helper.php';
+          render_articles_ssr('Tutti');
+          ?>
           <!-- Article cards generated dynamically via JS -->
         </ul>
       </div>
@@ -335,6 +357,6 @@
  
   <!-- JavaScript App Logic -->
   <script src="js/baas-service.js"></script>
-  <script src="js/app.js?v=1503"></script>
+  <script src="js/app.js?v=1600"></script>
 </body>
 </html>

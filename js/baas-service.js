@@ -43,7 +43,7 @@ class BaasService {
 
   async loadArticlesFromBackend() {
     try {
-      const response = await fetch(`${this.API_URL}?action=list`);
+      const response = await fetch(`${this.API_URL}?action=list&_t=${Date.now()}`);
       if (response.ok) {
         const data = await response.json();
         if (data.success && Array.isArray(data.articles)) {

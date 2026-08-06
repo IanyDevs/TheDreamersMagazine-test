@@ -4,14 +4,48 @@
    Progetto: The Dreamers Magazine
    ============================================================================== */
 
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+
+// Controllo timeout inattività sessione (2 ore = 7200 secondi)
+if (isset($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true) {
+    if (isset($_SESSION['last_activity']) && (time() - $_SESSION['last_activity'] > 7200)) {
+        $_SESSION = [];
+        if (ini_get("session.use_cookies")) {
+            $params = session_get_cookie_params();
+            setcookie(session_name(), '', time() - 42000,
+                $params["path"], $params["domain"],
+                $params["secure"], $params["httponly"]
+            );
+        }
+        session_destroy();
+    } else {
+        $_SESSION['last_activity'] = time();
+    }
+}
+
 header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: *');
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '*';
+header("Access-Control-Allow-Origin: $origin");
+header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type');
+header('Cache-Control: no-store, no-cache, must-revalidate, max-age=0');
+header('Cache-Control: post-check=0, pre-check=0', false);
+header('Pragma: no-cache');
 
 if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(200);
     exit;
+}
+
+function check_admin_auth() {
+    if (empty($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+        http_response_code(403);
+        echo json_encode(['success' => false, 'message' => 'Richiesta non autorizzata. Accesso negato.']);
+        exit;
+    }
 }
 
 $isLocal = false;
@@ -43,7 +77,13 @@ if ($action === 'list' && $_SERVER['REQUEST_METHOD'] === 'GET') {
         // Fetch articoli da tabella custom MySQL se connessione PDO attiva
         if (isset($pdo)) {
             try {
-                $stmt = $pdo->query("SELECT * FROM tdm_articles ORDER BY id DESC");
+                $isAdmin = !empty($_SESSION['admin_logged_in']) && $_SESSION['admin_logged_in'] === true;
+                if ($isAdmin) {
+                    $stmt = $pdo->query("SELECT * FROM tdm_articles ORDER BY id DESC");
+                } else {
+                    $stmt = $pdo->prepare("SELECT * FROM tdm_articles WHERE (status = 'published' OR status IS NULL OR status = '') AND (scheduledAt IS NULL OR scheduledAt <= ?) ORDER BY id DESC");
+                    $stmt->execute([date('Y-m-d H:i:s')]);
+                }
                 $dbArticles = $stmt->fetchAll();
                 if (is_array($dbArticles)) {
                     $articles = $dbArticles;
@@ -161,6 +201,7 @@ if ($action === 'list' && $_SERVER['REQUEST_METHOD'] === 'GET') {
 // 2. SALVA / AGGIORNA ARTICOLO (POST)
 // ------------------------------------------------------------------------------
 if (($action === 'create' || $action === 'update') && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    check_admin_auth();
     $input = file_get_json_input();
     
     if (!$input || empty($input['title'])) {
@@ -264,6 +305,7 @@ if (($action === 'create' || $action === 'update') && $_SERVER['REQUEST_METHOD']
 // 3. ELIMINA ARTICOLO
 // ------------------------------------------------------------------------------
 if ($action === 'delete' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    check_admin_auth();
     $input = file_get_json_input();
     $id = (int)($input['id'] ?? 0);
 
@@ -286,6 +328,7 @@ if ($action === 'delete' && $_SERVER['REQUEST_METHOD'] === 'POST') {
 // 4. SVUOTA TUTTI GLI ARTICOLI (CLEAR)
 // ------------------------------------------------------------------------------
 if ($action === 'clear' && $_SERVER['REQUEST_METHOD'] === 'POST') {
+    check_admin_auth();
     try {
         if (isset($pdo)) {
             $pdo->exec("DELETE FROM tdm_articles");
